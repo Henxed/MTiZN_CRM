@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Boost;
-use App\Models\Transaction;
 use App\Models\UUID;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
 
-class GamesController extends Controller
+class MapController extends Controller
 {
 
     public function order($id) // Вся инфа о заказе

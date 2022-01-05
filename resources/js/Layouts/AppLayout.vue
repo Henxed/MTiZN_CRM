@@ -70,9 +70,9 @@
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
-            <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Реестры' : ''">
+            <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Электронный журнал НПА' : ''">
                 <i class="fi fi-rr-document"></i>
-                <span class="text-slate-800 dark:text-slate-100">Реестры</span>
+                <span class="text-slate-800 dark:text-slate-100">Электронный журнал НПА</span>
             </a>
             <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Карта' : ''">
                 <i class="fi fi-rr-map-marker"></i>

@@ -201,6 +201,8 @@
 
         span {
             overflow-x: unset;
+            line-height: 1;
+            display: flex;
         }
     }
 }
