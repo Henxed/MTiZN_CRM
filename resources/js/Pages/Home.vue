@@ -16,7 +16,7 @@
                 <div class="text-lg text-pink-400">Статистика</div>
             </a>
 
-            <a href="#" class="flex bg-gray-100 dark:bg-gray-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+            <a href="https://map.henxed.ru/cp" class="flex bg-gray-100 dark:bg-gray-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-gray-200 dark:text-gray-200/30 text-9xl"><i class="fi fi-rr-apps"></i></div>
                 <div class="text-lg text-gray-400">Администрирование системы</div>
             </a>
