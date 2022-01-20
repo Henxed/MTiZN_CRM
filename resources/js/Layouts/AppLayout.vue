@@ -64,17 +64,17 @@
   </div>
 
 
-    <main class="flex h-full p-4 text-xl">
-        <div class="flex py-6 flex-col" :class="menu ? 'menu-side-open' : ''">
+    <main class="flex h-full p-4">
+        <div class="flex py-6 flex-col text-xl" :class="menu ? 'menu-side-open' : ''">
             <a :href="route('home')" class="app-sidebar-link" :class="route().current('home') ? 'active': ''" v-tippy="!menu ? 'Главная' : '' ">
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
-            <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Электронный журнал НПА' : ''">
+            <a :href="route('regist')" class="app-sidebar-link" v-tippy="!menu ? 'Электронный журнал НПА' : ''">
                 <i class="fi fi-rr-document"></i>
                 <span class="text-slate-800 dark:text-slate-100">Электронный журнал НПА</span>
             </a>
-            <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Карта' : ''">
+            <a :href="route('regions')" class="app-sidebar-link" v-tippy="!menu ? 'Карта' : ''">
                 <i class="fi fi-rr-map-marker"></i>
                 <span class="text-slate-800 dark:text-slate-100">Карта</span>
             </a>

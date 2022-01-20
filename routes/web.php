@@ -4,6 +4,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\RegionController;
+use App\Http\Controllers\RegistController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/regions', [RegionController::class, 'index'])->name('regions');
     Route::get('/region/{id}', [RegionController::class, 'show'])->name('region');
+
+    Route::get('registry', [RegistController::class, 'index'])->name('regist');
 
     // Route::get('/messages/{id}', [ChatController::class, 'getMessagesFor'])->name('messages');
     // Route::post('/message/send', [ChatController::class, 'send'])->name('message.send');

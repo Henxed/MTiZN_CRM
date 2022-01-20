@@ -19,8 +19,8 @@ class RegionController extends Controller
      */
     public function index()
     {
-        return Inertia::render('Regions', [
-            'regions' => Areas::with('areas_children')->orderBy('region')->get()
+        return Inertia::render('Maps/Regions', [
+            'regions' => Areas::with('distance')->whereNotNull('d')->get()
         ]);
     }
 
@@ -35,7 +35,7 @@ class RegionController extends Controller
     // одна запись про район, можно дополнить информаций
     public function show($id)
     {
-        return Inertia::render('Regions', [
+        return Inertia::render('Maps/Regions', [
             'region' => Areas::with('areas_children')->find($id)
         ]);
     }

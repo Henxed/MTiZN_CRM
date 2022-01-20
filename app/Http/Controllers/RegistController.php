@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Regist;
+use App\Models\Regist;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
 
 class RegistController extends Controller
 {
@@ -15,8 +16,9 @@ class RegistController extends Controller
      */
     public function index()
     {
-        $data = Regist::paginate(15);
-        return view('regist.index', compact('data'));
+        return Inertia::render('Registry/Index', [
+            'regions' => Regist::paginate(15)
+        ]);
     }
 
     /**

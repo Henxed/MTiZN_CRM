@@ -10,17 +10,22 @@ class Areas extends Model
 
     public function selsoviet()
     {
-        return $this->hasMany('App\Model\Selsoviet', 'area_id');
+        return $this->hasMany(Selsoviet::class, 'area_id');
     }
 
     public function enterprises()
     {
-        return $this->hasMany('App\Model\Enterprises', 'area_id');
+        return $this->hasMany(Enterprises::class, 'area_id');
     }
 
     public function extra()
     {
-        return $this->hasOne('App\Model\AreasExtra', 'area_id');
+        return $this->hasOne(AreasExtra::class, 'area_id');
+    }
+
+    public function distance()
+    {
+        return $this->hasMany(AreasDistance::class, 'area_id');
     }
 
     public function users()

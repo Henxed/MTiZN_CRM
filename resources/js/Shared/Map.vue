@@ -663,6 +663,12 @@
 
 <script>
 export default {
+    mounted() {
 
+            document.querySelector('.st1').addEventListener('focus', function (event) {
+                console.log(this);
+            });
+            //this.region()
+        },
 }
 </script>
