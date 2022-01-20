@@ -16,7 +16,7 @@
                     @click="getInfo(region, $event)" />
 
                     <g class="text-svg" v-if="listDistante.length > 1">
-                        <text class="text-slate-400" x="500" y="20" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
+                        <text class="text-slate-500" x="500" y="20" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
                             {{ listDistante[0] }}
                         </text>
                         <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="600" :y="50 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right">
@@ -62,36 +62,6 @@
                         <div class="text-sm text-slate-500 ">{{ reg.city }}</div>
                         <div class="text-sm text-slate-500 leading-none text-right">{{ reg.leader }}</div>
                     </div>
-
-                </div>
-                <div class="" v-else>
-                    Оренбургская область
-                    <div class="region_main_info">
-                    <div class="region_main_item">
-                        <div class="region_main_item_title">ПЛОЩАДЬ ТЕРРИТОРИИ</div>
-                        <div class="region_main_item_content">123700 км<sup>2</sup></div>
-                    </div>
-                    <div class="region_main_item">
-                        <div class="region_main_item_title">НАСЕЛЕНИЕ</div>
-                        <div class="region_main_item_content">1963007 чел.</div>
-                    </div>
-                    <div class="region_main_item">
-                        <div class="region_main_item_title">РАБОТОДАТЕЛИ </div>
-                        <div class="region_main_item_content">
-                            83284 ед., в том числе:  <br>
-                            37383 — предприятия и организации; <br>
-                            45901 — индивидуальные предприниматели.
-                        </div>
-                    </div>
-                    <div class="region_main_item">
-                        <div class="region_main_item_title">УРОВЕНЬ БЕЗРАБОТИЦЫ</div>
-                        <div class="region_main_item_content">7,59%</div>
-                    </div>
-                    <div class="region_main_item">
-                        <div class="region_main_item_title">ВАКАНСИИ</div>
-                        <div class="region_main_item_content">10819 ед.</div>
-                    </div>
-                </div>
                 </div>
             </div>
 
