@@ -1,3 +1,7 @@
+.grid-main {
+    grid-template-columns: 50px 1fr;
+}
+
 .tgl {
   display: none;
   box-sizing: border-box;
@@ -101,10 +105,24 @@
   }
 }
 
+.menu-fake{
+    height: 26px;
+    width: 26px;
+    @media (max-width: 640px) {
+        z-index: 999;
+        width: 54px;
+    }
+}
 .menu-side {
     height: 26px;
     width: 26px;
+    @media (max-width: 640px) {
+        /* position: fixed; */
+        top: 27px;
+        left: 20px;
+    }
 }
+
 .burger{
     z-index: 10;
     width: 26px;
@@ -185,7 +203,7 @@
     }
     span {
         padding-left: 1rem;
-        font-size: 18px;
+        font-size: 16px;
         @apply w-0 inline-block overflow-x-hidden uppercase;
 
     }
@@ -196,9 +214,24 @@
 }
 
 .menu-side-open {
-    width: 200px;
-    .app-sidebar-link {
+    width: 220px;
+    @media (max-width: 640px) {
+        top: 0;
+        left: 0;
+        padding-top: .5rem;
+        padding-left: 5rem;
+        position: fixed;
+        z-index: 900;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.83);
 
+        @supports(backdrop-filter: blur(5px)) {
+            backdrop-filter: blur(5px);
+            background: transparent;
+        }
+     }
+    .app-sidebar-link {
         span {
             overflow-x: unset;
             line-height: 1;
@@ -228,7 +261,9 @@
         stroke: #1b1b1b;
     }
 }
-
+.fix-svg-btn{
+    padding: 0.5rem;
+}
 .icon-size {
     font-size: 22px;
     line-height: 0;

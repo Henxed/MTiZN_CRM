@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Regist;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class RegistController extends Controller
@@ -17,7 +20,7 @@ class RegistController extends Controller
     public function index()
     {
         return Inertia::render('Registry/Index', [
-            'regions' => Regist::paginate(15)
+            'regists' => Regist::paginate(15)
         ]);
     }
 
@@ -39,13 +42,24 @@ class RegistController extends Controller
      */
     public function store()
     {
-        Regist::create([
+        $reg = Regist::create([
             'title' => Request::get('title'),
             'npa' => Request::get('npa'),
             'depart' => Request::get('depart'),
             'status' => Request::get('status'),
-            'file' => Request::file('file') ? Storage::disk('local')->put('regist', Request::file('img')) : null,
+            'term' => Request::get('term'),
         ]);
+
+        if (Request::file('file')) {
+            foreach(Request::file('file') as $file)
+            {
+                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s-'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
+                Storage::putFileAs('public/regist', $file, $name);
+                File::create(
+                    ['regist_id' => $reg->id, 'file' => 'regist/'.$name]
+                );
+            }
+        }
 
         return redirect()->route('regist.index');
     }

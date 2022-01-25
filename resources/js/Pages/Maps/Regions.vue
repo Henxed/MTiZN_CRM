@@ -3,7 +3,10 @@
 
         <div class="w-full grid gap-8 gap-y-2 text-sm grid-cols-1 2xl:grid-cols-3 ">
             <div class="2xl:col-span-2 max-w-screen-2xl">
-                <svg version="1.1" class="svg-auto map" id="orenburg" viewBox="0 0 1030 599">
+
+
+
+                <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
                     <path class="st1"
                     v-for="region in regions"
                     :key="region.id"
@@ -12,14 +15,14 @@
                     :id="region.id"
                     @mousemove="moveOnLocation"
                     @mouseout="unpointLocation"
-                    @mouseover="pointLocation(region.region)"
+                    @mouseover="pointLocation(region.id +' - '+region.region)"
                     @click="getInfo(region, $event)" />
 
                     <g class="text-svg" v-if="listDistante.length > 1">
-                        <text class="text-slate-500" x="500" y="20" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
+                        <text class="text-slate-500" x="470" y="60" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
                             {{ listDistante[0] }}
                         </text>
-                        <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="600" :y="50 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right">
+                        <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="560" :y="90 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right">
                             {{ item }}
                         </text>
                     </g>
@@ -54,18 +57,125 @@
                 <div class="absolute px-2 py-1 text-sm bg-slate-800 text-slate-100 dark:text-slate-800 dark:bg-slate-100 rounded-md" :style="tooltipStyle">
                     {{ pointedLocation }}
                 </div>
+
+                <div class="flex justify-center mx-auto mt-10 ">
+
+                    <div class="flex items-center bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10">
+                        <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-700  rounded-full"
+                        type="text"
+                        placeholder="Поиск региона..."
+                        v-model="keyword"
+                        @input="search">
+                        <i class="fi fi-rr-search pt-1 mr-1"></i>
+                    </div>
+                    <!-- <div @click="setStats('lvl')">Напряженность</div> -->
+                    <!-- <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
+                        <input class="tgl tgl-skewed" id="ext.name" type="checkbox" >
+                        <label class="tgl-btn rounded-xl" data-tg-off="OFF" data-tg-on="ON" for="ext.name"></label>
+                    </div> -->
+                </div>
+
             </div>
             <div class="p-4">
-                <div class="w-full bg-slate-300 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
-                    <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-2">
-                        <div class="text-base font-bold col-span-2">{{ reg.region }}</div>
+                <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
+                    <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-3 mb-4">
+                        <div class="text-base font-bold col-span-3">{{ reg.region }}</div>
                         <div class="text-sm text-slate-500 ">{{ reg.city }}</div>
-                        <div class="text-sm text-slate-500 leading-none text-right">{{ reg.leader }}</div>
+                        <div class="text-sm text-slate-500 leading-none text-right col-span-2">{{ reg.leader }}</div>
                     </div>
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            ₽
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Средняя заработная плата</div>
+                            <div class="text-slate-500">{{ reg.amw }}₽</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-building pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Население</div>
+                            <div class="text-slate-500">{{ reg.population }} чел.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-tree"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Число хозяйствующих субъектов</div>
+                            <div class="text-slate-500">{{ reg.subject }} ед.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-diploma pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Заключенные коллективные договоры</div>
+                            <div class="text-slate-500">{{ reg.contract }} ед.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-chat-arrow-down"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Уровень безработицы</div>
+                            <div class="text-slate-500">{{ reg.lvl }}%</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-user-time pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Численность зарегистрированных безработных</div>
+                            <div class="text-slate-500">{{ reg.unemployed }} чел.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-briefcase pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Количество вакансий</div>
+                            <div class="text-slate-500">{{ reg.vacancy }} мест</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-id-badge pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Трудоустроено</div>
+                            <div class="text-slate-500">{{ reg.employed }} чел.</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-wheelchair"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Численность инвалидов</div>
+                            <div class="text-slate-500">{{ reg.cripple }} чел., трудоустроено — {{ reg.cripple_worked }} чел.</div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
-        <div @click="setStats('lvl')">Напряженность</div>
       </div>
       <!-- Нельзя -->
     </app-layout>
@@ -120,11 +230,28 @@
                         { pct: 42, color: { r: 169, g: 214, b: 63 } },  //зеленый
                         { pct: 60, color: { r: 65, g: 165, b: 65 } },  //белый
                     ]
+                },
+                keyword: ''
             }
+        },
+        computed: {
+            search() {
+                let r;
+                if(this.keyword) {
+                    r = this.regions.filter((el) => {
+                        return this.keyword.toLowerCase().split(' ').every(v => el.region.toLowerCase().includes(v));
+                    });
+                    this.getInfo(r[0], r[0].id-1)
+                }else{
+                    this.reg = null
+                    for (let index = 0; index < this.itemRefs.length; index++) {
+                        this.itemRefs[index].style = '';
+                    }
+                }
+
             }
         },
         mounted(){
-
 
         },
         methods: {
@@ -148,7 +275,7 @@
                 return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
             },
             getInfo(arr, event){
-                let id = event.currentTarget.id - 1;
+                let id =  event >= 0 ? event : event.currentTarget.id -1;
                 this.reg = arr;
                 this.listDistante = [];
                 if(!this.stats){
@@ -157,6 +284,11 @@
                     }
 
                     this.itemRefs[id].style.fill = '#849ab9'; //#a19cdf
+                    // if (this.classList.contains('bad')) {
+                    //     // The box that we clicked has a class of bad so let's remove it and add the good class
+                    //     this.classList.remove('bad');
+                    //     this.classList.add('good');
+                    // }
                     this.listDistante.push(`От «${arr.city}» до:`)
 
                     this.regions[id].distance.forEach(element => {
