@@ -1,7 +1,7 @@
 <template>
     <app-layout title="Карта регионов">
 
-        <div class="w-full grid gap-8 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
+        <div class="w-full grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
             <div class="col-span-12 lg:col-span-12 xl:col-span-8">
 
                 <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
@@ -76,9 +76,9 @@
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
-                    <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-3 mb-4">
-                        <div class="text-base font-bold col-span-3">{{ reg.region }}</div>
-                        <div class="text-sm text-slate-500 ">{{ reg.city }}</div>
+                    <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-4 mb-4">
+                        <div class="text-base font-bold col-span-4">{{ reg.region }}</div>
+                        <div class="text-sm text-slate-500 col-span-2">{{ reg.city }}</div>
                         <div class="text-sm text-slate-500 leading-none text-right col-span-2">{{ reg.leader }}</div>
                     </div>
                     <div class="flex mb-4">

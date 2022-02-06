@@ -2,8 +2,8 @@
  * @license MIT */
 
 /*!
-  * vue-tippy v6.0.0-alpha.43
-  * (c) 2021 
+  * vue-tippy v6.0.0-alpha.45
+  * (c) 2022 
   * @license MIT
   */
 

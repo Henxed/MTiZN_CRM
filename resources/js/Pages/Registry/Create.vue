@@ -74,7 +74,7 @@
 
 import AppLayout from '@/Layouts/AppLayout'
 import LoadingButton from '@/Shared/LoadingButton'
-import SelectInput from '@/Shared/Selectinput'
+import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
 
@@ -148,7 +148,10 @@ export default {
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
         submit() {
-            this.form.post(this.route('registry.store'))
+            this.$toast.open({message: 'Добавляю реестр... Ожидайте!', type: 'warning'})
+            this.form.post(this.route('registry.store'), {
+                onSuccess: () => this.$toast.open({message: 'Реестр !'}),
+            })
         }
 
     },

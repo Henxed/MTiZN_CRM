@@ -79,7 +79,7 @@
 
 import AppLayout from '@/Layouts/AppLayout'
 import LoadingButton from '@/Shared/LoadingButton'
-import SelectInput from '@/Shared/Selectinput'
+import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
 
@@ -160,6 +160,7 @@ export default {
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
         update() {
+            this.$toast.open({message: 'Обновляю реестр... Ожидайте!', type: 'warning'})
             this.form.post(route('registry.update', this.regist.id))
         },
         deleteFile(file) {
@@ -176,6 +177,7 @@ export default {
         },
         destroy() {
             if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
+                this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'warning'})
                 this.$inertia.delete(route('registry.destroy', this.regist.id))
             }
         },

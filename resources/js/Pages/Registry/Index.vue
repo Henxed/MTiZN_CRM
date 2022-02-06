@@ -198,6 +198,7 @@
             },
              destroy(e) {
                 if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
+                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'warning'})
                     axios.post(route('registry.destroy', e), {_method: 'delete'} ).then(() => {
                         this.$refs['reg_'+e][0].remove()
                         this.$toast.open({message: 'Реестр удален!'})

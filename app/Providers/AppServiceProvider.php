@@ -19,9 +19,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->registerInertia();
 
-        $this->app->bind(PaymentService::class, function($app) {
-            return new PaymentService();
-        });
+        // $this->app->bind(PaymentService::class, function($app) {
+        //     return new PaymentService();
+        // });
     }
 
     /**
@@ -44,6 +44,12 @@ class AppServiceProvider extends ServiceProvider
         Inertia::share([
             'canLogin' => function () {
                 return Auth::check();
+            },
+            'access' => function () {
+                return [
+                    'can' => Auth::check() ? Auth::user()->getAllPermissions()->pluck('name') : null,
+                    'role' => Auth::check() ? Auth::user()->getRoleNames() : null
+                ];
             },
             'flash' => function (HttpRequet $request) {
                 return [

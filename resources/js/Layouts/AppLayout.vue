@@ -84,13 +84,13 @@
                 <i class="fi fi-rr-map-marker"></i>
                 <span class="text-slate-800 dark:text-slate-100">Карта</span>
             </a>
-            <a href="" class="app-sidebar-link" v-tippy="!menu ? 'Настройки' : ''">
+            <a :href="route('settings')" class="app-sidebar-link" :class="{'active' : route().current('settings')}" v-tippy="!menu ? 'Настройки' : ''">
                 <i class="fi fi-rr-settings"></i>
                 <span class="text-slate-800 dark:text-slate-100">Настройки</span>
             </a>
         </div>
 
-            <slot></slot>
+        <slot></slot>
 
     </main>
 

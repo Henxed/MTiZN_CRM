@@ -6,9 +6,9 @@
                 <div class="text-lg text-orange-400">Карта регионов</div>
             </a>
 
-            <a href="https://map.henxed.ru/reg" class="flex bg-blue-100 dark:bg-blue-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+            <a :href="route('registries', ['npa', 'all'])" class="flex bg-blue-100 dark:bg-blue-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-blue-200 dark:text-blue-200/30 text-9xl"><i class="fi fi-rr-duplicate"></i></div>
-                <div class="text-lg text-blue-400">Электронный журнал НПА</div>
+                <div class="text-lg text-blue-400">Реестры</div>
             </a>
 
             <a href="#" class="flex bg-pink-100 dark:bg-pink-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
