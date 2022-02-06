@@ -4,23 +4,47 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Regist;
+use App\Models\RegistCategory;
+use App\Models\Status;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
 class RegistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
+        return Redirect::route('registries', ['npa', 'all']);
+    }
+
+    public function list($slug, $parametr)
+    {
+        $categories = RegistCategory::where('slug', $slug)->first();
+        if($parametr === 'all'){
+            $arr = Regist::where('category_id', $categories->id)->with('status', 'files')->filter(Request::only('search'))->paginate(15);
+        }else{
+            $status = Status::where('slug', $parametr)->first();
+            if($status){
+                $arr = Regist::where('category_id', $categories->id)->where('status_id', $status->code)->with('status')->filter(Request::only('search'))->paginate(15);
+            }else{
+                return abort(404);
+            }
+        }
+
         return Inertia::render('Registry/Index', [
-            'regists' => Regist::paginate(15)
+            'filters' => Request::all('search'),
+            'regists' => $arr,
+            'categories' => RegistCategory::get(),
+            'category_title' => $categories->title,
+            'category' => $categories->slug,
+            'count_all' => Regist::where('category_id', $categories->id)->count(),
+            'count_true' => Regist::where('category_id', $categories->id)->where('status_id', 100)->count(),
+            'count_change' => Regist::where('category_id', $categories->id)->where('status_id', 101)->count(),
+            'count_false' => Regist::where('category_id', $categories->id)->where('status_id', 102)->count(),
+            'count_die' => Regist::where('category_id', $categories->id)->where('status_id', 103)->count(),
         ]);
     }
 
@@ -31,7 +55,10 @@ class RegistController extends Controller
      */
     public function create()
     {
-        return view('regist.form');
+        return Inertia::render('Registry/Create', [
+            'categories' => RegistCategory::get(),
+            'statuses' => Status::where('model', 'regist')->get(),
+        ]);
     }
 
     /**
@@ -42,71 +69,85 @@ class RegistController extends Controller
      */
     public function store()
     {
+        Request::validate([
+            'title' => ['required', 'max:255'],
+            'npa' => ['required', 'max:250', Rule::unique('regists')],
+            'depart' => ['nullable'],
+            'status_id' => ['required'],
+            'category_id' => ['required'],
+            'term' => ['nullable'],
+            'files' => ['nullable'],
+        ]);
+
         $reg = Regist::create([
             'title' => Request::get('title'),
             'npa' => Request::get('npa'),
             'depart' => Request::get('depart'),
-            'status' => Request::get('status'),
+            'status_id' => Request::get('status_id'),
+            'category_id' => Request::get('category_id'),
             'term' => Request::get('term'),
         ]);
 
-        if (Request::file('file')) {
-            foreach(Request::file('file') as $file)
+        if (Request::file('files')) {
+            foreach(Request::file('files') as $file)
             {
-                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s-'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
+                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s&'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
                 Storage::putFileAs('public/regist', $file, $name);
                 File::create(
-                    ['regist_id' => $reg->id, 'file' => 'regist/'.$name]
+                    ['regist_id' => $reg->id, 'file' => 'regist/'.$name, 'size' => $file->getSize()]
+                );
+            }
+        }
+        return Redirect::route('registry.index')->with('success', 'Реестр был добавлен!');
+    }
+
+    public function edit($id)
+    {
+
+        return Inertia::render('Registry/Edit', [
+            'regist' => Regist::with('status', 'files')->findOrFail($id),
+            'categories' => RegistCategory::get(),
+            'statuses' => Status::where('model', 'regist')->get(),
+        ]);
+    }
+
+
+    public function update(Regist $regist, $reg)
+    {
+
+        $regist->where('id', $reg)->update(Request::only('title','npa','depart','status','term','status_id','category_id'));
+
+        if (Request::file('files')) {
+            foreach(Request::file('files') as $file)
+            {
+                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s--&'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
+                Storage::putFileAs('public/regist', $file, $name);
+                File::create(
+                    ['regist_id' => $reg, 'file' => 'regist/'.$name, 'size' => $file->getSize()]
                 );
             }
         }
 
-        return redirect()->route('regist.index');
+        return Redirect::route('registry.edit', $reg)->with('success', 'Реестр был обновлен!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Model\Tpl  $modelTpl
-     * @return \Illuminate\Http\Response
-     */
-    public function show()
+    public function destroy($reg)
     {
-        //
+        $regist = Regist::with('files')->findOrFail($reg);
+        foreach($regist->files as $file)
+        {
+            unlink(public_path('storage/'.$file->file));
+        }
+        $regist->delete();
+        return Redirect::route('registry.index')->with('success', 'Реестр удален!');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Model\Tpl  $modelTpl
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function file_destroy($id)
     {
-        $data = Regist::findOrFail($id);
-        return view('regist.form', compact('data'));
-    }
+        $file = File::findOrFail($id);
+        unlink(public_path('storage/'.$file->file));
+        $file->delete();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Model\Tpl  $modelTpl
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Tpl $Tpl)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Model\Tpl  $modelTpl
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Tpl $Tpl)
-    {
-        //
+        return true;
     }
 }

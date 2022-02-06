@@ -71,14 +71,14 @@
 
 
     <main class="flex h-full p-4">
-        <div class="py-6 flex-col sm:flex" :class="menu ? 'menu-side-open flex' : 'hidden'">
+        <div class="py-6 mr-6 flex-col sm:flex" :class="menu ? 'menu-side-open flex' : 'hidden'">
             <a :href="route('home')" class="app-sidebar-link" :class="{'active' : route().current('home')}" v-tippy="!menu ? 'Главная' : '' ">
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
-            <a :href="route('regist')" class="app-sidebar-link" :class="{'active' : route().current('regist')}" v-tippy="!menu ? 'Электронный журнал НПА' : ''">
+            <a :href="route('registries', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('regist')}" v-tippy="!menu ? 'Реестры' : ''">
                 <i class="fi fi-rr-document"></i>
-                <span class="text-slate-800 dark:text-slate-100">Электронный журнал НПА</span>
+                <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
             <a :href="route('regions')" class="app-sidebar-link" :class="{'active' : route().current('regions')}" v-tippy="!menu ? 'Карта' : ''">
                 <i class="fi fi-rr-map-marker"></i>

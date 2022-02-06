@@ -1,10 +1,8 @@
 <template>
     <app-layout title="Карта регионов">
 
-        <div class="w-full grid gap-8 gap-y-2 text-sm grid-cols-1 2xl:grid-cols-3 ">
-            <div class="2xl:col-span-2 max-w-screen-2xl">
-
-
+        <div class="w-full grid gap-8 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
+            <div class="col-span-12 lg:col-span-12 xl:col-span-8">
 
                 <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
                     <path class="st1"
@@ -22,7 +20,7 @@
                         <text class="text-slate-500" x="470" y="60" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
                             {{ listDistante[0] }}
                         </text>
-                        <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="560" :y="90 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right">
+                        <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="560" :y="90 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right" font-size="18">
                             {{ item }}
                         </text>
                     </g>
@@ -39,10 +37,10 @@
                         <text class="text-slate-600 dark:text-slate-400" x="500" y="110" fill="currentColor" text-anchor="left" font-size="14">
                             РАБОТОДАТЕЛИ — 83284 ед., в том числе:
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="626" y="130" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-600 dark:text-slate-400" x="635" y="130" fill="currentColor" text-anchor="left" font-size="14">
                             37383 — предприятия и организации;
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="626" y="150" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-600 dark:text-slate-400" x="635" y="150" fill="currentColor" text-anchor="left" font-size="14">
                             45901 — индивидуальные предприниматели.
                         </text>
                         <text class="text-slate-600 dark:text-slate-400" x="500" y="170" fill="currentColor" text-anchor="left" font-size="14">
@@ -76,7 +74,7 @@
                 </div>
 
             </div>
-            <div class="p-4">
+            <div class="sm:p-4 col-span-12 xl:col-span-4">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
                     <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-3 mb-4">
                         <div class="text-base font-bold col-span-3">{{ reg.region }}</div>
@@ -138,7 +136,7 @@
                             <i class="fi fi-rr-user-time pt-1"></i>
                         </div>
                         <div class="ml-4 leading-snug">
-                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Численность зарегистрированных безработных</div>
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Зарегистрированно безработных</div>
                             <div class="text-slate-500">{{ reg.unemployed }} чел.</div>
                         </div>
                     </div>
@@ -163,7 +161,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-wheelchair"></i>
                         </div>
@@ -308,8 +306,8 @@
             moveOnLocation(event) {
                 this.tooltipStyle = {
                     display: 'block',
-                    top: `${event.clientY + 30}px`,
-                    left: `${event.clientX - 100}px`,
+                    top: `${event.clientY + window.scrollY + 30}px`,
+                    left: `${event.clientX +  window.scrollX - 100}px`,
                 }
             },
             setItemRef(el) {

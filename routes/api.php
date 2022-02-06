@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GamesController;
+use App\Http\Controllers\RegistController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -19,5 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::post('/order/{id}/setAccount', [GamesController::class, 'setAccount'])->name('set.account');
+    Route::get('registry/file/{id}/delete', [RegistController::class, 'file_destroy'])->name('registry.file.destroy');
 });

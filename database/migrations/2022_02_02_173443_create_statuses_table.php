@@ -26,14 +26,17 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('code')->unsigned()->nullable()->index()->unique(); // уникальные номера ошибок. Вдруг нужно текст поменять, тогда можно получать коды статуса
-            $table->string('model')->nullable(); // для какого модуля
             $table->string('name')->nullable();
+            $table->string('slug')->nullable()->index()->unique();
+            $table->string('model')->nullable(); // для какого модуля
             $table->timestamps();
         });
 
         Schema::create('regists_categories', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->nullable()->index()->unique();
+            $table->string('title')->nullable();
             $table->timestamps();
         });
 

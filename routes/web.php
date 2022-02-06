@@ -25,7 +25,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/regions', [RegionController::class, 'index'])->name('regions');
     Route::get('/region/{id}', [RegionController::class, 'show'])->name('region');
 
-    Route::get('registry', [RegistController::class, 'index'])->name('regist');
+    //Route::get('registry', [RegistController::class, 'index'])->name('regists');
+    Route::resource('registry', RegistController::class);
+    Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registries');
+
+
 
     // Route::get('/messages/{id}', [ChatController::class, 'getMessagesFor'])->name('messages');
     // Route::post('/message/send', [ChatController::class, 'send'])->name('message.send');
