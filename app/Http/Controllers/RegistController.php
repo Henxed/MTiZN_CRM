@@ -16,13 +16,13 @@ use Inertia\Inertia;
 class RegistController extends Controller
 {
 
-    function __construct()
-    {
-        $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
-        $this->middleware('permission:role-create', ['only' => ['create','store']]);
-        $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
-        $this->middleware('permission:role-delete', ['only' => ['destroy']]);
-    }
+    // function __construct()
+    // {
+    //     $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index','store']]);
+    //     $this->middleware('permission:role-create', ['only' => ['create','store']]);
+    //     $this->middleware('permission:role-edit', ['only' => ['edit','update']]);
+    //     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+    // }
 
     public function index()
     {
@@ -37,7 +37,7 @@ class RegistController extends Controller
         }else{
             $status = Status::where('slug', $parametr)->first();
             if($status){
-                $arr = Regist::where('category_id', $categories->id)->where('status_id', $status->code)->with('status')->filter(Request::only('search'))->paginate(15);
+                $arr = Regist::where('category_id', $categories->id)->where('status_id', $status->code)->with('status', 'files')->filter(Request::only('search'))->paginate(15);
             }else{
                 return abort(404);
             }

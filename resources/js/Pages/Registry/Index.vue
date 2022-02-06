@@ -168,11 +168,11 @@
             },
             files_open: function(e){
                 this.regists.data.forEach(element => {
-                    if(!this.$refs['file_'+element.id][0].classList.contains("hidden")){
+                    if(this.$refs['file_'+element.id][0] !== this.$refs[e][0]){
                         this.$refs['file_'+element.id][0].classList.add('hidden')
                     }
                 });
-                this.$refs[e][0].classList.remove('hidden')
+                this.$refs[e][0].classList.toggle('hidden')
             },
             files_close: function(e){
                 this.$refs[e][0].classList.add('hidden')
