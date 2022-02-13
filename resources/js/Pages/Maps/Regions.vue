@@ -106,7 +106,7 @@
                         <label class="tgl-btn rounded-xl" data-tg-off="OFF" data-tg-on="ON" for="ext.name"></label>
                     </div> -->
                 </div>
-                <div class="absolute right-9 top-1/4 w-1 h-40 rounded-xl" ref='linePct'></div>
+                <div class="hidden sm:block absolute right-9 top-1/4 w-1 h-40 rounded-xl" ref='linePct'></div>
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4" v-if="reg">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg">

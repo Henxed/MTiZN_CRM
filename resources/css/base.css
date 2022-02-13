@@ -293,3 +293,6 @@ input:checked + div svg {
     fill: #849ab9 !important;
 }
 
+.h-80 {
+    height: 85vh;
+}

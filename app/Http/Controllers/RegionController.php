@@ -30,6 +30,7 @@ class RegionController extends Controller
     public function show($id)
     {
         return Inertia::render('Maps/Region', [
+            'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id)
         ]);
     }
