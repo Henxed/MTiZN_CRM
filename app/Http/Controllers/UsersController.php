@@ -38,7 +38,7 @@ class UsersController extends Controller
     {
         return Inertia::render('Settings/Users/Create', [
             'roles' => Role::get(),
-            //'permissions' => Permission::get(),
+            'permissions' => Permission::get(),
             'regions' => Areas::select('id', 'region')->where('areas_id', NULL)->get()
         ]);
     }
@@ -49,8 +49,7 @@ class UsersController extends Controller
         Request::validate([
             'name' => ['required', 'max:50'],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')],
-            'password' => ['nullable'],
-            'role' => ['nullable'],
+            'password' => ['required', 'min:8'],
         ]);
 
         $user = User::create([
@@ -59,16 +58,9 @@ class UsersController extends Controller
             'password' => Hash::make(Request::get('password'))
         ]);
 
-        if($request->region){
-            $RoleU = new AreasUser();
-            $RoleU->areas_id = $request->region;
-            $RoleU->user_id = $user->id;
-            $RoleU->save();
-        }
-
-        if (Request::get('role')) {
-            $user->roles()->sync(Request::get('role'));
-        }
+        $user->roles()->sync(Request::get('roles'));
+        $user->permissions()->sync(Request::get('permissions'));
+        $user->areas()->sync(Request::get('regions'));
 
         return Redirect::route('users.index')->with('success', 'Пользователь создан.');
 
@@ -82,7 +74,8 @@ class UsersController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'roles' => $user->roles->pluck('id'),
-                //'permissions' => $user->permissions->flatten()->pluck('id'),
+                'permissions' => $user->permissions->flatten()->pluck('id'),
+                'areas' => $user->areas->flatten()->pluck('id')
             ],
             'regions' => Areas::select('id', 'region')->where('areas_id', NULL)->get(),
             'roles' => Role::get(),
@@ -90,20 +83,19 @@ class UsersController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(User $user)
     {
 
         Request::validate([
             'name' => ['required', 'max:50'],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable'],
-            'roles' => ['nullable'],
         ]);
 
         $user->update(Request::only('name', 'email'));
         $user->roles()->sync(Request::get('roles'));
-        //$user->permissions()->sync(Request::get('permissions'));
-        $user->areas()->sync($request->region);
+        $user->permissions()->sync(Request::get('permissions'));
+        $user->areas()->sync(Request::get('regions'));
 
         if (Request::get('password')) {
             $user->update(['password' => Hash::make(Request::get('password'))]);
@@ -111,9 +103,6 @@ class UsersController extends Controller
 
         return Redirect::back()->with('success', 'Пользователь обновлен');
 
-        //$users = User::with('roles')->get();
-
-        return redirect()->route("users.index");
     }
 
 }

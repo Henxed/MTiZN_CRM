@@ -39,7 +39,7 @@ class PermissionController extends Controller
         $permission->syncRoles(Request::only('role'));
 
 
-        return Redirect::route('permission.index')->with('success', 'Право доступа создано.');
+        return Redirect::route('permissions.index')->with('success', 'Право доступа создано.');
     }
 
     public function edit(Permission $permission)

@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Карта регионов">
+    <app-layout :title="`${category_title} - Реестры`">
     <div class="md:flex w-full">
         <div>
             <div class="sticky top-5">
@@ -9,11 +9,11 @@
                     <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
                             v-for="item in categories" :key="item.id"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : item.slug === category}"
-                            :href="route('registries', [item.slug, 'all'])">
+                            :href="route('registry.list', [item.slug, 'all'])">
                         {{ item.name }}
                     </Link>
                 </div>
-                <Link :href="route('registry.create')" class="block my-4 bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center" role="button">Добавить</Link>
+                <Link v-if="$page.props.access.can.includes('registry.add') || $page.props.access.role.includes('super-admin')" :href="route('registry.create')" class="block my-4 bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center" role="button">Добавить</Link>
             </div>
         </div>
         <div class="rounded-xl bg-white text-slate-900 md:mx-6 dark:bg-slate-800 w-full max-w-screen-2xl">
@@ -21,23 +21,23 @@
             <div class="md:sticky top-0 z-40 bg-white dark:bg-slate-800 rounded-xl p-4 md:p-9">
                 <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">{{ category_title }}</div>
                 <div class="grid 2xl:flex grid-cols-2 sm:grid-cols-3 xl:grid-cols-7 gap-6 mt-3 dark:text-slate-300 p-5 pt-0 sm:p-0">
-                    <Link :href="route('registries', [category, 'all'])">
+                    <Link :href="route('registry.list', [category, 'all'])">
                         <div class="text-2xl font-semibold">{{ count_all }}</div>
                         <div class="uppercase text-xs">{{ declOfNum(count_all, ['Всего реестр', 'Всего реестра', 'Всего реестров']) }}</div>
                     </Link>
-                    <Link :href="route('registries', [category, 'valid'])">
+                    <Link :href="route('registry.list', [category, 'valid'])">
                         <div class="text-2xl font-semibold">{{ count_true }}</div>
                         <div class="uppercase text-xs break-all">{{ declOfNum(count_true, ['Действителен', 'Действительно', 'Действительно']) }}</div>
                     </Link>
-                    <Link :href="route('registries', [category, 'change'])">
+                    <Link :href="route('registry.list', [category, 'change'])">
                         <div class="text-2xl font-semibold">{{ count_change }}</div>
                         <div class="uppercase text-xs">Подлежит изменению</div>
                     </Link>
-                    <Link :href="route('registries', [category, 'expired'])">
+                    <Link :href="route('registry.list', [category, 'expired'])">
                         <div class="text-2xl font-semibold">{{ count_false }}</div>
                         <div class="uppercase text-xs">{{ declOfNum(count_false, ['Утратил силу', 'Утратили силу', 'Утратило силу']) }}</div>
                     </Link>
-                    <Link :href="route('registries', [category, 'deadline'])" class="flex-1 ">
+                    <Link :href="route('registry.list', [category, 'deadline'])" class="flex-1 ">
                         <div class="text-2xl font-semibold">{{ count_die }}</div>
                         <div class="uppercase text-xs">Истёк срок</div>
                     </Link>
@@ -64,13 +64,15 @@
                     </div>
                     <div class="flex justify-center sm:justify-end order-last sm:order-none bottom-t-1 mt-3">
                         <Link :href="route('registry.edit', item.id)" class="flex items-center justify-center leading-none h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
-                        content="Редактировать" v-tippy='{ placement : "bottom" }'>
+                        content="Редактировать" v-tippy='{ placement : "bottom" }'
+                        v-if="$page.props.access.can.includes('registry.edit') || $page.props.access.role.includes('super-admin')">
                             <i class="fi fi-rr-edit"></i>
                             <span class="ml-2 sm:hidden">Редактировать</span>
                         </Link>
                         <div class="flex items-center justify-center leading-none mx-2 h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
                         content="Удалить" v-tippy='{ placement : "bottom" }'
-                        @click="destroy(item.id)">
+                        @click="destroy(item.id)"
+                        v-if="$page.props.access.can.includes('registry.delete') || $page.props.access.role.includes('super-admin')">
                             <i class="fi fi-rr-trash"></i>
                             <span class="ml-2 sm:hidden">Удалить</span>
                         </div>
@@ -198,7 +200,7 @@
             },
              destroy(e) {
                 if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
-                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'warning'})
+                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!'})
                     axios.post(route('registry.destroy', e), {_method: 'delete'} ).then(() => {
                         this.$refs['reg_'+e][0].remove()
                         this.$toast.open({message: 'Реестр удален!'})

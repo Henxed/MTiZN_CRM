@@ -37,11 +37,11 @@ class AppServiceProvider extends ServiceProvider
 
     public function registerInertia()
     {
-        // Inertia::version(function () {
-        //     return md5_file(public_path('mix-manifest.json'));
-        // });
 
         Inertia::share([
+            // 'recaptcha_site_key' => function () {
+            //     return env('GOOGLE_RECAPTCHA_SITE_KEY');
+            // },
             'canLogin' => function () {
                 return Auth::check();
             },

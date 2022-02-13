@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Areas;
 use App\Models\Enterprises;
 use App\Models\AreasExtra;
+use App\Models\AreasUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Auth;
@@ -20,7 +21,8 @@ class RegionController extends Controller
     public function index()
     {
         return Inertia::render('Maps/Regions', [
-            'regions' => Areas::with('distance')->whereNotNull('d')->get()
+            'regions' => Areas::with('distance')->whereNotNull('d')->get(),
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id')
         ]);
     }
 

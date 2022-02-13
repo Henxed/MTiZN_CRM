@@ -1,65 +1,116 @@
 <template>
-  <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-20">
-    <h1 class="mb-8 font-bold text-3xl">
-      <Link class="text-pink-400 hover:text-pink-600" :href="route('users.index')">Users</Link>
-    </h1>
-    <div class="bg-white rounded shadow max-w-3xl">
-      <form @submit.prevent="submit">
-        <div class="p-8 -mr-6 -mb-8 flex flex-wrap">
-            <text-input v-model="form.name" :error="errors.name" class="pr-6 pb-1 w-full lg:w-1/2" label="Name" />
-            <text-input v-model="form.email" :error="errors.email" class="pr-6 pb-1 w-full lg:w-1/2" label="E-mail" type="email" />
-            <div class="pr-6 pb-1 w-full lg:w-1/2">
-                <label for="role" class="form-label">Роль</label>
-                <treeselect v-model="form.roles" :options="roles" :normalizer="normalizer" placeholder="Роли..." id="role" />
+    <app-layout title="Редактировать пользователя">
+        <setting class="p-9">
+
+        <div class="px-4 py-5 sm:px-6">
+            <h3 class="text-2xl leading-6 font-medium text-gray-900 dark:text-slate-300 ">Добавление нового пользователя</h3>
+            <p class="mt-1 max-w-2xl text-sm text-gray-500">Персональная информация о пользователе</p>
+        </div>
+        <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-500">
+            <dl>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">ФИО <p class="mt-1 text-sm opacity-80">Как зовут владельца аккаунта?</p></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.name" :error="errors.name" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Электронная почта <p class="mt-1 text-sm opacity-80">Является логином для входа и отправки уведомлений, если потеряется доступ к аккаунту.</p></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.email" :error="errors.email" type="email" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Пароль <p class="mt-1 text-sm opacity-80">Защищает аккаунт от несанкционированного доступа. </p></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.password" :error="errors.password" />
+                    <small class="text-sm text-slate-600 dark:text-slate-400/70 hover:opacity-80 cursor-pointer" @click="randomPassword(12)">Сгенерировать</small></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Доступ к регионам
+                        <p class="mt-1 text-sm opacity-80">Если пользователь должен редактировать регионы.</p>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.regions" :options="regions" multiple :normalizer="normal_a" placeholder="Регионы..." id="role" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Роль
+                        <p class="mt-1 text-sm opacity-80">Одна роль даёт сразу ко многим правам доступа.</p>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.roles" :options="roles" :normalizer="normalizer" placeholder="Роли..." id="role" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Дополнительные права доступа
+                        <p class="mt-1 text-sm opacity-80">Если в роли нет каких-то прав доступа, то можно добавить отдельно через это меню.</p>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.permissions" :options="permissions" multiple :normalizer="normalizer" placeholder="Права..." id="permissions" /></dd>
+                </div>
+            </dl>
+            <div class="mt-6 flex items-center">
+                <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Добавить</loading-button>
             </div>
-            <text-input v-model="form.password" :error="errors.password" class="pr-6 pb-1 w-full lg:w-1/2" label="Password" />
-        </div>
-        <div class="px-8 py-4 bg-gray-100 border-t border-gray-200 flex items-center">
-          <loading-button :loading="sending" class="btn-load ml-auto" type="submit">Create</loading-button>
-        </div>
-      </form>
-    </div>
-  </div>
+        </form>
+        </setting>
+    </app-layout>
 </template>
 
 <script>
-import Layout from '@/Layouts/AppLayout'
+import AppLayout from '@/Layouts/AppLayout'
+import Setting from '@/Pages/Settings/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
-import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
-import Treeselect from 'vue3-treeselect'
-import 'vue3-treeselect/dist/vue3-treeselect.css'
+import Treeselect from '@bosquig/vue3-treeselect'
+
 
 export default {
-  layout: Layout,
-  components: {
-    LoadingButton,
-    SelectInput,
-    Treeselect,
-    TextInput,
-    Link
-  },
-  props: {
-    errors: Object,
-    roles: Array,
-  },
-  data() {
-    return {
-      sending: false,
-      form: this.$inertia.form({
-        name: '',
-        email: '',
-        password: '',
-        roles: null
-      })
-    }
-  },
-  methods: {
-    submit() {
-      this.form.post(this.route('users.store'))
-    }
+    components: {
+        LoadingButton,
+        TextInput,
+        Link,
+        Treeselect,
+        AppLayout,
+        Setting
+    },
+    props: {
+        errors: Object,
+        roles: Array,
+        permissions: Array,
+        regions: Array,
+    },
+    data() {
+        return {
+        sending: false,
+        form: this.$inertia.form({
+            name: '',
+            email: '',
+            password: '',
+            regions: null,
+            roles: null,
+            permissions: null,
+        }),
+                normalizer(node) {
+            return {
+                id: node.id,
+                label: node.name,
+            }
+        },
+        normal_a(node) {
+            return {
+                id: node.id,
+                label: node.region,
+            }
+        },
+        }
+    },
+    methods: {
+            randomPassword(length) {
+                var chars = "%!*#$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+                var pass = "";
+                for (var x = 0; x < length; x++) {
+                    var i = Math.floor(Math.random() * chars.length);
+                    pass += chars.charAt(i);
+                }
+                this.form.password = pass;
+            },
+            submit() {
+            this.form.post(this.route('users.store'))
+            }
 
-  },
+    },
 }
 </script>

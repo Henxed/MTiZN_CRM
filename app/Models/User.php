@@ -73,4 +73,9 @@ class User extends Authenticatable
                 ->orWhere('email', 'like', '%'.$search.'%');
         });
     }
+
+    public function areas()
+    {
+        return $this->belongsToMany(Areas::class);
+    }
 }

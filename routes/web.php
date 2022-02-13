@@ -28,10 +28,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/region/{id}', [RegionController::class, 'show'])->name('region');
 
     Route::resource('registry', RegistController::class);
-    Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registries');
+    Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');
 
     Route::group(['prefix' => 'settings'], function () {
-        Route::resource('users', UsersController::class);
+        Route::resource('users', UsersController::class)->middleware('role:super-admin');
         // Роли
         Route::resource('roles', RoleController::class)->except(['show'])->middleware('role:super-admin');
 

@@ -2,8 +2,8 @@
     <app-layout title="Карта регионов">
 
         <div class="w-full grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
-            <div class="col-span-12 lg:col-span-12 xl:col-span-8">
-
+            <div class="col-span-12 lg:col-span-12 xl:col-span-8 relative">
+<!-- <div class="" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(10)">Доступ</div> -->
                 <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
                     <path class="st1"
                     v-for="region in regions"
@@ -13,50 +13,64 @@
                     :id="region.id"
                     @mousemove="moveOnLocation"
                     @mouseout="unpointLocation"
-                    @mouseover="pointLocation(region.id +' - '+region.region)"
+                    @mouseover="pointLocation(region.region)"
                     @click="getInfo(region, $event)" />
 
                     <g class="text-svg" v-if="listDistante.length > 1">
-                        <text class="text-slate-500" x="470" y="60" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="24">
+                        <text class="text-slate-600 dark:text-slate-300" x="500" y="40" fill="currentColor" alignment-baseline="central" text-anchor="left" font-size="32">
                             {{ listDistante[0] }}
                         </text>
-                        <text v-for="(item, index) in listDistante.slice(1)" :key="item" class="text-slate-400" x="560" :y="90 + (25*index)" fill="currentColor" alignment-baseline="central" text-anchor="right" font-size="18">
-                            {{ item }}
+                        <text  class="text-slate-500 dark:text-slate-400" x="500" y="60" fill="currentColor" alignment-baseline="central" text-anchor="right" font-size="18">
+                            <tspan x="505" dy="1.5em" v-for="item in listDistante.slice(1)" :key="item">{{ item }}</tspan>
+                        </text>
+                    </g>
+                    <g class="text-svg w-48" v-else-if="reg && stats == 'commissions'">
+                        <text class="text-slate-600 dark:text-slate-300" x="500" y="40" fill="currentColor" text-anchor="left" font-size="32">
+                            {{ reg.city }}
+                        </text>
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="55" fill="currentColor" text-anchor="left" font-size="16">
+                            <tspan x="500" dy="1em">
+                                Процент исполнения контрольного показателя — {{ reg.commissions }}
+                            </tspan>
+                            <tspan x="500" dy="1.7em">Контрольный показатель по снижению</tspan>
+                            <tspan x="500" dy="1.2em">неформальной занятости — {{ reg.commissions_c }}</tspan>
+                            <tspan x="500" dy="1.7em">Заключено трудовых договоров в рамках работы</tspan>
+                            <tspan x="500" dy="1.2em">по снижению неформальной занятости — {{ reg.commissions_t }}</tspan>
+                            <tspan x="500" dy="1.7em">Количество проведенных территориальных</tspan>
+                            <tspan x="500" dy="1.2em">межведомственной комиссии — {{ reg.in_employment }}</tspan>
                         </text>
                     </g>
                     <g class="text-svg" v-else>
                         <text class="text-slate-600 dark:text-slate-300" x="500" y="40" fill="currentColor" text-anchor="left" font-size="32">
                             Оренбургская область
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="500" y="70" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="70" fill="currentColor" text-anchor="left" font-size="14">
                             ПЛОЩАДЬ ТЕРРИТОРИИ — 123700 кв.км
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="500" y="90" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="90" fill="currentColor" text-anchor="left" font-size="14">
                             НАСЕЛЕНИЕ — 1963007 чел.
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="500" y="110" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="110" fill="currentColor" text-anchor="left" font-size="14">
                             РАБОТОДАТЕЛИ — 83284 ед., в том числе:
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="635" y="130" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="635" y="130" fill="currentColor" text-anchor="left" font-size="14">
                             37383 — предприятия и организации;
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="635" y="150" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="635" y="150" fill="currentColor" text-anchor="left" font-size="14">
                             45901 — индивидуальные предприниматели.
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="500" y="170" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="170" fill="currentColor" text-anchor="left" font-size="14">
                             ВАКАНСИИ — 10819 мест
                         </text>
-                        <text class="text-slate-600 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
+                        <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
                             УРОВЕНЬ БЕЗРАБОТИЦЫ — 7,59%
                         </text>
                     </g>
                 </svg>
 
-                <div class="absolute px-2 py-1 text-sm bg-slate-800 text-slate-100 dark:text-slate-800 dark:bg-slate-100 rounded-md" :style="tooltipStyle">
-                    {{ pointedLocation }}
-                </div>
 
-                <div class="flex justify-center mx-auto mt-10 ">
+
+                <div class="flex flex-col items-center justify-center mx-auto mt-10 ">
 
                     <div class="flex items-center bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-700  rounded-full"
@@ -66,13 +80,34 @@
                         @input="search">
                         <i class="fi fi-rr-search pt-1 mr-1"></i>
                     </div>
+
+                <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-6">
+                    <div class="flex">
+                        <input class="peer hidden" id="stats_u" type="radio" v-model="stats" value="lvl" />
+                        <label for="stats_u" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
+                            Информация о ситуации на рынке труда
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <input class="peer hidden" id="stats_t" type="radio" v-model="stats" value="tension" />
+                        <label for="stats_t" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
+                            Уровень напряженности
+                        </label>
+                    </div>
+                    <div class="flex">
+                        <input class="peer hidden" id="stats_c" type="radio" v-model="stats" value="commissions" />
+                        <label for="stats_c" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('commissions')">
+                            Процент исполнения контрольного показателя по снижению неформальной занятости
+                        </label>
+                    </div>
+                </div>
                     <!-- <div @click="setStats('lvl')">Напряженность</div> -->
                     <!-- <div class="relative inline-block w-10 align-middle select-none transition duration-200 ease-in">
                         <input class="tgl tgl-skewed" id="ext.name" type="checkbox" >
                         <label class="tgl-btn rounded-xl" data-tg-off="OFF" data-tg-on="ON" for="ext.name"></label>
                     </div> -->
                 </div>
-
+                <div class="absolute right-9 top-1/4 w-1 h-40 rounded-xl" ref='linePct'></div>
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
@@ -175,6 +210,10 @@
             </div>
 
       </div>
+        <div class="absolute px-2 py-1 text-sm bg-slate-800 text-slate-100 dark:text-slate-800 dark:bg-slate-100 rounded-md" :style="tooltipStyle">
+            {{ pointedLocation }}
+        </div>
+
       <!-- Нельзя -->
     </app-layout>
 </template>
@@ -190,10 +229,11 @@
         components: {
             AppLayout,
             Head,
-            Link
+            Link,
         },
         props: {
             regions: Array,
+            access_region: Array
         },
         data() {
             return {
@@ -204,29 +244,29 @@
                 listDistante: [],
                 stats: false,
                 percentColors: {
-                    'U': [
+                    'lvl': [
                         { pct: 0, color: { r: 161, g: 208, b: 106 } },  //белый
                         { pct: 2, color: { r: 160, g: 243, b: 155 } },  //зеленый
                         { pct: 4, color: { r: 255, g: 214, b: 80 } },   //желтый
                         { pct: 6, color: { r: 255, g: 163, b: 55 } },   //оранжевый
                         { pct: 8, color: { r: 212, g: 101, b: 36 } },   //коричневый
-                        { pct: 10, color: { r: 214, g: 43, b: 0 } },    //красный
+                        { pct: 100, color: { r: 214, g: 43, b: 0 } },    //красный
                     ],
-                    'T': [
+                    'tension': [
                         { pct: 0, color: { r: 161, g: 208, b: 106 } },  //белый
                         { pct: 4, color: { r: 160, g: 243, b: 155 } },  //зеленый
                         { pct: 8, color: { r: 255, g: 214, b: 80 } },  //зеленый
                         { pct: 16, color: { r: 255, g: 163, b: 55 } },   //желтый
                         { pct: 22, color: { r: 212, g: 101, b: 36 } },  //оранжевый
-                        { pct: 28, color: { r: 214, g: 43, b: 0 } },    //красный
+                        { pct: 100, color: { r: 214, g: 43, b: 0 } },    //красный
                     ],
-                    'C': [
+                    'commissions': [
                         { pct: 0, color: { r: 214, g: 43, b: 0 } },    //красный
-                        { pct: 5, color: { r: 210, g: 102, b: 46 } },  //коричневый
-                        { pct: 16, color: { r: 214, g: 174, b: 78 } },  //оранжевый
-                        { pct: 28, color: { r: 214, g: 206, b: 78 } },   //желтый
-                        { pct: 42, color: { r: 169, g: 214, b: 63 } },  //зеленый
-                        { pct: 60, color: { r: 65, g: 165, b: 65 } },  //белый
+                        { pct: 5, color: { r: 255, g: 87, b: 34  } },  //коричневый
+                        { pct: 16, color: { r: 255, g: 152, b: 0 } },  //оранжевый
+                        { pct: 28, color: { r: 255, g: 235, b: 59 } },   //желтый
+                        { pct: 60, color: { r: 184, g: 225, b: 119 } },  //зеленый
+                        { pct: 100, color: { r: 136, g: 217, b: 139 } },  //белый
                     ]
                 },
                 keyword: ''
@@ -253,9 +293,49 @@
 
         },
         methods: {
+            uncheck: function (val) {
+
+                if (val === this.stats) {
+                    this.stats = false;
+                    this.$refs.linePct.innerHTML = '';
+                    this.$refs.linePct.style.background = '';
+                    for (let i = 0; i < this.regions.length; i++) {
+                        this.itemRefs[i].style.fill = '';
+                    }
+                } else {
+                    this.stats = val
+                    for (let i = 0; i < this.regions.length; i++) {
+                        this.itemRefs[i].style.fill = this.getColorForPercentage(this.percentColors[val], this.regions[i][val].replace(/[,.]/gi, '.'));
+                    }
+                    this.linePct(this.percentColors[val]);
+                }
+
+            },
+            linePct: function (arr){
+                var h_arr = '';
+                var h = 106/arr.length;
+                for(var i = 0; i < arr.length; i++){
+                    if (arr[i].pct !== undefined) {
+                        h_arr += '<div class="absolute left-3 text-slate-700 dark:text-slate-300" style="top:'+ h * i +'%">'+arr[i].pct+'%</div>';
+                    }
+                }
+                this.$refs.linePct.innerHTML = h_arr;
+
+                let line = [];
+                let part = 100 / arr.length;
+
+                for (var i = 1; i < arr.length; i++) {
+                    line += 'rgb(' + [arr[i].color.r, arr[i].color.g, arr[i].color.b].join(',') + ') '+ part * i +'%'
+                    if(i < arr.length - 1){
+                        line += ', '
+                    }
+                }
+
+                this.$refs.linePct.style.background = `linear-gradient(${line})`;
+            },
             getColorForPercentage: function(colors, pct) {
                 for (var i = 1; i < colors.length - 1; i++) {
-                    if (pct < colors[i].pct) {
+                    if (pct < colors[i].pct && pct <= 100) {
                         break;
                     }
                 }
@@ -306,7 +386,7 @@
             moveOnLocation(event) {
                 this.tooltipStyle = {
                     display: 'block',
-                    top: `${event.clientY + window.scrollY + 30}px`,
+                    top: `${event.clientY + window.scrollY +30}px`,
                     left: `${event.clientX +  window.scrollX - 100}px`,
                 }
             },
@@ -316,19 +396,7 @@
                         this.itemRefs.push(el)
                     }
                 }
-            },
-            setStats(el){
-                if(el == 'lvl') {
-                    for (let i = 0; i < this.regions.length; i++) {
-                        this.itemRefs[i].style.fill = this.getColorForPercentage(this.percentColors['U'], this.regions[i].lvl.replace(/,/gi, '.'))
-                    }
-                }
-                if(el == 'ex') {
-                    for (let i = 0; i < this.regions.length; i++) {
-                        this.itemRefs[i].style.fill = ''
-                    }
-                }
-            },
+            }
 	    },
       beforeUpdate() {
           this.itemRefs = []

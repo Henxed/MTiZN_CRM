@@ -31,7 +31,7 @@
                     </button>
                     <button type="button" class="flex font-bold px-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none uppercase">
                         <div class="hidden sm:flex">
-                            {{ $page.props.user.name }}
+                            {{ $page.props.user.email.split('@')[0] }}
 
                             <svg class="ml-1 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -76,7 +76,7 @@
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
-            <a :href="route('registries', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('regist')}" v-tippy="!menu ? 'Реестры' : ''">
+            <a :href="route('registry.list', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('registry.*')}" v-tippy="!menu ? 'Реестры' : ''">
                 <i class="fi fi-rr-document"></i>
                 <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
@@ -84,7 +84,7 @@
                 <i class="fi fi-rr-map-marker"></i>
                 <span class="text-slate-800 dark:text-slate-100">Карта</span>
             </a>
-            <a :href="route('settings')" class="app-sidebar-link" :class="{'active' : route().current('settings')}" v-tippy="!menu ? 'Настройки' : ''">
+            <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="!menu ? 'Настройки' : ''">
                 <i class="fi fi-rr-settings"></i>
                 <span class="text-slate-800 dark:text-slate-100">Настройки</span>
             </a>

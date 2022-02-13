@@ -1,4 +1,6 @@
 <template>
+<app-layout title="Добавить роль">
+    <setting class="p-9">
   <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
     <h1 class="mb-8 font-bold text-3xl">
       <inertia-link class="text-pink-400 hover:text-pink-600" :href="route('roles.index')">Роли</inertia-link>
@@ -19,25 +21,28 @@
       </form>
     </div>
   </div>
+      </setting>
+</app-layout>
 </template>
 
 <script>
-import Layout from '@/Layouts/AppLayout'
+import AppLayout from '@/Layouts/AppLayout'
+import Setting from '@/Pages/Settings/Layout'
 import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 
-import Treeselect from 'vue3-treeselect'
-import 'vue3-treeselect/dist/vue3-treeselect.css'
+import Treeselect from '@bosquig/vue3-treeselect'
+
 
 export default {
-  metaInfo: { title: 'Новая роль' },
-  layout: Layout,
   components: {
     LoadingButton,
     SelectInput,
     TextInput,
-    Treeselect
+    Treeselect,
+    AppLayout,
+    Setting
   },
   props: {
     errors: Object,
