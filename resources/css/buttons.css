@@ -1,11 +1,17 @@
 .btn-yellow {
-    @apply px-6 py-3 rounded bg-yellow-400 text-black text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400;
+    @apply px-6 py-3 rounded bg-yellow-400 text-black text-sm leading-4 font-bold whitespace-nowrap hover:bg-orange-400 focus:bg-orange-400 cursor-pointer;
 }
 .btn-red {
-    @apply px-6 py-3 rounded bg-red-500 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-red-700 focus:bg-red-700;
+    @apply px-6 py-3 rounded bg-red-500 text-white text-sm leading-4 font-bold whitespace-nowrap hover:bg-red-700 focus:bg-red-700 cursor-pointer;
 }
 .btn-green {
-    @apply my-4 bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center hover:bg-emerald-500 dark:hover:bg-emerald-700;
+    @apply bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center hover:bg-emerald-500 dark:hover:bg-emerald-700 cursor-pointer;
+}
+.btn-default {
+    @apply bg-slate-400 dark:bg-slate-600 text-white p-2 px-4 rounded-xl text-center hover:bg-slate-500 dark:hover:bg-slate-700 cursor-pointer;
+}
+.btn-purple {
+    @apply bg-indigo-600 text-white p-2 px-4 rounded-xl text-center hover:bg-indigo-700 cursor-pointer;
 }
 
 .btn-spinner,

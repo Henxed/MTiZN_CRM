@@ -288,3 +288,8 @@ input:checked + div {
 input:checked + div svg {
     @apply block;
 }
+
+.region-main {
+    fill: #849ab9 !important;
+}
+

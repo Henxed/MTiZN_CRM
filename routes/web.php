@@ -24,8 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     })->name('home');
 
 
-    Route::get('/regions', [RegionController::class, 'index'])->name('regions');
-    Route::get('/region/{id}', [RegionController::class, 'show'])->name('region');
+    Route::resource('regions', RegionController::class);
 
     Route::resource('registry', RegistController::class);
     Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');

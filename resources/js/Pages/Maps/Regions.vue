@@ -3,7 +3,6 @@
 
         <div class="w-full grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
             <div class="col-span-12 lg:col-span-12 xl:col-span-8 relative">
-<!-- <div class="" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(10)">Доступ</div> -->
                 <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
                     <path class="st1"
                     v-for="region in regions"
@@ -81,22 +80,22 @@
                         <i class="fi fi-rr-search pt-1 mr-1"></i>
                     </div>
 
-                <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-6">
+                <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-6 select-none">
                     <div class="flex">
                         <input class="peer hidden" id="stats_u" type="radio" v-model="stats" value="lvl" />
-                        <label for="stats_u" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
+                        <label for="stats_u" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
                             Информация о ситуации на рынке труда
                         </label>
                     </div>
                     <div class="flex">
                         <input class="peer hidden" id="stats_t" type="radio" v-model="stats" value="tension" />
-                        <label for="stats_t" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
+                        <label for="stats_t" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
                             Уровень напряженности
                         </label>
                     </div>
                     <div class="flex">
                         <input class="peer hidden" id="stats_c" type="radio" v-model="stats" value="commissions" />
-                        <label for="stats_c" class=" text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('commissions')">
+                        <label for="stats_c" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('commissions')">
                             Процент исполнения контрольного показателя по снижению неформальной занятости
                         </label>
                     </div>
@@ -109,12 +108,12 @@
                 </div>
                 <div class="absolute right-9 top-1/4 w-1 h-40 rounded-xl" ref='linePct'></div>
             </div>
-            <div class="sm:p-4 col-span-12 xl:col-span-4">
-                <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg" v-if="reg">
-                    <div class="grid gap-4 gap-y-0 text-sm grid-cols-1 sm:grid-cols-4 mb-4">
-                        <div class="text-base font-bold col-span-4">{{ reg.region }}</div>
+            <div class="sm:p-4 col-span-12 xl:col-span-4" v-if="reg">
+                <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg">
+                    <div class="grid sm:gap-x-4 text-sm grid-cols-1 sm:grid-cols-5 mb-4">
+                        <div class="text-base font-bold col-span-5">{{ reg.region }}</div>
                         <div class="text-sm text-slate-500 col-span-2">{{ reg.city }}</div>
-                        <div class="text-sm text-slate-500 leading-none text-right col-span-2">{{ reg.leader }}</div>
+                        <div class="text-sm text-slate-500 leading-none text-right col-span-3">{{ reg.leader }}</div>
                     </div>
                     <div class="flex mb-4">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
@@ -206,7 +205,14 @@
                         </div>
                     </div>
 
+                    <Linl class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                        Редактировать
+                    </Linl>
+                    <Link :href="route('regions.show', reg.id)" class="block btn-default mt-4" >
+                        Подробнее
+                    </Link>
                 </div>
+                <div class="text-center cursor-pointer mt-3 dark:text-slate-400 text-slate-500" @click.prevent="close_all">Закрыть (ESC)</div>
             </div>
 
       </div>
@@ -290,7 +296,11 @@
             }
         },
         mounted(){
-
+            document.body.addEventListener('keyup', e => {
+                if (e.keyCode === 27) {
+                    this.close_all() // how to hide any open modal?
+                }
+            })
         },
         methods: {
             uncheck: function (val) {
@@ -352,16 +362,17 @@
                 };
                 return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
             },
-            getInfo(arr, event){
+            getInfo: function(arr, event){
                 let id =  event >= 0 ? event : event.currentTarget.id -1;
                 this.reg = arr;
                 this.listDistante = [];
                 if(!this.stats){
                     for (let index = 0; index < this.itemRefs.length; index++) {
                         this.itemRefs[index].style = '';
+                        this.itemRefs[index].classList.remove('region-main')
                     }
 
-                    this.itemRefs[id].style.fill = '#849ab9'; //#a19cdf
+                    this.itemRefs[id].classList.add('region-main') //.style.fill = '#849ab9'; //#a19cdf
                     // if (this.classList.contains('bad')) {
                     //     // The box that we clicked has a class of bad so let's remove it and add the good class
                     //     this.classList.remove('bad');
@@ -374,28 +385,42 @@
                         this.listDistante.push(`${this.regions[element.go_id-1].city}  —  ${element.distance} км`)
                     });
 
+                }else{
+                    for (let index = 0; index < this.itemRefs.length; index++) {
+                        this.itemRefs[index].classList.remove('region-main')
+                    }
+                    this.itemRefs[id].classList.add('region-main')
                 }
             },
-            pointLocation(e) {
+            pointLocation: function(e) {
                 this.pointedLocation = e;
             },
-            unpointLocation(event) {
+            unpointLocation: function(event) {
                 this.pointedLocation = null;
                 this.tooltipStyle = { display: 'none' };
             },
-            moveOnLocation(event) {
+            moveOnLocation: function(event) {
                 this.tooltipStyle = {
                     display: 'block',
                     top: `${event.clientY + window.scrollY +30}px`,
                     left: `${event.clientX +  window.scrollX - 100}px`,
                 }
             },
-            setItemRef(el) {
+            setItemRef: function(el) {
                 if (el) {
                     if(this.itemRefs.length <= this.regions.length) {
                         this.itemRefs.push(el)
                     }
                 }
+            },
+            close_all: function() {
+                for (let index = 0; index < this.itemRefs.length; index++) {
+                    if(!this.stats) {
+                        this.itemRefs[index].style = '';
+                    }
+                    this.itemRefs[index].classList.remove('region-main')
+                }
+                this.reg = null;
             }
 	    },
       beforeUpdate() {

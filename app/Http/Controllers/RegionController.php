@@ -26,19 +26,11 @@ class RegionController extends Controller
         ]);
     }
 
-    // все запись районов
-    public function regions_api()
-    {
-        $data = Areas::get();
-
-        return response()->json($data);
-    }
-
     // одна запись про район, можно дополнить информаций
     public function show($id)
     {
-        return Inertia::render('Maps/Regions', [
-            'region' => Areas::with('areas_children')->find($id)
+        return Inertia::render('Maps/Region', [
+            'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id)
         ]);
     }
 

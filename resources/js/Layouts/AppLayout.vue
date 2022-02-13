@@ -80,9 +80,9 @@
                 <i class="fi fi-rr-document"></i>
                 <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
-            <a :href="route('regions')" class="app-sidebar-link" :class="{'active' : route().current('regions')}" v-tippy="!menu ? 'Карта' : ''">
+            <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="!menu ? 'Регионы' : ''">
                 <i class="fi fi-rr-map-marker"></i>
-                <span class="text-slate-800 dark:text-slate-100">Карта</span>
+                <span class="text-slate-800 dark:text-slate-100">Регионы</span>
             </a>
             <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="!menu ? 'Настройки' : ''">
                 <i class="fi fi-rr-settings"></i>
