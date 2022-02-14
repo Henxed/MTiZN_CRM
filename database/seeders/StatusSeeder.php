@@ -33,7 +33,8 @@ class StatusSeeder extends Seeder
             [
                 'code' => 103,
                 'model' => 'regist',
-                'name' => 'Истёк срок'
+                'name' => 'Истёк срок',
+                'active' => false,
             ],
 
         ]);

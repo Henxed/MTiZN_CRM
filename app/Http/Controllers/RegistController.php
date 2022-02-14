@@ -25,7 +25,7 @@ class RegistController extends Controller
 
     public function index()
     {
-        return Redirect::route('registries', ['npa', 'all']);
+        return Redirect::route('registry.list', ['npa', 'all']);
     }
 
     public function list($slug, $parametr)
@@ -65,7 +65,7 @@ class RegistController extends Controller
     {
         return Inertia::render('Registry/Create', [
             'categories' => RegistCategory::get(),
-            'statuses' => Status::where('model', 'regist')->get(),
+            'statuses' => Status::where('model', 'regist')->where('active', true)->get(),
         ]);
     }
 
@@ -99,7 +99,7 @@ class RegistController extends Controller
         if (Request::file('files')) {
             foreach(Request::file('files') as $file)
             {
-                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s&'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
+                $name = Carbon::now('Asia/Yekaterinburg')->format('Y-m-d-H-i-s--&'). str_replace(array('_', '-', '—', '  ', ',',' '), '-', trim($file->getClientOriginalName()));
                 Storage::putFileAs('public/regist', $file, $name);
                 File::create(
                     ['regist_id' => $reg->id, 'file' => 'regist/'.$name, 'size' => $file->getSize()]
@@ -115,7 +115,7 @@ class RegistController extends Controller
         return Inertia::render('Registry/Edit', [
             'regist' => Regist::with('status', 'files')->findOrFail($id),
             'categories' => RegistCategory::get(),
-            'statuses' => Status::where('model', 'regist')->get(),
+            'statuses' => Status::where('model', 'regist')->where('active', true)->get(),
         ]);
     }
 

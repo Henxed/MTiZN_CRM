@@ -6,9 +6,9 @@
                 <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl md:w-72">
                     <div class="mb-5 text-lg text-center uppercase">Реестры</div>
 
-                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
+                    <Link class="block mb-4 p-2 px-4 rounded-xl "
                             v-for="item in categories" :key="item.id"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : item.slug === category}"
+                            :class="item.slug === category ? 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : 'bg-slate-600/10 hover:bg-slate-600/20 dark:bg-slate-600/20 dark:hover:bg-slate-600/30'"
                             :href="route('registry.list', [item.slug, 'all'])">
                         {{ item.name }}
                     </Link>
@@ -53,7 +53,7 @@
                 </div>
             </div>
             <div class="p-4 sm:px-9">
-                <div class="relative grid grid-cols-1 sm:grid-cols-5 gap-x-4 mb-6 bg-gray-200 dark:bg-slate-600 dark:text-slate-300 p-4 rounded-xl
+                <div class="relative grid grid-cols-1 sm:grid-cols-5 gap-x-4 mb-6 bg-gray-200 dark:bg-slate-600/40 dark:text-slate-300 p-4 rounded-xl
                     before:absolute before:top-5 before:bottom-5 before:-left-0.5 before:w-1 before:rounded-full hover:cursor-pointer"
                     :class="status_color(item.status.length ? item.status[0].code : null)"
                     v-for="item in regists.data" :key="item" :ref="'reg_'+item.id">
@@ -200,10 +200,12 @@
             },
              destroy(e) {
                 if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
-                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!'})
+                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'default'})
                     axios.post(route('registry.destroy', e), {_method: 'delete'} ).then(() => {
                         this.$refs['reg_'+e][0].remove()
                         this.$toast.open({message: 'Реестр удален!'})
+                    }).catch(() => {
+                        this.$toast.open({message: 'Не могу удалить реестр...', type: 'error'})
                     })
                 }
             },

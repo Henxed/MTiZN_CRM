@@ -148,9 +148,11 @@ export default {
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
         submit() {
-            this.$toast.open({message: 'Добавляю реестр... Ожидайте!', type: 'warning'})
+            this.$toast.open({message: 'Добавляю реестр... Ожидайте!', type: 'default'})
             this.form.post(this.route('registry.store'), {
-                onSuccess: () => this.$toast.open({message: 'Реестр !'}),
+                onSuccess: () => this.$toast.open({message: 'Реестр добавлен!'}),
+            }).catch(() => {
+                this.$toast.open({message: 'Возникла ошибка при добавление...', type: 'error'})
             })
         }
 

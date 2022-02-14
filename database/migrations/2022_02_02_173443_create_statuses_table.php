@@ -29,6 +29,7 @@ class CreateStatusesTable extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->nullable()->index()->unique();
             $table->string('model')->nullable(); // для какого модуля
+            $table->boolean('active')->default(true)->nullable();
             $table->timestamps();
         });
 

@@ -160,7 +160,7 @@ export default {
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
         update() {
-            this.$toast.open({message: 'Обновляю реестр... Ожидайте!', type: 'warning'})
+            this.$toast.open({message: 'Обновляю реестр... Ожидайте!', type: 'default'})
             this.form.post(route('registry.update', this.regist.id))
         },
         deleteFile(file) {
