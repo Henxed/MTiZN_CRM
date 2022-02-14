@@ -1,9 +1,9 @@
 <template>
     <app-layout :title="`${region.region} - Регион`">
     <div class="lg:flex w-full">
-        <div>
+        <div class="max-w-2xl">
             <div class="lg:sticky lg:top-12 mr-6">
-                <div class="dark:text-slate-300 sm:w-96">
+                <div class="dark:text-slate-300 ">
                     <div class="mb-5 text-lg text-center uppercase">Регионы</div>
                     <perfect-scrollbar class="h-80 max-h-screen pr-3">
                     <Link class="block mb-3 py-2 px-3 rounded-lg bg-slate-600/10 hover:bg-slate-600/20 dark:bg-slate-400/10 dark:hover:bg-slate-400/20 text-sm"
@@ -68,10 +68,10 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
                 <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
                     <div class="text-xl font-bold dark:text-slate-300">Информация по учебным заведениям</div>
-                    <div class="grid grid-cols-2 2xl:flex gap-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
+                    <div class="grid grid-cols-2 sm:flex gap-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                         <div v>
                             <div class="text-2xl font-semibold">{{ region.extra.vvuz || '-'}}</div>
                             <div class="text-sm">{{ declOfNum(region.extra.vvuz, ['ВВУЗ', 'ВВУЗа', 'ВВУЗов']) }}</div>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
                     <div class="text-xl font-bold dark:text-slate-300">Регистрируемый рынок труда</div>
-                    <div class="grid grid-cols-2 2xl:flex gap-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
+                    <div class="grid grid-cols-2 sm:flex gap-4 2xl:gap-12  mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                         <div>
                             <div class="text-2xl font-semibold">{{ region.unemployed || '-' }}</div>
                             <div class="text-sm">{{ declOfNum(region.unemployed, ['Безработный', 'Безработных', 'Безработных']) }}</div>
