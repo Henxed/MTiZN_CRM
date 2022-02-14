@@ -296,3 +296,7 @@ input:checked + div svg {
 .h-80 {
     height: 85vh;
 }
+
+.text-13{
+    font-size: 13.5px;
+}
