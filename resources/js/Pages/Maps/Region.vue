@@ -5,9 +5,9 @@
             <div class="lg:sticky lg:top-12 mr-6">
                 <div class="dark:text-slate-300 ">
                     <div class="mb-5 text-lg text-center uppercase">Регионы</div>
-                    <perfect-scrollbar class="h-80 max-h-screen pr-3">
+                    <perfect-scrollbar class="h-screen-85 max-h-screen pr-3">
                     <Link class="block py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
-                            v-for="item in regions" :key="item.id"
+                            v-for="item in regions" :key="item.id" :ref="`region_${item.id}`"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : item.id === region.id}"
                             :href="route('regions.show', item.id)">
                         {{ item.region }}
