@@ -8,6 +8,8 @@ use App\Models\AreasExtra;
 use App\Models\AreasUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+
+
 use Auth;
 
 class RegionController extends Controller
@@ -22,16 +24,17 @@ class RegionController extends Controller
     {
         return Inertia::render('Maps/Regions', [
             'regions' => Areas::with('distance')->whereNotNull('d')->get(),
-            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id')
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }
 
     // одна запись про район, можно дополнить информаций
     public function show($id)
     {
+
         return Inertia::render('Maps/Region', [
             'regions' => Areas::get(),
-            'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id)
+            'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
         ]);
     }
 

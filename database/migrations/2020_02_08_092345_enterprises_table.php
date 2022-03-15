@@ -22,7 +22,7 @@ class EnterprisesTable extends Migration
           $table->string('name')->nullable();
           $table->string('amy')->nullable()->comment('средняя ЗП за текущий год');
           $table->string('am')->nullable()->comment('средняя ЗП');
-          $table->string('cw')->nullable()->comment('Численность работников на дату');
+          $table->float('cw')->nullable()->comment('Численность работников на дату');
           $table->string('inn')->nullable()->unique();
           $table->timestamps();
       });

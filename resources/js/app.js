@@ -1,7 +1,7 @@
 require('./bootstrap');
 
 import { createApp, h } from 'vue';
-import { createInertiaApp } from '@inertiajs/inertia-vue3';
+import { createInertiaApp, Link } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import { createStore } from 'vuex'
 import VueToast from 'vue-toast-notification';
@@ -27,10 +27,10 @@ createInertiaApp({
             .use(VueToast)
             .use(VueTippy, {
                 defaultProps: { placement: 'right', theme: 'crm', arrow: false },
-              })
+            })
             .mixin({ methods: { route } })
             .mount(el);
     },
 });
 
-InertiaProgress.init({ color: '#4B5563' });
+InertiaProgress.init({ color: '#1e293b' });

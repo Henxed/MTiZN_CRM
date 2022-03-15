@@ -40,6 +40,7 @@
         "postcss-apply": "^0.12.0",
         "postcss-nested": "^5.0.6",
         "pusher-js": "^7.0.3",
+        "qs": "^6.10.3",
         "vue-click-outside": "^1.1.0",
         "vue-multiselect": "^3.0.0-alpha.2",
         "vue-slider-component": "^4.0.0-beta.4",

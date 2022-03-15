@@ -117,7 +117,11 @@
                         {{ index+1 }}. {{ item.name }}
                     </Link>
                 </div>
+
+                <Link :href="route('regions.enterprises', region.id)" class="btn-green block">Предприятия</Link>
+
             </div>
+
 
         </div>
     </div>
@@ -148,7 +152,9 @@
                 domain: window.location.host,
             }
         },
+        mounted(){
 
+        },
         methods: {
             declOfNum: declOfNum,
 
