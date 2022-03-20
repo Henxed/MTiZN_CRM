@@ -35,6 +35,7 @@ class RegionController extends Controller
         return Inertia::render('Maps/Region', [
             'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }
 

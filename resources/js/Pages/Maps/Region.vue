@@ -20,7 +20,7 @@
 
             <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                 {{ region.region }}
-                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать регион'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать регион'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <i class="fi fi-rr-edit"></i>
                 </Link>
             </div>
@@ -168,6 +168,7 @@
         props: {
             regions: Array,
             region: Array,
+            access_region: Array
         },
         data() {
             return {

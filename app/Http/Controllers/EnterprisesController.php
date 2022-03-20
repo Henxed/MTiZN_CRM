@@ -44,7 +44,7 @@ class EnterprisesController extends Controller
 
 
         return Inertia::render('Maps/Enterprises/Index', [
-            'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
+            'region' => Areas::select(['id', 'region'])->with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'enterprises' => $enterprises,
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем
