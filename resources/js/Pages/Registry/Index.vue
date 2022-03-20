@@ -64,13 +64,13 @@
                     </div>
                     <div class="flex justify-center sm:justify-end order-last sm:order-none bottom-t-1 mt-3">
                         <Link :href="route('registry.edit', item.id)" class="flex items-center justify-center leading-none h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
-                        content="Редактировать" v-tippy='{ placement : "bottom" }'
+                        v-tippy='"Редактировать"'
                         v-if="$page.props.access.can.includes('registry.edit') || $page.props.access.role.includes('super-admin')">
                             <i class="fi fi-rr-edit"></i>
                             <span class="ml-2 sm:hidden">Редактировать</span>
                         </Link>
                         <div class="flex items-center justify-center leading-none mx-2 h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
-                        content="Удалить" v-tippy='{ placement : "bottom" }'
+                        v-tippy='"Удалить"'
                         @click="destroy(item.id)"
                         v-if="$page.props.access.can.includes('registry.delete') || $page.props.access.role.includes('super-admin')">
                             <i class="fi fi-rr-trash"></i>

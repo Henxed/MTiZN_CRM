@@ -18,7 +18,12 @@
         </div>
         <div class="w-full max-w-screen-xl">
 
-            <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">{{ region.region }}</div>
+            <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
+                {{ region.region }}
+                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать регион'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                    <i class="fi fi-rr-edit"></i>
+                </Link>
+            </div>
             <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl grid grid-cols-1 sm:grid-cols-3 gap-4">
 
                 <div class="flex sm:col-span-2 items-center">
@@ -68,7 +73,7 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 mt-6">
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 my-6">
                 <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
                     <div class="text-xl font-bold dark:text-slate-300">Информация по учебным заведениям</div>
                     <div class="grid grid-cols-2 sm:flex gap-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
@@ -113,14 +118,31 @@
                 </div>
                 <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
                     <div class="text-2xl font-bold dark:text-slate-300">Информация по сельским советам</div>
-                    <Link class="block text-slate-600 dark:text-slate-300 mb-2 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
+                    <perfect-scrollbar class="pr-3">
+                    <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
                         {{ index+1 }}. {{ item.name }}
                     </Link>
+                    </perfect-scrollbar>
                 </div>
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
+                    <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                        <div class="absolute -right-5 -bottom-8 text-indigo-300 dark:text-indigo-300/30 text-9xl"><i class="fi fi-rr-shop"></i></div>
+                        <div class="text-lg text-indigo-500">Предприятия</div>
+                    </Link>
 
-                <Link :href="route('regions.enterprises', region.id)" class="btn-green block">Предприятия</Link>
-
+                    <Link :href="route('registry.list', ['npa', 'all'])" class="flex bg-amber-200 dark:bg-amber-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                        <div class="absolute -right-5 -bottom-8 text-amber-300 dark:text-amber-300/30 text-9xl"><i class="fi fi-rr-document-signed"></i></div>
+                        <div class="text-lg text-amber-500">Реестр санкций</div>
+                    </Link>
+        <!--
+                    <Link href="#" class="flex bg-green-200 dark:bg-green-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                        <div class="absolute -right-5 -bottom-10 text-green-300 dark:text-green-300/30 text-9xl"><i class="fi fi-rr-bank"></i></div>
+                        <div class="text-lg text-green-500">Сельсоветы</div>
+                    </Link> -->
+                </div>
             </div>
+
+
 
 
         </div>

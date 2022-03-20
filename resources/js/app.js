@@ -26,7 +26,7 @@ createInertiaApp({
             .use(store)
             .use(VueToast)
             .use(VueTippy, {
-                defaultProps: { placement: 'right', theme: 'crm', arrow: false },
+                defaultProps: { placement: 'bottom', theme: 'crm', arrow: false },
             })
             .mixin({ methods: { route } })
             .mount(el);

@@ -4,7 +4,7 @@
             <div class="mb-6 flex justify-between items-center align-center">
                 <div class="">
                     <div class="font-bold text-3xl dark:text-slate-300">Предприятия региона</div>
-                    <div class="font-bold text-xl text-slate-600 dark:text-slate-400 uppercase">{{region.region}}</div>
+                    <Link :href="route('regions.show', region.id)" class="block font-bold text-xl text-indigo-600 dark:text-indigo-500 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{region.region}}</Link>
 
                 </div>
                 <Link class="btn-green ml-auto" :href="route('users.create')">

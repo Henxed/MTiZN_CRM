@@ -72,19 +72,19 @@
 
     <main class="flex h-full p-4">
         <div class="py-6 mr-6 flex-col sm:flex" :class="menu ? 'menu-side-open flex' : 'hidden'">
-            <a :href="route('home')" class="app-sidebar-link" :class="{'active' : route().current('home')}" v-tippy="!menu ? 'Главная' : '' ">
+            <a :href="route('home')" class="app-sidebar-link" :class="{'active' : route().current('home')}" v-tippy="{ placement : 'right', content: !menu ? 'Главная' : '' }">
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
-            <a :href="route('registry.list', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('registry.*')}" v-tippy="!menu ? 'Реестры' : ''">
+            <a :href="route('registry.list', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('registry.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Реестры' : '' }">
                 <i class="fi fi-rr-document"></i>
                 <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
-            <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="!menu ? 'Регионы' : ''">
+            <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Регионы' : ''}">
                 <i class="fi fi-rr-map-marker"></i>
                 <span class="text-slate-800 dark:text-slate-100">Регионы</span>
             </a>
-            <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="!menu ? 'Настройки' : ''">
+            <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Настройки' : ''}">
                 <i class="fi fi-rr-settings"></i>
                 <span class="text-slate-800 dark:text-slate-100">Настройки</span>
             </a>

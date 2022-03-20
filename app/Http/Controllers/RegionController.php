@@ -8,7 +8,7 @@ use App\Models\AreasExtra;
 use App\Models\AreasUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Redirect;
 
 use Auth;
 
@@ -38,97 +38,41 @@ class RegionController extends Controller
         ]);
     }
 
-    public function region_api_ajax($id)
+
+    public function edit(Request $request, $id)
     {
-        $region = Areas::with('selsoviet', 'areas_children')->find($id);
 
-        //$enterprises = Enterprises::where('area_id', $id)->whereNull('enterprises_id')->with('children')->get();
-
-        return view('region.region', compact('region'));
-    }
-
-
-    public function region_edit(Request $request, $id, $type)
-    {
-        if(!Auth::user()->checkArea($id)){
+        if(Auth::user()->checkArea($id)){
             abort(403);
         }
 
-        $region = Areas::with('extra', 'areas_children')->findOrfail($id);
-        $enterprises = Enterprises::where('area_id', $id)->whereNull('enterprises_id')->orderBy('name', 'asc')->paginate(25);
-        //$tpl = Tpl::get();
-        //dd(json_decode($tpl[0]['content']));
-        return view('region.edit', compact('region', 'enterprises', 'type'));
+        return Inertia::render('Maps/Edit', [
+            'region' => Areas::with('extra')->findOrFail($id),
+        ]);
+
     }
 
-    public function region_edit_extra_api(Request $request, $id)
+    public function update(Request $request, $id)
     {
-
-        if(!Auth::user()->checkArea($id)){
-            abort(403);
-        }
-
-        $AE = AreasExtra::where('area_id', $id)->first();
-        if(!$AE){
-          $AE = new AreasExtra();
-        }
-        $AE->area_id = $id;
-        $input = $request->all();
-        $AE->fill($input)->save();
-
-        return response()->json([
-            "message" => "Данные обновлены!",
-            "errors" => []
-        ], 200);
-    }
-
-
-    public function region_update(Request $request, $id)
-    {
-        if(!Auth::user()->checkArea()){
-            abort(403);
-        }
-
-        $region = Areas::findOrfail($id);
         $request->validate([
             'population' => 'required',
             'region' => 'required',
             'city' => 'required',
+            'tension' => 'required',
+            'lvl' => 'required',
+            'in_employment' => 'required',
         ]);
 
-        $input = $request->all();
-        $region->fill($input)->save();
-
-        return response()->json([
-            "message" => "Данные обновлены!",
-            "errors" => []
-        ], 200);
-    }
-
-    public function region_extra_update(Request $request, $id)
-    {
-        if(!Auth::user()->checkArea($id)){
+        if(Auth::user()->checkArea($id)){
             abort(403);
         }
 
-        $region = Areas::findOrfail($id);
-        $input = $request->all();
-        $region->fill($input)->save();
+        Areas::where('id', $id)->update($request->except(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
+        AreasExtra::where('area_id', $id)->update($request->only(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
 
-        return response()->json([
-            "message" => "Данные обновлены!",
-            "errors" => []
-        ], 200);
+        return Redirect::back()->with('success', 'Данные региона обновлены!');
     }
 
-
-    // Загрузка данных с excel файла
-    public function region_data()
-    {
-        //$regions = Areas::with('areas_children')->orderBy('region')->get();
-
-        return view('cp.region_data');
-    }
 
     // Загрузка данных с excel файла
     public function region_data_upload(Request $request)

@@ -22,7 +22,10 @@
                     <jet-input id="email" type="email" class="mt-1 block w-full" v-model="form.email" required autofocus />
                 </div>
 
-                <div class="flex items-center justify-end mt-4">
+                <div class="flex items-center justify-between mt-4">
+                    <Link :href="route('login')" class="flex font-medium text-indigo-600 hover:text-indigo-500">
+                        Авторизация
+                    </Link>
                     <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                         Сбросить пароль
                     </jet-button>
@@ -34,7 +37,7 @@
 
 <script>
     import { defineComponent } from 'vue'
-    import { Head } from '@inertiajs/inertia-vue3';
+    import { Head, Link } from '@inertiajs/inertia-vue3';
     import JetAuthenticationCard from '@/Jetstream/AuthenticationCard.vue'
     import JetAuthenticationCardLogo from '@/Jetstream/AuthenticationCardLogo.vue'
     import JetButton from '@/Jetstream/Button.vue'
@@ -50,7 +53,8 @@
             JetButton,
             JetInput,
             JetLabel,
-            JetValidationErrors
+            JetValidationErrors,
+            Link
         },
 
         props: {

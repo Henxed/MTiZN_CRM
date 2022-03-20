@@ -1,6 +1,6 @@
 <template>
     <button
-     @click.prevent="toggleTheme" :content="'Уведомления'" v-tippy='{ placement : "bottom" }' class="fix-svg-btn">
+     @click.prevent="toggleTheme" v-tippy='"Уведомления"' class="fix-svg-btn">
         <!-- <svg class="outline-none" :fill="!theme ? 'none' : 'currentColor'"  stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="40" height="40" viewBox="0 0 24 24">
           <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
         </svg> -->
@@ -15,7 +15,7 @@
 export default {
   data() {
       return{
-          
+
       }
   },
   methods: {

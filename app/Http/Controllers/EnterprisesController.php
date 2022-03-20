@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Areas;
+use App\Models\AreasUser;
 use App\Models\Enterprises;
+use Illuminate\Support\Facades\Request as Req;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Inertia\Inertia;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Auth;
 
 class EnterprisesController extends Controller
 {
@@ -51,79 +55,56 @@ class EnterprisesController extends Controller
 
     public function create()
     {
-        //
+
+
     }
 
     public function store(Request $request)
     {
-        //
+
     }
 
     public function edit(Request $request, $id)
     {
-        if($request->ajax()) {
-            $enterprises = Enterprises::findOrFail($id);
+        $data = Enterprises::findOrfail($id);
 
-            return response()->json([
-                "inputs" => [
-                    'name' => $enterprises->name,
-                    'amy' => $enterprises->amy,
-                    'cw' => $enterprises->cw,
-                    'inn' => $enterprises->inn
-                ],
-                "labels" =>[
-                    'name' => 'Название',
-                    'amy' => 'Средняя ЗП',
-                    'cw' => 'Работников',
-                    'inn' => 'ИНН'
-                ],
-                'title' => 'Редактирование предприятия',
-                "errors" => []
-            ], 200);;
+        if(Auth::user()->checkArea($data->area_id)){
+            return abort(403);
         }
+        return Inertia::render('Maps/Enterprises/Edit', [
+            'enterprises' => $data,
+        ]);
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Enterprises $enterprises, $id)
     {
-        if($request->ajax()) {
+        Req::validate([
+            'name' => 'required',
+            'inn' => 'required'
+        ]);
 
-
-            $request->validate([
-                'name' => 'required',
-                'inn' => 'required'
-            ]);
-            $enterprises = Enterprises::findOrFail($id);
-
-            // $region = Areas::findOrfail($enterprises->area_id);
-            // if(!PermissionsCheck::hasRole(['admin', 'moderator'])){
-            //     if(Auth::user()->areas->where('id',$id)->count() == 0){
-            //         if(!$region->areas_id){
-            //             abort(403);
-            //         }
-            //     }
-            // }
-
-            $enterprises->fill($request->all())->save();
-
-            return response()->json([
-                'id' => $enterprises->id,
-                'name' => $enterprises->name,
-                'amy' => $enterprises->amy,
-                'cw' => $enterprises->cw,
-                'inn' => $enterprises->inn,
-                'time' =>  \Carbon\Carbon::parse($enterprises->updated_at)->toDateTimeString(),
-                "message" => "Данные обновлены!",
-                "errors" => []
-            ], 200);;
+        if(Auth::user()->checkArea(Req::get('area_id'))){
+            return abort(403);
         }
+
+        $enterprises->where('id', $id)->update(Req::only('name','cw','amy','inn'));
+
+        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }
 
 
     public function destroy(Enterprises $enterprises, $id)
     {
-      Enterprises::destroy((int)$id); //удаление
 
-      return response()->json("Удалил!");
+        $data = Enterprises::findOrfail($id);
+
+        if(Auth::user()->checkArea($data->area_id)){
+            return abort(403);
+        }
+
+        $data->destroy((int)$id); //удаление
+
+        return response()->json("Предприятие удалено!");
     }
 }

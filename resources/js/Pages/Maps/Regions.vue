@@ -23,13 +23,13 @@
                             <tspan x="505" dy="1.5em" v-for="item in listDistante.slice(1)" :key="item">{{ item }}</tspan>
                         </text>
                     </g>
-                    <g class="text-svg w-48" v-else-if="reg && stats == 'commissions'">
+                    <g class="text-svg w-48" v-else-if="reg && stats === 'commissions'">
                         <text class="text-slate-600 dark:text-slate-300" x="500" y="40" fill="currentColor" text-anchor="left" font-size="32">
                             {{ reg.city }}
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="55" fill="currentColor" text-anchor="left" font-size="16">
                             <tspan x="500" dy="1em">
-                                Процент исполнения контрольного показателя — {{ reg.commissions }}
+                                Процент исполнения контрольного показателя — {{ reg.commissions }}%
                             </tspan>
                             <tspan x="500" dy="1.7em">Контрольный показатель по снижению</tspan>
                             <tspan x="500" dy="1.2em">неформальной занятости — {{ reg.commissions_c }}</tspan>
@@ -62,7 +62,7 @@
                             ВАКАНСИИ — 10819 мест
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
-                            УРОВЕНЬ БЕЗРАБОТИЦЫ — 7,59%
+                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{sum}}%
                         </text>
                     </g>
                 </svg>
@@ -106,7 +106,7 @@
                         <label class="tgl-btn rounded-xl" data-tg-off="OFF" data-tg-on="ON" for="ext.name"></label>
                     </div> -->
                 </div>
-                <div class="hidden sm:block absolute right-9 top-1/4 w-1 h-40 rounded-xl" ref='linePct'></div>
+                <div class="hidden sm:flex absolute right-9 top-1/4 w-1 h-40 rounded-xl flex-col justify-between" ref='linePct'></div>
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4" v-if="reg">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg">
@@ -205,9 +205,9 @@
                         </div>
                     </div>
 
-                    <Linl class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                    <Link :href="route('regions.edit', reg.id)" class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
                         Редактировать
-                    </Linl>
+                    </Link>
                     <Link :href="route('regions.show', reg.id)" class="block btn-default mt-4" >
                         Подробнее
                     </Link>
@@ -249,6 +249,7 @@
                 itemRefs: [],
                 listDistante: [],
                 stats: false,
+                sum: this.regions.reduce((p, c) => p + parseInt(c.lvl), 0), // "p" - предыдущий, "с" - текущий. "р" != массив региона, а "с" - индекс массива
                 percentColors: {
                     'lvl': [
                         { pct: 0, color: { r: 161, g: 208, b: 106 } },  //белый
@@ -273,6 +274,7 @@
                         { pct: 28, color: { r: 255, g: 235, b: 59 } },   //желтый
                         { pct: 60, color: { r: 184, g: 225, b: 119 } },  //зеленый
                         { pct: 100, color: { r: 136, g: 217, b: 139 } },  //белый
+                        { pct: 500, color: { r: 136, g: 217, b: 139 } },
                     ]
                 },
                 keyword: ''
@@ -315,18 +317,19 @@
                 } else {
                     this.stats = val
                     for (let i = 0; i < this.regions.length; i++) {
-                        this.itemRefs[i].style.fill = this.getColorForPercentage(this.percentColors[val], this.regions[i][val].replace(/[,.]/gi, '.'));
+                        if(this.regions[i][val] !== null) {
+                            this.itemRefs[i].style.fill = this.getColorForPercentage(this.percentColors[val], this.regions[i][val].replace(/[,.]/gi, '.'));
+                        }
                     }
                     this.linePct(this.percentColors[val]);
                 }
 
             },
             linePct: function (arr){
-                var h_arr = '';
-                var h = 106/arr.length;
+                let h_arr = '';
                 for(var i = 0; i < arr.length; i++){
-                    if (arr[i].pct !== undefined) {
-                        h_arr += '<div class="absolute left-3 text-slate-700 dark:text-slate-300" style="top:'+ h * i +'%">'+arr[i].pct+'%</div>';
+                    if (arr[i].pct !== undefined && arr[i].pct <= 100) {
+                        h_arr += '<div class="ml-3 text-slate-700 dark:text-slate-300">'+arr[i].pct+'%</div>';
                     }
                 }
                 this.$refs.linePct.innerHTML = h_arr;
@@ -345,7 +348,8 @@
             },
             getColorForPercentage: function(colors, pct) {
                 for (var i = 1; i < colors.length - 1; i++) {
-                    if (pct < colors[i].pct && pct <= 100) {
+
+                    if (pct < colors[i].pct) {
                         break;
                     }
                 }
@@ -421,6 +425,7 @@
                     this.itemRefs[index].classList.remove('region-main')
                 }
                 this.reg = null;
+                this.listDistante = []
             }
 	    },
       beforeUpdate() {

@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Auth;
 
 class User extends Authenticatable
 {
@@ -77,5 +78,16 @@ class User extends Authenticatable
     public function areas()
     {
         return $this->belongsToMany(Areas::class);
+    }
+
+    public function checkArea($area_id = null)
+    {
+        if(Auth::user()->hasRole('super-admin') ? false : true){
+            if(!in_array((int)$area_id, AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id')->all(), true) ){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
