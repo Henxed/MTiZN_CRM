@@ -70,8 +70,8 @@
   </div>
 
 
-    <main class="flex h-full p-4">
-        <div class="py-6 mr-6 flex-col sm:flex" :class="menu ? 'menu-side-open flex' : 'hidden'">
+    <main class="flex h-full p-4 ">
+        <div class="py-6 mr-6 flex-col sm:flex sm:self-start sm:sticky sm:top-2" :class="menu ? 'menu-side-open flex' : 'hidden'">
             <a :href="route('home')" class="app-sidebar-link" :class="{'active' : route().current('home')}" v-tippy="{ placement : 'right', content: !menu ? 'Главная' : '' }">
                 <i class="fi fi-rr-home"></i>
                 <span class="text-slate-800 dark:text-slate-100">Главная</span>
