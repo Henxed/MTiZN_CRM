@@ -7,7 +7,7 @@
                     <Link :href="route('regions.show', region.id)" class="block font-bold text-xl text-indigo-600 dark:text-indigo-500 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{region.region}}</Link>
 
                 </div>
-                <Link class="btn-green ml-auto" :href="route('users.create')">
+                <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)">
                     <span>Новое</span>
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>

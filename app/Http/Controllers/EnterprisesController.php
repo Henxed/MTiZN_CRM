@@ -13,6 +13,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Inertia\Inertia;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class EnterprisesController extends Controller
 {
@@ -53,18 +54,36 @@ class EnterprisesController extends Controller
         ]);
     }
 
-    public function create()
+    public function create($id)
     {
+        $data = Areas::select(['id', 'region'])->findOrfail($id);
 
+        if(Auth::user()->checkArea($data->id)){
+            return abort(403);
+        }
+        return Inertia::render('Maps/Enterprises/Create', [
+            'region' => $data,
+        ]);
 
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'name' => ['required', 'max:255'],
+            'inn' => ['required', Rule::unique('enterprises')],
+        ]);
 
+        if(Auth::user()->checkArea($request->area_id)){
+            return abort(403);
+        }
+
+        Enterprises::create($request->all());
+
+        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }
 
-    public function edit(Request $request, $id)
+    public function edit($id)
     {
         $data = Enterprises::findOrfail($id);
 
@@ -81,7 +100,7 @@ class EnterprisesController extends Controller
     {
         Req::validate([
             'name' => 'required',
-            'inn' => 'required'
+            'inn' => ['required', Rule::unique('enterprises')],
         ]);
 
         if(Auth::user()->checkArea(Req::get('area_id'))){
@@ -105,6 +124,6 @@ class EnterprisesController extends Controller
 
         $data->destroy((int)$id); //удаление
 
-        return response()->json("Предприятие удалено!");
+        return Redirect::route('regions.enterprises', $data->area_id)->with('success', "Предприятие удалено!");
     }
 }

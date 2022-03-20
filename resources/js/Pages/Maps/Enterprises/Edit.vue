@@ -50,7 +50,6 @@ export default {
     },
     data() {
         return {
-        status_name: null,
         form: this.$inertia.form({
             _method: 'put',
             name: this.enterprises.name,

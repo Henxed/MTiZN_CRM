@@ -28,7 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('regions', RegionController::class);
     Route::get('regions/{id}/enterprises', [EnterprisesController::class, 'enterprises'])->name('regions.enterprises');
-    Route::resource('enterprises', EnterprisesController::class);
+
+    Route::resource('enterprises', EnterprisesController::class)->except('create');
+    Route::get('regions/{id}/enterprises/create', [EnterprisesController::class, 'create'])->name('regions.enterprises.create');
 
     Route::resource('registry', RegistController::class);
     Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');
