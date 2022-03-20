@@ -34910,23 +34910,26 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 rounded-xl bg-white p-8 dark:bg-slate-800 w-full max-w-screen-2xl"
 };
+var _hoisted_2 = ["href"];
 
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "https://map.henxed.ru",
-  "class": "flex bg-orange-100 dark:bg-orange-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "absolute -right-5 -bottom-8 text-orange-200 dark:text-orange-200/30 text-9xl"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fi fi-rr-map-marker"
-})]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "text-lg text-orange-400"
-}, "Карта регионов")], -1
+})], -1
 /* HOISTED */
 );
 
-var _hoisted_3 = ["href"];
-
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "text-lg text-orange-400"
+}, "Карта регионов", -1
+/* HOISTED */
+);
+
+var _hoisted_5 = [_hoisted_3, _hoisted_4];
+var _hoisted_6 = ["href"];
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "absolute -right-5 -bottom-8 text-blue-200 dark:text-blue-200/30 text-9xl"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fi fi-rr-duplicate"
@@ -34934,15 +34937,15 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-lg text-blue-400"
 }, "Реестры", -1
 /* HOISTED */
 );
 
-var _hoisted_6 = [_hoisted_4, _hoisted_5];
+var _hoisted_9 = [_hoisted_7, _hoisted_8];
 
-var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "flex bg-pink-100 dark:bg-pink-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -34955,13 +34958,9 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_8 = {
-  key: 0,
-  href: "https://map.henxed.ru/cp",
-  "class": "flex bg-gray-100 dark:bg-gray-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
-};
+var _hoisted_11 = ["href"];
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "absolute -right-5 -bottom-8 text-gray-200 dark:text-gray-200/30 text-9xl"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
   "class": "fi fi-rr-apps"
@@ -34969,13 +34968,13 @@ var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
 /* HOISTED */
 );
 
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "text-lg text-gray-400"
 }, "Администрирование системы", -1
 /* HOISTED */
 );
 
-var _hoisted_11 = [_hoisted_9, _hoisted_10];
+var _hoisted_14 = [_hoisted_12, _hoisted_13];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_app_layout = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("app-layout");
 
@@ -34983,12 +34982,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title: "Главная"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+        href: _ctx.route('regions.index'),
+        "class": "flex bg-orange-100 dark:bg-orange-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
+      }, _hoisted_5, 8
+      /* PROPS */
+      , _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
         href: _ctx.route('registry.list', ['npa', 'all']),
         "class": "flex bg-blue-100 dark:bg-blue-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
-      }, _hoisted_6, 8
+      }, _hoisted_9, 8
       /* PROPS */
-      , _hoisted_3), _hoisted_7, _ctx.$page.props.access.can.includes('cp') || _ctx.$page.props.access.role.includes('super-admin') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_8, _hoisted_11)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
+      , _hoisted_6), _hoisted_10, _ctx.$page.props.access.can.includes('cp') || _ctx.$page.props.access.role.includes('super-admin') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+        key: 0,
+        href: _ctx.route('settings'),
+        "class": "flex bg-gray-100 dark:bg-gray-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64"
+      }, _hoisted_14, 8
+      /* PROPS */
+      , _hoisted_11)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])];
     }),
     _: 1
     /* STABLE */
