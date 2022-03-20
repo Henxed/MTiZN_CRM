@@ -158,7 +158,7 @@
             form: {
                 deep: true,
                 handler: throttle(function () {
-                    this.$inertia.get(this.route('registry', [this.category, this.$page.url.split('/')[3].replace(/\?.*/, '')]), pickBy(this.form), { preserveState: true })
+                    this.$inertia.get(this.route('registry.list', [this.category, this.$page.url.split('/')[3].replace(/\?.*/, '')]), pickBy(this.form), { preserveState: true })
                 }, 150),
             },
         },
