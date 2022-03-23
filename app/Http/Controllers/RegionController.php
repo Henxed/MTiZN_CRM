@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Areas;
 use App\Models\Enterprises;
 use App\Models\AreasExtra;
+use App\Models\AreasLog;
 use App\Models\AreasUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -70,6 +71,7 @@ class RegionController extends Controller
 
         Areas::where('id', $id)->update($request->except(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
         AreasExtra::where('area_id', $id)->update($request->only(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
+        AreasLog::setLog(Auth::user()->id, $request->all(), 'USER_LOG');
 
         return Redirect::back()->with('success', 'Данные региона обновлены!');
     }

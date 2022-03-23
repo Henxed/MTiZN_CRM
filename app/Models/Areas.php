@@ -40,4 +40,9 @@ class Areas extends Model
     {
         return $this->hasMany(Areas::class)->with('areas');
     }
+
+    public function scopeExclude($query, $value = [])
+    {
+        return $query->select(array_diff($this->columns, (array) $value));
+    }
 }
