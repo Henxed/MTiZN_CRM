@@ -3,7 +3,8 @@
 
 <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-8">
-            <Link :href="route('regions.show', region.id)" class="text-3xl text-slate-700 dark:text-slate-600 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ form.region }}</Link>
+            <Link :href="route('regions.show', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ form.region }}</Link>
+            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(region.updated_at).add(2, 'h').format('LLL') }}</div>
         </div>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
 

@@ -1,7 +1,7 @@
 <template>
     <app-layout :title="`${region.region} - Регион`">
     <div class="lg:flex w-full">
-        <div class="max-w-2xl">
+        <div class="w-2/6 max-w-sm">
             <div class="lg:sticky lg:top-12 mr-6">
                 <div class="dark:text-slate-300 ">
                     <div class="mb-5 text-lg text-center uppercase">Регионы</div>
@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-full max-w-screen-xl">
+        <div class="w-5/6 max-w-screen-xl">
 
             <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                 {{ region.region }}
@@ -104,7 +104,7 @@
                         </div>
                         <div>
                             <div class="text-2xl font-semibold">{{ region.lvl || '-' }}%</div>
-                            <div class="text-sm">Уровень безработицы</div>
+                            <div class="text-sm">Безработица</div>
                         </div>
                         <div>
                             <div class="text-2xl font-semibold">{{ region.tension || '-' }}%</div>

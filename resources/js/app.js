@@ -9,6 +9,9 @@ import 'vue-toast-notification/dist/theme-sugar.css';
 import VueTippy from 'vue-tippy';
 import storeState from "./store";
 
+import moment from 'moment'
+moment.locale('ru');
+
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
 
 const store = createStore({
@@ -21,15 +24,19 @@ createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) => require(`./Pages/${name}.vue`),
     setup({ el, app, props, plugin }) {
-        return createApp({ render: () => h(app, props) })
+
+        let ap = createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(store)
             .use(VueToast)
             .use(VueTippy, {
                 defaultProps: { placement: 'bottom', theme: 'crm', arrow: false },
             })
-            .mixin({ methods: { route } })
-            .mount(el);
+            .mixin({ methods: { route } });
+
+            ap.config.globalProperties.$moment=moment;
+
+            return ap.mount(el);
     },
 });
 

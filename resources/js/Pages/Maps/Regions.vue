@@ -5,6 +5,7 @@
             <div class="col-span-12 lg:col-span-12 xl:col-span-8 relative">
                 <svg version="1.1" class="hidden sm:flex" id="orenburg" viewBox="0 0 1030 599">
                     <path class="st1"
+                    stroke-alignment="inner"
                     v-for="region in regions"
                     :key="region.id"
                     :d='region.d'
@@ -12,7 +13,7 @@
                     :id="region.id"
                     @mousemove="moveOnLocation"
                     @mouseout="unpointLocation"
-                    @mouseover="pointLocation(region.region)"
+                    @mouseover="pointLocation(region)"
                     @click="getInfo(region, $event)" />
 
                     <g class="text-svg" v-if="listDistante.length > 1">
@@ -311,12 +312,22 @@
                     this.stats = false;
                     this.$refs.linePct.innerHTML = '';
                     this.$refs.linePct.style.background = '';
+
                     for (let i = 0; i < this.regions.length; i++) {
                         this.itemRefs[i].style.fill = '';
+                        if (this.itemRefs[i].classList.contains('region-main-stroke')) {
+                            this.itemRefs[i].classList.add('region-main')
+                            this.itemRefs[i].classList.remove('region-main-stroke')
+                        }
                     }
                 } else {
                     this.stats = val
+                    this.listDistante = []
                     for (let i = 0; i < this.regions.length; i++) {
+                        if (this.itemRefs[i].classList.contains('region-main')) {
+                            this.itemRefs[i].classList.add('region-main-stroke')
+                            this.itemRefs[i].classList.remove('region-main')
+                        }
                         if(this.regions[i][val] !== null) {
                             this.itemRefs[i].style.fill = this.getColorForPercentage(this.percentColors[val], this.regions[i][val].replace(/[,.]/gi, '.'));
                         }
@@ -374,6 +385,7 @@
                     for (let index = 0; index < this.itemRefs.length; index++) {
                         this.itemRefs[index].style = '';
                         this.itemRefs[index].classList.remove('region-main')
+                        this.itemRefs[index].classList.remove('region-main-stroke')
                     }
 
                     this.itemRefs[id].classList.add('region-main') //.style.fill = '#849ab9'; //#a19cdf
@@ -392,12 +404,17 @@
                 }else{
                     for (let index = 0; index < this.itemRefs.length; index++) {
                         this.itemRefs[index].classList.remove('region-main')
+                        this.itemRefs[index].classList.remove('region-main-stroke')
                     }
-                    this.itemRefs[id].classList.add('region-main')
+                    this.itemRefs[id].classList.add('region-main-stroke')
                 }
             },
             pointLocation: function(e) {
-                this.pointedLocation = e;
+                if(this.stats) {
+                    this.pointedLocation = e.region + ' –– ' + e[this.stats] + '%'
+                }else{
+                    this.pointedLocation = e.region;
+                }
             },
             unpointLocation: function(event) {
                 this.pointedLocation = null;

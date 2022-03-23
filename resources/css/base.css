@@ -289,9 +289,15 @@ input:checked + div svg {
     @apply block;
 }
 
+.region-main-stroke {
+    @apply stroke-slate-700 dark:stroke-slate-600;
+    stroke-width: 3px;
+}
+
 .region-main {
     fill: #849ab9 !important;
 }
+
 
 .h-screen-85 {
     height: 85vh;
