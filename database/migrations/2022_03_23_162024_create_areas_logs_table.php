@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('areas_logs', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->integer('area_id')->unsigned()->nullable();
             $table->json('log');
             $table->string('type')->nullable()->index(); // COPY/STATS
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('CASCADE');
+            $table->foreign('area_id')->references('id')->on('areas')->onDelete('SET NULL')->onUpdate('CASCADE');
         });
     }
 

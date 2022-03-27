@@ -7,6 +7,7 @@ import { createStore } from 'vuex'
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 import VueTippy from 'vue-tippy';
+import { i18nVue } from 'laravel-vue-i18n'
 import storeState from "./store";
 
 import moment from 'moment'
@@ -31,6 +32,10 @@ createInertiaApp({
             .use(VueToast)
             .use(VueTippy, {
                 defaultProps: { placement: 'bottom', theme: 'crm', arrow: false },
+            })
+            .use(i18nVue, {
+                lang: 'ru',
+                resolve: lang => import(`../lang/${lang}.json`),
             })
             .mixin({ methods: { route } });
 

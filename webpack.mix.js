@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-
+require('laravel-vue-i18n/mix');
 /*
  |--------------------------------------------------------------------------
  | Mix Asset Management
@@ -17,12 +17,13 @@ mix.js('resources/js/app.js', 'public/js').vue()
         postCss: [
             require('postcss-import'),
             require('postcss-nested'),
-            
+
             require("tailwindcss"),
         ],
     })
     // .browserSync('a635-145-255-21-216.ngrok.io')
     .webpackConfig(require('./webpack.config'))
+    .i18n('resources/lang')
 if (mix.inProduction()) {
     mix.version();
 }

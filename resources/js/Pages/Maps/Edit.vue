@@ -4,7 +4,7 @@
 <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-8">
             <Link :href="route('regions.show', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ form.region }}</Link>
-            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(region.updated_at).add(2, 'h').format('LLL') }}</div>
+            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(region.updated_at).format('LLL') }}  |  <span class="cursor-pointer hover:text-slate-600" @click.prevent="open=true">История изменений</span> </div>
         </div>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
 
@@ -25,7 +25,7 @@
                             <text-input v-model="form.leader" :error="errors.leader" label="Глава региона" />
                             <text-input v-model="form.city" :error="errors.city" label="Районый центр" />
                             <text-input v-model="form.population" :error="errors.population" label="Население" type="number" />
-                            <text-input v-model="form.area" :error="errors.area" label="Площадь" type="number" />
+                            <text-input v-model="form.area"  @keyup="mask($event, 'area')" :error="errors.area" label="Площадь" />
 
                         </div>
 
@@ -122,6 +122,7 @@
             </div>
         </form>
     </div>
+    <history :data="log" v-model:open="open" @open="hasOpen" />
     </app-layout>
 </template>
 
@@ -131,7 +132,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
 import Treeselect from '@bosquig/vue3-treeselect'
-
+import History from '@/Shared/RegionHistory'
 
 export default {
     components: {
@@ -140,15 +141,19 @@ export default {
         Link,
         Treeselect,
         AppLayout,
+        History
     },
     props: {
         errors: Object,
         region: Array,
+        log: Array
     },
     remember: 'form',
     data() {
         return {
+            open: false,
             form: this.$inertia.form({
+                id: this.region.id,
                 region: this.region.region,
                 city: this.region.city,
                 leader: this.region.leader,
@@ -195,8 +200,10 @@ export default {
         },
         submit() {
             this.form.put(this.route('regions.update', this.region.id))
+        },
+        hasOpen(e) {
+            this.open = e
         }
-
     },
 }
 </script>

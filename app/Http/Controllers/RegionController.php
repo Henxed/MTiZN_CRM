@@ -50,6 +50,7 @@ class RegionController extends Controller
 
         return Inertia::render('Maps/Edit', [
             'region' => Areas::with('extra')->findOrFail($id),
+            'log' => AreasLog::where('area_id', $id)->with('user')->orderBy('created_at', 'desc')->get()
         ]);
 
     }
@@ -69,9 +70,9 @@ class RegionController extends Controller
             abort(403);
         }
 
+        AreasLog::setLog(Auth::user()->id, $id, $request->all(), 'USER_LOG');
         Areas::where('id', $id)->update($request->except(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
         AreasExtra::where('area_id', $id)->update($request->only(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
-        AreasLog::setLog(Auth::user()->id, $request->all(), 'USER_LOG');
 
         return Redirect::back()->with('success', 'Данные региона обновлены!');
     }
