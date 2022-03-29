@@ -126,4 +126,49 @@ class EnterprisesController extends Controller
 
         return Redirect::route('regions.enterprises', $data->area_id)->with('success', "Предприятие удалено!");
     }
+
+    // Загрузка данных с excel файла
+    public function data_upload(Request $request)
+    {
+
+
+        if($request->hasFile('csv')) {
+
+            $f = fopen($request->file('csv'), "rt") or die("Ошибка!");
+
+            for ($i=0; ($data=fgetcsv($f,1000,";"))!==false; $i++) {
+
+                if((int)$data[0]){
+
+
+                    $d = Enterprises::updateOrCreate(
+                        ['inn' => $data[3], 'area_id' => $data[0]],
+                        [
+                            'name' => $data[1],
+                            'rns' => $data[2],
+                            'status_id' => $data[4],
+                            'okvd' => $data[5],
+                            'okvd_name' => $data[6],
+                            'ane' => $data[7],
+                            'nde' => $data[8],
+                            'factors' => $data[9],
+                            'total_jobs' => $data[10],
+                            'workplaces_respect' => $data[11],
+                            'workplaces_three' => $data[12],
+                            'workplaces_four' => $data[13],
+                            'total_factors' => $data[14],
+                            'start_year_factors' => $data[15],
+                            'address' => $data[16],
+                        ]
+                    );
+                }
+
+
+            }
+            fclose($f);
+
+        }
+
+        //return Redirect::route('csv')->with('info', "Обработал");
+    }
 }

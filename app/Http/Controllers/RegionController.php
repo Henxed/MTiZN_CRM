@@ -85,7 +85,7 @@ class RegionController extends Controller
         if($request->hasFile('csv')) {
 
             $f = fopen($request->file('csv'), "rt") or die("Ошибка!");
-            for ($i=0; ($data=fgetcsv($f,1000,";"))!==false; $i++) {
+            for ($i=0; ($data=fgetcsv($f,35000,";"))!==false; $i++) {
 
                 if((int)$data[0]){
                     //echo $data[0] . " - " . $data[2] . " - " . $data[3] . " - " .$data[4] . " - " . $data[5]. " <br> ";

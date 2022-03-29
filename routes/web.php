@@ -25,6 +25,10 @@ Route::group(['middleware' => 'auth'], function () {
         return Inertia::render('Home');
     })->name('home');
 
+    Route::get('/csv', function () {
+        return Inertia::render('Maps/Enterprises/File');
+    })->name('csv')->middleware('role:super-admin');
+    Route::post('enterprises_u', [EnterprisesController::class, 'data_upload'])->name('csv_u')->middleware('role:super-admin');
 
     Route::resource('regions', RegionController::class);
     Route::get('regions/{id}/enterprises', [EnterprisesController::class, 'enterprises'])->name('regions.enterprises');
