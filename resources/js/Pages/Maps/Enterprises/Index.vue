@@ -22,13 +22,14 @@
             <div class="overflow-x-auto">
             <table class="w-full whitespace-no-wrap table-fixed">
                 <tr class="text-left font-bold">
-                    <th @click.prevent="sortBy('name')" class="w-5/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Предприятие <span v-html="getSortIcon('name')"></span></th>
-                    <th @click.prevent="sortBy('amy')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Средняя ЗП <span v-html="getSortIcon('amy')"></span></th>
-                    <th @click.prevent="sortBy('cw')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Работников <span v-html="getSortIcon('cw')"></span></th>
-                    <th @click.prevent="sortBy('inn')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">ИНН <span v-html="getSortIcon('inn')"></span></th>
-                    <th @click.prevent="sortBy('updated_at')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Актуальность <span v-html="getSortIcon('updated_at')"></span></th>
+                    <th @click.prevent="sortBy('name')" class="w-3/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Предприятие <span v-html="getSortIcon('name')"></span></th>
+                    <th @click.prevent="sortBy('inn')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">ИНН <span v-html="getSortIcon('inn')"></span></th>
+                    <th @click.prevent="sortBy('okvd_name')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Наименование ОКВЭД<span v-html="getSortIcon('okvd_name')"></span></th>
+                    <th @click.prevent="sortBy('ane')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Среднесписочная <span v-html="getSortIcon('ane')"></span></th>
+                    <th @click.prevent="sortBy('status_id')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Состояние <span v-html="getSortIcon('status_id')"></span></th>
+                    <th @click.prevent="sortBy('updated_at')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Актуальность <span v-html="getSortIcon('updated_at')"></span></th>
                 </tr>
-                <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400">
+                <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
                     <td class="border-t dark:border-slate-500">
                         <Link class="px-5 py-4 flex items-center" :href="route('enterprises.edit', item.id)">
                         <span class="">{{ item.name }}</span>
@@ -36,17 +37,22 @@
                     </td>
                     <td class="border-t dark:border-slate-500">
                         <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.amy }}₽
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.cw }}
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
                         {{ item.inn }}
+                        </Link>
+                    </td>
+                    <td class="border-t dark:border-slate-500">
+                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
+                        {{ item.okvd_name }}
+                        </Link>
+                    </td>
+                    <td class="border-t dark:border-slate-500">
+                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
+                        {{ item.ane }}
+                        </Link>
+                    </td>
+                    <td class="border-t dark:border-slate-500">
+                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
+                        {{ item.status ? item.status.name : 'Без статуса'  }}
                         </Link>
                     </td>
                     <td class="border-t dark:border-slate-500">

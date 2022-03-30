@@ -35,8 +35,9 @@ class EnterprisesController extends Controller
         // Сортировка + поиск + страницы
         $enterprises = QueryBuilder::for(Enterprises::class)
             ->defaultSort('name')
-            ->allowedSorts(['name', 'amy', 'cw', 'inn', 'updated_at'])
-            ->allowedFilters(['name', 'amy', 'cw', 'inn', 'updated_at', $globalSearch])
+            ->allowedSorts(['name', 'okvd_name', 'ane', 'inn', 'status_id', 'updated_at'])
+            ->allowedFilters(['name', 'okvd_name', 'ane', 'inn', 'status_id', 'updated_at', $globalSearch])
+            ->with('status')
             ->where('area_id', $id)
             ->whereNull('enterprises_id')
             ->paginate()
@@ -44,7 +45,7 @@ class EnterprisesController extends Controller
 
 
         return Inertia::render('Maps/Enterprises/Index', [
-            'region' => Areas::select(['id', 'region'])->with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
+            'region' => Areas::select(['id', 'region'])->findOrFail($id),
             'enterprises' => $enterprises,
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем

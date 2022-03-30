@@ -16,4 +16,8 @@ class Enterprises extends Model
     {
         return $this->hasMany(Enterprises::class)->with('enterprises');
     }
+    public function status()
+    {
+        return $this->hasOne(Status::class, 'code', 'status_id');
+    }
 }
