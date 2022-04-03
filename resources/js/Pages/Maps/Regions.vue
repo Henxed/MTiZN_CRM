@@ -85,7 +85,7 @@
                     <div class="flex">
                         <input class="peer hidden" id="stats_u" type="radio" v-model="stats" value="lvl" />
                         <label for="stats_u" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
-                            Информация о ситуации на рынке труда
+                            Уровень безработицы
                         </label>
                     </div>
                     <div class="flex">
@@ -168,7 +168,17 @@
 
                     <div class="flex mb-4">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                            <i class="fi fi-rr-user-time pt-1"></i>
+                            <i class="fi fi-rr-bolt pt-1"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Уровень напряженности</div>
+                            <div class="text-slate-500">{{ reg.tension }}%</div>
+                        </div>
+                    </div>
+
+                    <div class="flex mb-4">
+                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                            <i class="fi fi-rr-search-alt pt-1"></i>
                         </div>
                         <div class="ml-4 leading-snug">
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Зарегистрированно безработных</div>
@@ -178,27 +188,17 @@
 
                     <div class="flex mb-4">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                            <i class="fi fi-rr-briefcase pt-1"></i>
-                        </div>
-                        <div class="ml-4 leading-snug">
-                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Количество вакансий</div>
-                            <div class="text-slate-500">{{ reg.vacancy }} мест</div>
-                        </div>
-                    </div>
-
-                    <div class="flex mb-4">
-                        <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-id-badge pt-1"></i>
                         </div>
                         <div class="ml-4 leading-snug">
-                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Трудоустроено</div>
-                            <div class="text-slate-500">{{ reg.employed }} чел.</div>
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Количество вакансий</div>
+                            <div class="text-slate-500">{{ reg.vacancy }} мест, трудоустроено — {{ reg.employed }} чел.</div>
                         </div>
                     </div>
 
-                    <div class="flex">
+                    <div class="flex" v-if="reg.cripple && reg.cripple_worked">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                            <i class="fi fi-rr-wheelchair"></i>
+                            <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" class="fill-current" viewBox="0 0 24 24" width="19" height="19"><path d="M23,21H21.721L20.4,17.051A3,3,0,0,0,17.559,15H14a2,2,0,0,1-2-2h6a1,1,0,0,0,0-2H12V8a1.026,1.026,0,0,0-.027-.134,4,4,0,1,0-1.946,0A1.026,1.026,0,0,0,10,8v5a4,4,0,0,0,3.911,3.991,6,6,0,1,1-6.769-6.929,1,1,0,0,0-.284-1.981A8,8,0,1,0,15.931,17h1.628a1,1,0,0,1,.949.684l1.544,4.632A1,1,0,0,0,21,23h2a1,1,0,0,0,0-2ZM9,4a2,2,0,1,1,2,2A2,2,0,0,1,9,4Z"/></svg>
                         </div>
                         <div class="ml-4 leading-snug">
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Численность инвалидов</div>

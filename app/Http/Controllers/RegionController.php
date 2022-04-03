@@ -71,8 +71,8 @@ class RegionController extends Controller
         }
 
         AreasLog::setLog(Auth::user()->id, $id, $request->all(), 'USER_LOG');
-        Areas::where('id', $id)->update($request->except(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
-        AreasExtra::where('area_id', $id)->update($request->only(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'tension', 'jobs']));
+        Areas::where('id', $id)->update($request->except(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'jobs']));
+        AreasExtra::where('area_id', $id)->update($request->only(['school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur', 'jobs']));
 
         return Redirect::back()->with('success', 'Данные региона обновлены!');
     }

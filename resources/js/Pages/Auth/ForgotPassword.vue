@@ -7,7 +7,7 @@
         <div class="max-w-lg">
 
             <div class="mb-4 text-sm text-gray-600">
-                Забыли Ваш пароль? Напишите ваш адрес электронной почты, и мы отправим вам ссылку сброса пароля, которая позволит ввести новый.
+                Забыли свой пароль? Напишите ваш адрес электронной почты, и мы отправим вам ссылку сброса пароля, которая позволит ввести новый.
             </div>
 
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
@@ -23,7 +23,7 @@
                 </div>
 
                 <div class="flex items-center justify-between mt-4">
-                    <Link :href="route('login')" class="flex font-medium text-indigo-600 hover:text-indigo-500">
+                    <Link :href="route('login')" class="flex font-medium text-slate-600 hover:text-slate-500">
                         Авторизация
                     </Link>
                     <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">

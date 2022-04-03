@@ -13,6 +13,9 @@
 .btn-purple {
     @apply bg-indigo-600 text-white p-2 px-4 rounded-xl text-center hover:bg-indigo-700 cursor-pointer;
 }
+.btn-slate {
+    @apply bg-slate-600 text-white p-2 px-4 rounded-xl text-center hover:bg-slate-700 cursor-pointer;
+}
 
 .btn-spinner,
 .btn-spinner:after {

@@ -181,7 +181,7 @@ export default {
                 detdom: this.region.extra.detdom,
                 nou: this.region.extra.nou,
                 ur: this.region.extra.ur,
-                tension: this.region.extra.tension,
+                tension: this.region.tension,
                 jobs: this.region.extra.jobs,
             }),
         }

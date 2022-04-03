@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Areas;
 use App\Models\AreasUser;
 use App\Models\Enterprises;
+use App\Models\Status;
 use Illuminate\Support\Facades\Request as Req;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
@@ -64,15 +65,20 @@ class EnterprisesController extends Controller
         }
         return Inertia::render('Maps/Enterprises/Create', [
             'region' => $data,
+            'statuses' => Status::where('model', 'enterprises')->where('active', true)->get(),
         ]);
 
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => ['required', 'max:255'],
-            'inn' => ['required', Rule::unique('enterprises')],
+        Req::validate([
+            'name' => 'required',
+            'inn' => 'required',
+            'okvd' => 'required',
+            'okvd_name' => 'required',
+            'status_id' => 'required',
+            'rns' => 'required',
         ]);
 
         if(Auth::user()->checkArea($request->area_id)){
@@ -81,7 +87,7 @@ class EnterprisesController extends Controller
 
         Enterprises::create($request->all());
 
-        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
+        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие добавлено!');
     }
 
     public function edit($id)
@@ -93,6 +99,7 @@ class EnterprisesController extends Controller
         }
         return Inertia::render('Maps/Enterprises/Edit', [
             'enterprises' => $data,
+            'statuses' => Status::where('model', 'enterprises')->where('active', true)->get(),
         ]);
     }
 
@@ -101,14 +108,18 @@ class EnterprisesController extends Controller
     {
         Req::validate([
             'name' => 'required',
-            'inn' => ['required', Rule::unique('enterprises')],
+            'inn' => 'required',
+            'okvd' => 'required',
+            'okvd_name' => 'required',
+            'status_id' => 'required',
+            'rns' => 'required',
         ]);
 
         if(Auth::user()->checkArea(Req::get('area_id'))){
             return abort(403);
         }
 
-        $enterprises->where('id', $id)->update(Req::only('name','cw','amy','inn'));
+        $enterprises->where('id', $id)->update(Req::all());
 
         return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }

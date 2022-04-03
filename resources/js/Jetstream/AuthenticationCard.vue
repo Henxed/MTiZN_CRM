@@ -1,10 +1,10 @@
 <template>
 <div class="h-screen md:flex" id="fonregistr" >
-	<div class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-blue-800 to-purple-700 i justify-around items-center hidden">
-		<div class="px-7">
+	<div class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-slate-800 to-slate-400 i justify-around items-center hidden">
+		<div class="px-12">
 			<h1 class="text-white font-bold text-4xl font-sans"> Информационно аналитическая система</h1>
 			<p class="text-white mt-1">Министерства труда и занятости населения Оренбургской области</p>
-			<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="block w-28 bg-white text-center text-indigo-800 mt-4 py-2 rounded-lg font-bold mb-2">Подробнее</a>
+			<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" class="block w-28 bg-white text-center text-slate-700 mt-4 py-2 rounded-lg font-bold mb-2">Подробнее</a>
 		</div>
 		<div class="absolute -bottom-32 -left-40 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
 		<div class="absolute -bottom-40 -left-20 w-80 h-80 border-4 rounded-full border-opacity-30 border-t-8"></div>
