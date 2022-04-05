@@ -1,6 +1,6 @@
 <template>
 <div class="h-screen md:flex" id="fonregistr" >
-	<div class="relative overflow-hidden md:flex w-1/2 bg-gradient-to-tr from-slate-800 to-slate-400 i justify-around items-center hidden">
+	<div class="relative overflow-hidden md:flex w-1/2 bg-slate-800 justify-around items-center hidden">
 		<div class="px-12">
 			<h1 class="text-white font-bold text-4xl font-sans"> Информационно аналитическая система</h1>
 			<p class="text-white mt-1">Министерства труда и занятости населения Оренбургской области</p>

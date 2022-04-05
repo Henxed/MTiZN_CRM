@@ -26,6 +26,7 @@ class EnterprisesController extends Controller
         return Inertia::render('Maps/Enterprises/Show', [
             'region' => Areas::select(['id', 'region'])->findOrFail($data->area_id),
             'enterprise' => $data,
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }
 
@@ -53,6 +54,7 @@ class EnterprisesController extends Controller
         return Inertia::render('Maps/Enterprises/Index', [
             'region' => Areas::select(['id', 'region'])->findOrFail($id),
             'enterprises' => $enterprises,
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем
                 'page'    => Paginator::resolveCurrentPage(), //текущая страница

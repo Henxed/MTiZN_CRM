@@ -206,11 +206,11 @@
                         </div>
                     </div>
 
-                    <Link :href="route('regions.edit', reg.id)" class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
-                        Редактировать
-                    </Link>
                     <Link :href="route('regions.show', reg.id)" class="block btn-default mt-4" >
                         Подробнее
+                    </Link>
+                    <Link :href="route('regions.edit', reg.id)" class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                        Редактировать
                     </Link>
                 </div>
                 <div class="text-center cursor-pointer mt-3 dark:text-slate-400 text-slate-500" @click.prevent="close_all">Закрыть (ESC)</div>

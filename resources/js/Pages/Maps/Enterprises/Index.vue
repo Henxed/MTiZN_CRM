@@ -10,7 +10,8 @@
                     <div class="text-2xl dark:text-slate-300">Предприятия региона</div>
 
                 </div>
-                <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)">
+                <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)"
+                v-if="$page.props.access.can.includes('enterprise.create') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <span>Новое</span>
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
@@ -98,6 +99,7 @@
         props: {
             region: Array,
             enterprises: Object,
+            access_region: Array,
             queryBuilderProps: {
                 type: Object,
                 required: true,

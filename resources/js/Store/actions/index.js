@@ -1,17 +1,31 @@
 export default {
     initTheme({ commit }) {
 
-        const cachedTheme = localStorage.theme ? localStorage.theme : false;
-        //  `true` if the user has set theme to `dark` on browser/OS
-        const userPrefersDark = window.matchMedia('(prefers-color-scheme: light)').matches;
+        function setColorScheme(scheme) {
+            const cachedTheme = localStorage.theme ? localStorage.theme : false;
+            if (cachedTheme)
+                commit('SET_THEME', cachedTheme)
+            else if (scheme)
+                commit('SET_THEME', 'dark')
+            else
+                commit('SET_THEME', 'light')
+        }
 
-        if (cachedTheme)
-            commit('SET_THEME', cachedTheme)
-        else if (userPrefersDark)
-            commit('SET_THEME', 'dark')
-        else
-            commit('SET_THEME', 'light')
+        function getPreferredColorScheme() {
+            if (window.matchMedia) {
+                if(window.matchMedia('(prefers-color-scheme: dark)').matches){
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            return false;
+        }
 
+        if(window.matchMedia){
+            var colorSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            colorSchemeQuery.addEventListener('change', setColorScheme(getPreferredColorScheme()));
+        }
     },
     toggleTheme({ commit }) {
 

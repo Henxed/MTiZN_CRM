@@ -35,11 +35,24 @@
                                     <div class="text-slate-500">{{ item.data.address.value }}</div>
                                 </li>
                             </ol>
-                            <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.name`)" />
+
+                            <div class="relative">
+                                <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.name`)" />
+                                <div class="absolute right-2 bottom-1 text-lg" @click="form.name = this.enterprises.name" v-if="nalog_selected"
+                                v-tippy="{placement: 'left', content: 'Вернуть предыдущее название'}"><i class="fi fi-rr-time-past"></i></div>
+                            </div>
                             <text-input v-model="form.ogrn" :error="errors.ogrn" :label="$t(`inputs.ogrn`)" />
                             <text-input v-model="form.rns" :error="errors.rns" :label="$t(`inputs.rns`)" />
-                            <text-input v-model="form.address" :error="errors.address" :label="$t(`inputs.address`)" />
-                            <text-input v-model="form.okvd" :error="errors.okvd" :label="$t(`inputs.okvd`)" @keyup="mask($event, 'okvd')" required />
+                            <div class="relative">
+                                <text-input v-model="form.address" :error="errors.address" :label="$t(`inputs.address`)" />
+                                <div class="absolute right-2 bottom-1 text-lg" @click="form.address = this.enterprises.address" v-if="nalog_selected"
+                                v-tippy="{placement: 'left', content: 'Вернуть предыдущий адрес'}"><i class="fi fi-rr-time-past"></i></div>
+                            </div>
+                            <div class="relative">
+                                <text-input v-model="form.okvd" :error="errors.okvd" :label="$t(`inputs.okvd`)" required/>
+                                <div class="absolute right-2 bottom-1 text-lg" @click="form.okvd = this.enterprises.okvd" v-if="nalog_selected"
+                                v-tippy="{placement: 'left', content: 'Вернуть предыдущий ОКВЭД'}"><i class="fi fi-rr-time-past"></i></div>
+                            </div>
                             <text-input v-model="form.okvd_name" :error="errors.okvd_name" :label="$t(`inputs.okvd_name`)" required />
 
                             <label class="form-label" for="status_id">{{ $t(`inputs.status_id`) }}:</label>
@@ -158,6 +171,7 @@ export default {
             }),
 
             nalog_status: false,
+            nalog_selected: false,
             token: "7d6bb02e2a8855750be56d3d50f7cc896aabc095",
             more_inn: []
         }
@@ -197,12 +211,11 @@ export default {
                 this.nalog_status = true
 
                 this.more_inn = JSON.parse(result).suggestions;
-
-                console.log(JSON.parse(result).suggestions);
             })
             .catch(error => console.log("error", error));
         },
         nalog_data(data){
+            this.nalog_selected = true;
             this.form.name = data.value;
             this.form.address = data.data.address.value;
             this.form.okvd = data.data.okved;

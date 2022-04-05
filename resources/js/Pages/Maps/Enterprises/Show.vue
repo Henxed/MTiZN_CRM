@@ -10,7 +10,8 @@
                     </Link>
 
                 </div>
-                <Link class="btn-blue ml-auto" :href="route('enterprises.edit', enterprise.id)">
+                <Link class="btn-blue ml-auto" :href="route('enterprises.edit', enterprise.id)"
+                v-if="$page.props.access.can.includes('enterprise.create') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <span>Редактировать</span>
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
@@ -123,6 +124,7 @@
         props: {
             region: Array,
             enterprise: Object,
+            access_region: Array
         },
         data() {
             return {
