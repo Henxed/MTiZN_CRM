@@ -17,6 +17,7 @@ class EnterprisesAdd extends Migration
         {
             $table->string('rns')->nullable()->comment('Регистрационный номер страхователя');
             $table->bigInteger('status_id')->unsigned()->nullable()->comment('Состояние страхователя');
+            $table->string('ogrn')->nullable()->comment('ОГРН');
             $table->string('okvd')->nullable()->comment('Код основного ОКВЭДа страхователя');
             $table->string('okvd_name')->nullable()->comment('Наименование основного ОКВЭДа страхователя');
 

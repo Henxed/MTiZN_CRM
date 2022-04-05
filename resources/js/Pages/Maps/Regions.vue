@@ -116,7 +116,7 @@
                         <div class="text-sm text-slate-500 col-span-2">{{ reg.city }}</div>
                         <div class="text-sm text-slate-500 leading-none text-right col-span-3">{{ reg.leader }}</div>
                     </div>
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             ₽
                         </div>
@@ -126,7 +126,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-building pt-1"></i>
                         </div>
@@ -136,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-tree"></i>
                         </div>
@@ -146,7 +146,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-diploma pt-1"></i>
                         </div>
@@ -156,7 +156,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-chat-arrow-down"></i>
                         </div>
@@ -166,7 +166,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-bolt pt-1"></i>
                         </div>
@@ -176,7 +176,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-search-alt pt-1"></i>
                         </div>
@@ -186,7 +186,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-4">
+                    <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                             <i class="fi fi-rr-id-badge pt-1"></i>
                         </div>

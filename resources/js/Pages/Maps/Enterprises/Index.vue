@@ -1,10 +1,13 @@
 <template>
     <app-layout :title="`${region.region} - Предприятия`">
-        <div class="rounded-xl bg-white text-slate-900 dark:bg-slate-800 w-full max-w-screen-2xl p-9">
-            <div class="mb-6 flex justify-between items-center align-center">
-                <div class="">
-                    <div class="font-bold text-3xl dark:text-slate-300">Предприятия региона</div>
-                    <Link :href="route('regions.show', region.id)" class="block font-bold text-xl text-indigo-600 dark:text-indigo-500 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{region.region}}</Link>
+
+        <div class="w-full max-w-screen-2xl">
+            <div class="flex justify-between items-center align-center">
+                <div class="py-8">
+                    <Link :href="route('regions.show', region.id)" v-tippy='"Вернуться на страницу региона"' class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
+                            {{ region.region }}
+                    </Link>
+                    <div class="text-2xl dark:text-slate-300">Предприятия региона</div>
 
                 </div>
                 <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)">
@@ -12,62 +15,63 @@
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
             </div>
+            <div class="rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
+                <div class="mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
+                    <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
+                    type="text"
+                    placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
+                    <i class="fi fi-rr-search pt-1 mr-1"></i>
+                </div>
+                <div class="overflow-x-auto">
+                <table class="w-full whitespace-no-wrap table-fixed">
+                    <tr class="text-left font-bold">
+                        <th @click.prevent="sortBy('name')" class="w-3/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Предприятие <span v-html="getSortIcon('name')"></span></th>
+                        <th @click.prevent="sortBy('inn')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">ИНН <span v-html="getSortIcon('inn')"></span></th>
+                        <th @click.prevent="sortBy('okvd_name')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Наименование ОКВЭД<span v-html="getSortIcon('okvd_name')"></span></th>
+                        <th @click.prevent="sortBy('ane')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Среднесписочная работников<span v-html="getSortIcon('ane')"></span></th>
+                        <th @click.prevent="sortBy('status_id')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Состояние <span v-html="getSortIcon('status_id')"></span></th>
+                        <th @click.prevent="sortBy('updated_at')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Актуальность <span v-html="getSortIcon('updated_at')"></span></th>
+                    </tr>
+                    <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-5 py-4 flex items-center" :href="route('enterprises.show', item.id)">
+                            <span class="">{{ item.name }}</span>
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
+                            {{ item.inn }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
+                            {{ item.okvd_name }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
+                            {{ item.ane }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
+                            {{ item.status ? item.status.name : 'Без статуса'  }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
+                            {{ item.updated_at ? item.updated_at.replace(/-/g, '-').substr(0, 10) : 'Не актуализирован' }}
+                            </Link>
+                        </td>
 
-            <div class="mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
-                <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
-                type="text"
-                placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
-                <i class="fi fi-rr-search pt-1 mr-1"></i>
+                    </tr>
+                    <tr v-if="enterprises.data.length === 0">
+                    <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
+                    </tr>
+                </table>
+                </div>
+                <pagination :links="enterprises.links" />
             </div>
-            <div class="overflow-x-auto">
-            <table class="w-full whitespace-no-wrap table-fixed">
-                <tr class="text-left font-bold">
-                    <th @click.prevent="sortBy('name')" class="w-3/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Предприятие <span v-html="getSortIcon('name')"></span></th>
-                    <th @click.prevent="sortBy('inn')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">ИНН <span v-html="getSortIcon('inn')"></span></th>
-                    <th @click.prevent="sortBy('okvd_name')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Наименование ОКВЭД<span v-html="getSortIcon('okvd_name')"></span></th>
-                    <th @click.prevent="sortBy('ane')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Среднесписочная <span v-html="getSortIcon('ane')"></span></th>
-                    <th @click.prevent="sortBy('status_id')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Состояние <span v-html="getSortIcon('status_id')"></span></th>
-                    <th @click.prevent="sortBy('updated_at')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Актуальность <span v-html="getSortIcon('updated_at')"></span></th>
-                </tr>
-                <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-5 py-4 flex items-center" :href="route('enterprises.edit', item.id)">
-                        <span class="">{{ item.name }}</span>
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.inn }}
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.okvd_name }}
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.ane }}
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.status ? item.status.name : 'Без статуса'  }}
-                        </Link>
-                    </td>
-                    <td class="border-t dark:border-slate-500">
-                        <Link class="px-4 py-4 flex items-center " :href="route('enterprises.edit', item.id)" tabindex="-1">
-                        {{ item.updated_at ? item.updated_at.replace(/-/g, '-').substr(0, 10) : 'Не актуализирован' }}
-                        </Link>
-                    </td>
-
-                </tr>
-                <tr v-if="enterprises.data.length === 0">
-                <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
-                </tr>
-            </table>
-            </div>
-            <pagination :links="enterprises.links" />
         </div>
     </app-layout>
 </template>

@@ -20,15 +20,33 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
 
-                            <text-input v-model="form.name" :error="errors.name" label="Наименование" />
-                            <text-input v-model="form.inn" :error="errors.inn" label="ИНН" />
-                            <text-input v-model="form.rns" :error="errors.rns" label="Регистрационный номер страхователя" />
-                            <text-input v-model="form.address" :error="errors.address" label="Адрес" />
-                            <text-input v-model="form.okvd" :error="errors.okvd" label="ОКВЭД" required />
-                            <text-input v-model="form.okvd_name" :error="errors.okvd_name" label="ОКВЭД наименование" required />
-                            <select-input v-model="form.status_id" :error="errors.status_id" label="Статус">
-                                <option v-for="item in statuses" :key="item" :value="item.code">{{ item.name }}</option>
-                            </select-input>
+                            <div class="flex items-center">
+                                <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
+                                <div class="w-full lg:w-1/2 sm:mt-4">
+                                    <button class="hover:underline decoration-slate-500 decoration-dotted decoration-2 cursor-pointer
+                                    disabled:hover:no-underline disabled:opacity-60 disabled:cursor-not-allowed"
+                                    @click.prevent="nalog(form.inn)" :disabled="!form.inn || nalog_status">Получить данные с налоговой</button>
+                                </div>
+                            </div>
+                            <ol class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600 rounded-lg" v-if="more_inn.length">
+                                <li class="text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-sm hover:bg-slate-300/80 p-2 dark:hover:bg-slate-700/80" v-for="item in more_inn" :key="item" @click="nalog_data(item)">
+                                    <div :class="{'line-through' : item.data.state.status !== 'ACTIVE'} ">{{ item.value }} - {{ item.data.inn }}</div>
+                                    <div class="text-slate-500">{{ item.data.address.value }}</div>
+                                </li>
+                            </ol>
+                            <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.name`)" />
+                            <text-input v-model="form.ogrn" :error="errors.ogrn" :label="$t(`inputs.ogrn`)" />
+                            <text-input v-model="form.rns" :error="errors.rns" :label="$t(`inputs.rns`)" />
+                            <text-input v-model="form.address" :error="errors.address" :label="$t(`inputs.address`)" />
+                            <text-input v-model="form.okvd" :error="errors.okvd" :label="$t(`inputs.okvd`)" @keyup="mask($event, 'okvd')" required />
+                            <text-input v-model="form.okvd_name" :error="errors.okvd_name" :label="$t(`inputs.okvd_name`)" required />
+
+                            <label class="form-label" for="status_id">{{ $t(`inputs.status_id`) }}:</label>
+                            <select v-model="form.status_id" :error="errors.status_id" id="status_id" class="form-select">
+                                <option :selected="form.status_id === null" disabled>Выбирете статус</option>
+                                <option v-for="item in statuses" :key="item" :value="item.code" :selected="item.code === form.status_id">{{ item.name }}</option>
+                            </select>
+                            <div v-if="errors.status_id" class="form-error">{{ errors.status_id }}</div>
                         </div>
 
                     </div>
@@ -55,17 +73,17 @@
 
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
-                            <text-input v-model="form.amy" :error="errors.amy" label="Средняя ЗП за текущий год" type='number'/>
-                            <text-input v-model="form.total_jobs" :error="errors.total_jobs" label="Общее количество рабочих мест" type="number"/>
-                            <text-input v-model="form.cw" :error="errors.cw" label="Сотрудников на текущую дату" type='number'/>
-                            <text-input v-model="form.ane" :error="errors.ane" label="Среднесписочная численность работников" type='number' />
-                            <text-input v-model="form.nde" :error="errors.nde" label="Численность работающих инвалидов" type='number' />
-                            <text-input v-model="form.factors" :error="errors.factors" label="Численность работников, занятых на работах с вредными и (или) опасными производственными факторами" type="number"/>
-                            <text-input v-model="form.workplaces_respect" :error="errors.workplaces_respect" label="Количество рабочих мест, в отношении условий труда на которых проведена специальная оценка условий труда на начало года, всего" type="number"/>
-                            <text-input v-model="form.workplaces_three" :error="errors.workplaces_three" label="Количество рабочих мест, в отношении условий труда на которых проведена специальная оценка условий труда на начало года, в том числе отнесенных к вредным и опасным условиям труда 3 класс" type="number"/>
-                            <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" label="Количество рабочих мест, в отношении условий труда на которых проведена специальная оценка условий труда на начало года, в том числе отнесенных к вредным и опасным условиям труда 4 класс" type="number"/>
-                            <text-input v-model="form.total_factors" :error="errors.total_factors" label="Общее количество работников, занятых на работах с вредными и (или) опасными производственными факторами, подлежащих обязательным предварительным и периодическим медицинским осмотрам (чел.)" type="number"/>
-                            <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" label="Количество работников, занятых на работах с вредными и (или) опасными производственными факторами, прошедших обязательные предварительные и периодические медицинские осмотры на начало года (чел.)" type="number"/>
+                            <text-input v-model="form.amy" :error="errors.amy" :label="$t(`inputs.amy`)" type='number'/>
+                            <text-input v-model="form.total_jobs" :error="errors.total_jobs" :label="$t(`inputs.total_jobs`)" type="number"/>
+                            <text-input v-model="form.cw" :error="errors.cw" :label="$t(`inputs.cw`)" type='number'/>
+                            <text-input v-model="form.ane" :error="errors.ane" :label="$t(`inputs.ane`)" type='number' />
+                            <text-input v-model="form.nde" :error="errors.nde" :label="$t(`inputs.nde`)" type='number' />
+                            <text-input v-model="form.factors" :error="errors.factors" :label="$t(`inputs.factors`)" type="number"/>
+                            <text-input v-model="form.workplaces_respect" :error="errors.workplaces_respect" :label="$t(`inputs.workplaces_respect`)" type="number"/>
+                            <text-input v-model="form.workplaces_three" :error="errors.workplaces_three" :label="$t(`inputs.workplaces_three`)" type="number"/>
+                            <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" :label="$t(`inputs.workplaces_four`)" type="number"/>
+                            <text-input v-model="form.total_factors" :error="errors.total_factors" :label="$t(`inputs.total_factors`)" type="number"/>
+                            <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" :label="$t(`inputs.start_year_factors`)" type="number"/>
                         </div>
 
                     </div>
@@ -113,35 +131,120 @@ export default {
     },
     data() {
         return {
-        form: this.$inertia.form({
-           name: '',
-            amy: '',
-            cw: '',
-            inn: '',
-            area_id: this.region.id,
-            rns: '',
-            status_id: '',
-            okvd: '',
-            okvd_name: '',
-            ane: '',
-            nde: '',
-            factors: '',
-            total_jobs: '',
-            workplaces_respect: '',
-            workplaces_three: '',
-            workplaces_four	: '',
-            total_factors: '',
-            start_year_factors: '',
-            address: '',
-        })
+            form: this.$inertia.form({
+                name: '',
+                amy: '',
+                cw: '',
+                inn: '',
+                area_id: this.region.id,
+                rns: '',
+                status_id: '',
+                okvd: '',
+                okvd_name: '',
+                ane: '',
+                nde: '',
+                factors: '',
+                total_jobs: '',
+                workplaces_respect: '',
+                workplaces_three: '',
+                workplaces_four	: '',
+                total_factors: '',
+                start_year_factors: '',
+                address: '',
+                ogrn: ''
+            }),
+            nalog_status: false,
+            token: "7d6bb02e2a8855750be56d3d50f7cc896aabc095",
+            more_inn: []
         }
     },
     methods: {
         submit() {
             this.$toast.open({message: 'Добавляю... Ожидайте!', type: 'default'})
             this.form.post(route('enterprises.store'))
-        }
+        },
+        mask (e, model) {
+            this.$data['form'][model] = e.target.value.replace(',', '.').replace(/[^\d.]/g, '')
+        },
+        nalog(query) {
+            var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/party";
 
+            var options = {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + this.token
+                },
+                body: JSON.stringify({query: query})
+            }
+
+            fetch(url, options)
+            .then(response => response.text())
+            .then(result => {
+                this.nalog_status = true
+
+                this.more_inn = JSON.parse(result).suggestions;
+
+                console.log(JSON.parse(result).suggestions);
+            })
+            .catch(error => console.log("error", error));
+        },
+        nalog_data(data){
+            this.form.name = data.value;
+            this.form.address = data.data.address.value;
+            this.form.okvd = data.data.okved;
+            this.form.ogrn = data.data.ogrn;
+            this.okvd_name_api()
+            this.change_status(data.data.state.status)
+        },
+        change_status(data){
+            switch (data) {
+                case 'ACTIVE': //действующая
+                    this.form.status_id = 201
+                    break;
+                case 'LIQUIDATING': //ликвидируется
+                    this.form.status_id = 207
+                    break;
+                case 'LIQUIDATED': //ликвидирована
+                    this.form.status_id = 201
+                    break;
+                case 'BANKRUPT': //банкротство
+                    this.form.status_id = 211
+                    break;
+                case 'REORGANIZING': //в процессе присоединения к другому юрлицу, с последующей ликвидацией
+                    this.form.status_id = 209
+                    break;
+                default:
+                    break;
+            }
+        },
+        okvd_name_api() {
+            var url = "https://suggestions.dadata.ru/suggestions/api/4_1/rs/findById/okved2";
+            var query = this.form.okvd;
+
+            var options = {
+                method: "POST",
+                mode: "cors",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                    "Authorization": "Token " + this.token
+                },
+                body: JSON.stringify({query: query})
+            }
+
+            fetch(url, options)
+            .then(response => response.text())
+            .then(result => {
+                var data = JSON.parse(result).suggestions[0].value
+                this.form.okvd_name = data;
+
+            })
+            .catch(error => console.log("error", error));
+
+        }
     },
 }
 </script>
