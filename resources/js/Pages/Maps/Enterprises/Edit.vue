@@ -98,6 +98,15 @@
                             <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" :label="$t(`inputs.workplaces_four`)" type="number"/>
                             <text-input v-model="form.total_factors" :error="errors.total_factors" :label="$t(`inputs.total_factors`)" type="number"/>
                             <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" :label="$t(`inputs.start_year_factors`)" type="number"/>
+
+                            <text-input v-model="form.sum_arrears" :error="errors.sum_arrears" :label="$t(`inputs.sum_arrears`)" type='number'/>
+                            <text-input v-model="form.employed_public" :error="errors.employed_public" :label="$t(`inputs.employed_public`)" type='number'/>
+                            <text-input v-model="form.employed_temporary" :error="errors.employed_temporary" :label="$t(`inputs.employed_temporary`)" type='number'/>
+                            <text-input v-model="form.work_part" :error="errors.work_part" :label="$t(`inputs.work_part`)" type='number'/>
+                            <text-input v-model="form.idle" :error="errors.idle" :label="$t(`inputs.idle`)" type='number'/>
+                            <text-input v-model="form.vacations" :error="errors.vacations" :label="$t(`inputs.vacations`)" type='number'/>
+                            <text-input v-model="form.dismissed" :error="errors.dismissed" :label="$t(`inputs.dismissed`)" type='number'/>
+                            <text-input v-model="form.remote" :error="errors.remote" :label="$t(`inputs.remote`)" type='number'/>
                         </div>
 
                     </div>
@@ -167,7 +176,14 @@ export default {
                 total_factors: this.enterprises.total_factors,
                 start_year_factors: this.enterprises.start_year_factors,
                 address: this.enterprises.address,
-                ogrn: this.enterprises.ogrn
+                ogrn: this.enterprises.ogrn,
+                sum_arrears: this.enterprises.sum_arrears,
+                employed_public: this.enterprises.employed_public,
+                employed_temporary: this.enterprises.employed_temporary,
+                work_part: this.enterprises.work_part,
+                vacations: this.enterprises.vacations,
+                dismissed: this.enterprises.dismissed,
+                remote: this.enterprises.remote
             }),
 
             nalog_status: false,

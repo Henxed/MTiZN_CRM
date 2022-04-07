@@ -1,12 +1,12 @@
 <template>
     <app-layout title="Редактировать пользователя">
-        <setting class="p-9">
+        <setting class="px-9">
 
         <div class="px-4 py-5 sm:px-6">
-            <h3 class="text-2xl leading-6 font-medium text-gray-900 dark:text-slate-300 ">{{ form.name }}</h3>
+            <h3 class="text-2xl leading-6 font-medium text-gray-900 dark:text-slate-300 ">{{ this.users.name }}</h3>
             <p class="mt-1 max-w-2xl text-sm text-gray-500">Персональная информация о пользователе</p>
         </div>
-        <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-500">
+        <form @submit.prevent="submit" class="dark:border-slate-500 shadow rounded-xl bg-white text-slate-900 dark:bg-slate-800 w-full max-w-screen-2xl">
             <dl>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">ФИО <p class="mt-1 text-sm opacity-80">Как зовут владельца аккаунта?</p></dt>
@@ -39,7 +39,7 @@
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.permissions" :options="permissions" multiple :normalizer="normalizer" placeholder="Права..." id="permissions" /></dd>
                 </div>
             </dl>
-            <div class="mt-6 flex items-center">
+            <div class="p-6 flex items-center">
                 <button class="text-red-600 hover:underline" tabindex="-1" type="button" @click="destroy">Удалить</button>
                 <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Обновить</loading-button>
             </div>

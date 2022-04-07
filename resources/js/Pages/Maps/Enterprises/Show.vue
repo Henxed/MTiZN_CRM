@@ -96,7 +96,38 @@
                         <dt class="text-sm font-medium">{{ $t(`inputs.start_year_factors`) }}</dt>
                         <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.start_year_factors || "-" }}</dd>
                     </div>
-
+                    <div class="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.sum_arrears`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.sum_arrears || "-"  }}</dd>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.employed_public`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.employed_public || "-" }}</dd>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.employed_temporary`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.employed_temporary || "-"  }}</dd>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.work_part`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.work_part || "-" }}</dd>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.vacations`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.vacations || "-"  }}</dd>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.dismissed`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.dismissed || "-" }}</dd>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-slate-700 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.remote`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.remote || "-"  }}</dd>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium">{{ $t(`inputs.start_year_factors`) }}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 dark:text-slate-200 sm:mt-0 sm:col-span-2">{{ enterprise.start_year_factors || "-" }}</dd>
+                    </div>
 
 
                 </dl>

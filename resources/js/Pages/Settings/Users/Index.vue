@@ -1,14 +1,16 @@
 <template>
 <app-layout title="Пользователи">
-    <setting class="p-9">
-            <div class="mb-6 flex justify-between items-center align-center">
-                <h1 class="mb-8 font-bold text-3xl dark:text-slate-300">Пользователи</h1>
-                <Link class="btn-green ml-auto" :href="route('users.create')">
-                    <span>Новый</span>
-                    <span class="hidden md:inline"> пользователь</span>
-                </Link>
+    <setting class="px-9">
+            <div class="mb-6 flex justify-between">
+                <h1 class="font-bold text-3xl dark:text-slate-300">Пользователи</h1>
+                <div class="">
+                    <Link class="btn-green ml-auto" :href="route('users.create')">
+                        <span>Новый</span>
+                        <span class="hidden md:inline"> пользователь</span>
+                    </Link>
+                </div>
             </div>
-            <div class="overflow-x-auto">
+            <div class="overflow-x-auto shadow rounded-xl bg-white text-slate-900 dark:bg-slate-800 w-full max-w-screen-2xl">
             <table class="w-full whitespace-no-wrap table-fixed">
                 <tr class="text-left font-bold">
                 <th class="px-6 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-left text-xs leading-4 font-medium  uppercase tracking-wider">ФИО</th>
@@ -36,9 +38,9 @@
                 <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
                 </tr>
             </table>
-            </div>
-            <pagination :links="users.links" />
 
+            <pagination :links="users.links" class="px-6" />
+            </div>
     </setting>
 </app-layout>
 </template>
