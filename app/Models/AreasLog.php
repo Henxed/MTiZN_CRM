@@ -22,7 +22,7 @@ class AreasLog extends Model
         if($type === 'USER_LOG') {
             $area = Areas::leftJoin('areas_extra', function($join) {
                 $join->on('areas.id', '=', 'areas_extra.area_id');
-            })->select(['areas.id', 'region', 'city', 'leader', 'population', 'area', 'amw', 'subject', 'contract', 'lvl', 'unemployed', 'unemployed_percent', 'vacancy', 'areas_extra.tension', 'employed', 'cripple', 'cripple_worked', 'commissions_c', 'commissions_t', 'commissions', 'in_employment', 'school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur',  'jobs'])
+            })->select(['areas.id', 'region', 'city', 'leader', 'population', 'area', 'amw', 'subject', 'contract', 'lvl', 'unemployed', 'unemployed_percent', 'vacancy', 'tension', 'employed', 'cripple', 'cripple_worked', 'commissions_c', 'commissions_t', 'commissions', 'in_employment', 'school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur',  'jobs'])
             ->where('areas.id', $data['id'])->get();
 
             $diff_bd = array_diff($area[0]->toArray(), $data);

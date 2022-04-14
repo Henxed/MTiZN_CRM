@@ -83,8 +83,10 @@ class User extends Authenticatable
     public function checkArea($area_id = null)
     {
         if(Auth::user()->hasRole('super-admin') ? false : true){
-            if(!in_array((int)$area_id, AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id')->all(), true) ){
-                return true;
+            if(Auth::user()->can('region.edit') ? false : true){
+                if(!in_array((int)$area_id, AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id')->all(), true) ){
+                    return true;
+                }
             }
         }
 
