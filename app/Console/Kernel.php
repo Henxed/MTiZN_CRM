@@ -37,7 +37,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             $area = Areas::leftJoin('areas_extra', function($join) {
                 $join->on('areas.id', '=', 'areas_extra.area_id');
-            })->select(['areas.id', 'population', 'amw', 'subject', 'contract', 'lvl', 'unemployed', 'unemployed_percent', 'vacancy', 'areas_extra.tension', 'employed', 'cripple', 'cripple_worked', 'commissions_c', 'commissions_t', 'commissions', 'in_employment', 'school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur',  'jobs'])->get();
+            })->select(['areas.id', 'population', 'amw', 'subject', 'contract', 'lvl', 'unemployed', 'unemployed_percent', 'vacancy', 'tension', 'employed', 'cripple', 'cripple_worked', 'commissions_c', 'commissions_t', 'commissions', 'in_employment', 'school', 'vvuz', 'ssuz', 'detdom', 'nou', 'ur',  'jobs'])->get();
 
             AreasLog::setLog(null, null, $area, 'STATS_MONTH');
         })->monthly()->description('Статистика месяца по показателям региона');
