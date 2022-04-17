@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class AreasUser extends Model
+class AreasUser extends Pivot
 {
-  public $timestamps = false;
-  protected $table = 'areas_user';
-
+    protected $table = 'areas_user';
 }

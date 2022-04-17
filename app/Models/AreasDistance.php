@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class AreasDistance extends Model
+class AreasDistance extends Pivot
 {
     protected $table = 'areas_distance';
 }

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Areas extends Model
 {
-    protected $fillable = ['leader','population','region','city','area','amw','subject','contract','lvl','unemployed','vacancy', 'tension','employed','cripple','cripple_worked','commissions','commissions_c','commissions_t','in_employment'];
+    protected $guarded = array('id');
+    //protected $fillable = ['leader','population','region','city','area','amw','subject','contract','lvl','unemployed','vacancy', 'tension','employed','cripple','cripple_worked','commissions','commissions_c','commissions_t','in_employment'];
 
     public function selsoviet()
     {

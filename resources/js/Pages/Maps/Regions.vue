@@ -178,7 +178,7 @@
 
                     <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                            <i class="fi fi-rr-search-alt pt-1"></i>
+                            <i class="fi fi-rr-id-badge pt-1"></i>
                         </div>
                         <div class="ml-4 leading-snug">
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Зарегистрированно безработных</div>
@@ -188,7 +188,7 @@
 
                     <div class="flex mb-2">
                         <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                            <i class="fi fi-rr-id-badge pt-1"></i>
+                            <i class="fi fi-rr-search-alt pt-1"></i>
                         </div>
                         <div class="ml-4 leading-snug">
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Количество вакансий</div>
@@ -423,7 +423,7 @@
             moveOnLocation: function(event) {
                 this.tooltipStyle = {
                     display: 'block',
-                    top: `${event.clientY + window.scrollY +30}px`,
+                    top: `${event.clientY + window.scrollY +20}px`,
                     left: `${event.clientX +  window.scrollX - 100}px`,
                 }
             },

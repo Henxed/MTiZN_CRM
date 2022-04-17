@@ -9,7 +9,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\EnterprisesController;
-
+use App\Http\Controllers\DepartmentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -43,6 +43,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('users', UsersController::class)->middleware('role:super-admin');
         // Роли
         Route::resource('roles', RoleController::class)->except(['show'])->middleware('role:super-admin');
+
+        // Отделы
+        Route::resource('departments', DepartmentController::class)->except(['show'])->middleware('role:super-admin');
 
         // Права доступа
         Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('role:super-admin');

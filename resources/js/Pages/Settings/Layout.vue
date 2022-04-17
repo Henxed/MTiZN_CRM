@@ -24,6 +24,11 @@
                             :href="route('permissions.index')">
                         Права доступа
                     </Link>
+                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
+                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('departments.*')}"
+                            :href="route('departments.index')">
+                        Отделы
+                    </Link>
                 </div>
             </div>
         </div>
