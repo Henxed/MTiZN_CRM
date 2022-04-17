@@ -47,7 +47,7 @@ class AppServiceProvider extends ServiceProvider
             },
             'access' => function () {
                 return [
-                    'can' => Auth::check() ? Auth::user()->getAllPermissions()->pluck('name') : null,
+                    'can' => Auth::check() ? Auth::user()->All_Permissions() : null,
                     'role' => Auth::check() ? Auth::user()->getRoleNames() : null
                 ];
             },

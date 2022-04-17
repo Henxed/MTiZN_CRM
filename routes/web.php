@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
         // Настройки
         Route::get('/', function () {
             return Inertia::render('Settings/Index');
-        })->middleware('role:super-admin')->name('settings');
+        })->middleware('permission:cp')->name('settings');
     });
 
     // Route::get('/messages/{id}', [ChatController::class, 'getMessagesFor'])->name('messages');
