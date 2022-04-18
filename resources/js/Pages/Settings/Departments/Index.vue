@@ -1,5 +1,5 @@
 <template>
-<app-layout title="Пользователи">
+<app-layout title="Список отделов">
     <setting class="px-9">
             <div class="mb-6 flex justify-between">
                 <h1 class="font-bold text-3xl dark:text-slate-300">Отделы</h1>

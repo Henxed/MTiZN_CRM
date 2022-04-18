@@ -1,6 +1,6 @@
 <template>
-    <app-layout title="Редактировать пользователя">
-        <setting class="p-9">
+    <app-layout title="Добавление отдела">
+        <setting class="px-9">
 
         <div class="px-4 py-5 sm:px-6">
             <h3 class="text-2xl leading-6 font-medium text-gray-900 dark:text-slate-300 ">Добавление нового отдела</h3>
@@ -70,33 +70,26 @@ export default {
     },
     data() {
         return {
-        sending: false,
-        form: this.$inertia.form({
-            name: '',
-            description: '',
-            owner: '',
-            permissions: null,
-            workers: null,
-        }),
-        normalizer(node) {
-            return {
-                id: node.id,
-                label: node.name,
+            form: this.$inertia.form({
+                name: '',
+                description: '',
+                owner: null,
+                permissions: [],
+                workers: [],
+            }),
+            normalizer(node, disabled) {
+                return {
+                    id: node.id,
+                    label: node.name,
+                    isDisabled: disabled | false,
+                }
             }
-        },
-        owner(node) {
-            return {
-                id: node.id,
-                label: node.name,
-            }
-        },
         }
     },
     methods: {
         submit() {
             this.form.post(this.route('departments.store'))
         }
-
     },
 }
 </script>

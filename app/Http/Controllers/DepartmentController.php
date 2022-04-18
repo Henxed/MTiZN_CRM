@@ -31,8 +31,18 @@ class DepartmentController extends Controller
         ]);
 
         $dep = Department::firstOrCreate(Request::only(['name','description','owner']));
+        $workers = collect(Request::get('workers'))->push(Request::get('owner'));
+
+        $combination = [];
+        foreach ($workers as $item_id)
+        {
+            $pivot_data = ['admin' => 0];
+            if ($item_id == Request::get('owner')) $pivot_data = ['admin' => 1];
+            $combination[$item_id] = $pivot_data;
+        }
+
         $dep->permissions()->sync(Request::get('permissions'));
-        $dep->workers()->sync(Request::get('workers'));
+        $dep->workers()->sync($combination);
 
         return Redirect::back()->with('success', 'Отдел добавлен!');
     }
@@ -45,8 +55,8 @@ class DepartmentController extends Controller
                 'name' => $department->name,
                 'description' => $department->description,
                 'owner' => $department->owner,
-                'permissions' => $department->permissions->flatten()->pluck('id'),
-                'workers' => $department->workers->flatten()->pluck('id')
+                'permissions' => $department->permissions->pluck('id')->all(),
+                'workers' => $department->workers->where('id', '!=',$department->owner)->pluck('id')
             ],
             'permissions' => Permission::get(),
             'users' => User::get()
@@ -60,9 +70,24 @@ class DepartmentController extends Controller
         ]);
 
         $department->update(Request::only(['name','description','owner']));
+
         $department->permissions()->sync(Request::get('permissions'));
-        $department->workers()->sync(Request::get('workers'));
+        $workers = collect(Request::get('workers'))->push(Request::get('owner'));
+        $combination = [];
+
+        foreach ($workers as $item_id)
+        {
+            $pivot_data = ['admin' => 0];
+            if ($item_id == Request::get('owner')) $pivot_data = ['admin' => 1];
+            $combination[$item_id] = $pivot_data;
+        }
+
+        $department->workers()->sync($combination);
 
         return Redirect::back()->with('success', 'Отдел обнавлен!');
+    }
+
+    public function destroy(Department $department){
+
     }
 }
