@@ -11,22 +11,22 @@
 
                     <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('users.*')}"
-                            :href="route('users.index')">
+                            :href="route('users.index')" v-if="$page.props.access.can.includes('cp.users') || $page.props.access.role.includes('super-admin')">
                         Пользователи
                     </Link>
                     <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('roles.*')}"
-                            :href="route('roles.index')">
+                            :href="route('roles.index')" v-if="$page.props.access.can.includes('cp.roles') || $page.props.access.role.includes('super-admin')">
                         Роли
                     </Link>
                     <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('permissions.*')}"
-                            :href="route('permissions.index')">
+                            :href="route('permissions.index')" v-if="$page.props.access.can.includes('cp.permission') || $page.props.access.role.includes('super-admin')">
                         Права доступа
                     </Link>
                     <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
                             :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('departments.*')}"
-                            :href="route('departments.index')">
+                            :href="route('departments.index')" v-if="$page.props.access.can.includes('cp.departments') || $page.props.access.role.includes('super-admin')">
                         Отделы
                     </Link>
                 </div>

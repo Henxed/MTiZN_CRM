@@ -60,7 +60,7 @@ export default {
   },
   methods: {
     submit() {
-      this.$inertia.put(this.route('permission.update', this.permission.id), this.form, {
+      this.$inertia.put(this.route('permissions.update', this.permission.id), this.form, {
         onStart: () => this.sending = true,
         onFinish: () => this.sending = false,
       })

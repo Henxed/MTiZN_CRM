@@ -40,15 +40,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');
 
     Route::group(['prefix' => 'settings'], function () {
-        Route::resource('users', UsersController::class)->middleware('permission:users');
+        Route::resource('users', UsersController::class)->middleware('permission:cp.users');
         // Роли
-        Route::resource('roles', RoleController::class)->except(['show'])->middleware('role:super-admin');
+        Route::resource('roles', RoleController::class)->except(['show'])->middleware('permission:cp.roles');
 
         // Отделы
-        Route::resource('departments', DepartmentController::class)->middleware('permission:departments');
+        Route::resource('departments', DepartmentController::class)->middleware('permission:cp.departments');
 
         // Права доступа
-        Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('role:super-admin');
+        Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('permission:cp.permission');
 
         // Настройки
         Route::get('/', function () {

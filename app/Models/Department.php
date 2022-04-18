@@ -11,7 +11,7 @@ class Department extends Model
 
     public function owner()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'id', 'owner');
     }
 
     public function workers()

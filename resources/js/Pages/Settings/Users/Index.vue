@@ -1,14 +1,23 @@
 <template>
 <app-layout title="Пользователи">
     <setting class="px-9">
-            <div class="mb-6 flex justify-between">
+            <div class="mb-6 flex justify-between items-center">
                 <h1 class="font-bold text-3xl dark:text-slate-300">Пользователи</h1>
-                <div class="">
-                    <Link class="btn-green ml-auto" :href="route('users.create')">
-                        <span>Новый</span>
-                        <span class="hidden md:inline"> пользователь</span>
-                    </Link>
-                </div>
+
+                    <div class="flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
+                            <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
+                            type="text"
+                            placeholder="Поиск пользователя..."
+                            v-model="form.search">
+                            <i class="fi fi-rr-search pt-1 mr-1"></i>
+                    </div>
+                    <div class="">
+                        <Link class="btn-green ml-auto" :href="route('users.create')">
+                            <span>Новый</span>
+                            <span class="hidden md:inline"> пользователь</span>
+                        </Link>
+                    </div>
+
             </div>
             <div class="overflow-x-auto shadow rounded-xl bg-white text-slate-900 dark:bg-slate-800 w-full max-w-screen-2xl">
             <table class="w-full whitespace-no-wrap table-fixed">

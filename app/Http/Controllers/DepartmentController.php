@@ -13,7 +13,7 @@ class DepartmentController extends Controller
 {
     public function index(){
         return Inertia::render('Settings/Departments/Index', [
-            'departments' => Department::orderBy('name')->paginate()
+            'departments' => Department::with('owner')->orderBy('name')->paginate()
         ]);
     }
 
