@@ -26,7 +26,7 @@ window.Echo = new Echo({
     wsHost: window.location.hostname,
     wsPort: process.env.MIX_WEBSOCKET_PORT,
     wssPort: process.env.MIX_WEBSOCKET_PORT,
-    forceTLS: true,
+    forceTLS: false,
     encrypted: false,
     disableStats: true,
     enabledTransports: ["ws", "wss"]
