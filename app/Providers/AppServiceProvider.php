@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Notification;
 use App\Service\PaymentService;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
@@ -10,11 +11,7 @@ use Illuminate\Http\Request as HttpRequet;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
+
     public function register()
     {
         $this->registerInertia();
@@ -24,11 +21,6 @@ class AppServiceProvider extends ServiceProvider
         // });
     }
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
     public function boot()
     {
         //
@@ -44,6 +36,9 @@ class AppServiceProvider extends ServiceProvider
             // },
             'canLogin' => function () {
                 return Auth::check();
+            },
+            'n_count' => function () {
+                return Auth::check() ? Notification::where('user_id', Auth::user()->id)->whereNull('read_at')->count() : 0;
             },
             'access' => function () {
                 return [

@@ -18,10 +18,6 @@ use Illuminate\Support\Facades\Broadcast;
 //     return (int) $user->id === (int) $id;
 // });
 
-Broadcast::channel('messages.{id}', function ($user, $id) {
-
-    if(Auth::check()) {
-        return $user->id;
-    }
-
+Broadcast::channel('notify.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
 });

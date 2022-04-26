@@ -20,7 +20,7 @@
     </div>
     <div class="flex items-center">
         <theme-toggler class="mr-2 flex items-center justify-center leading-none h-10 w-10 rounded-md text-slate-700 hover:bg-slate-300  dark:text-slate-300 dark:hover:bg-slate-600 focus:outline-none"/>
-        <notify class="mr-2 flex items-center justify-center leading-none h-10 w-10 rounded-md text-slate-700 hover:bg-slate-300  dark:text-slate-300 dark:hover:bg-slate-600 focus:outline-none"/>
+        <notify class="mr-3 flex items-center justify-center leading-none h-10 w-10 rounded-md text-slate-700 hover:bg-slate-300  dark:text-slate-300 dark:hover:bg-slate-600 focus:outline-none"/>
 
 
         <jet-dropdown align="right" width="48" class="border-l-2 border-l-slate-300 pl-3">

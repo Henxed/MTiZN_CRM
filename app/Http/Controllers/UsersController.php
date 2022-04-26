@@ -9,6 +9,7 @@ use App\Models\Areas;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\AreasUser;
+use App\Models\Notification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\Rule;
@@ -18,10 +19,6 @@ use Inertia\Inertia;
 
 class UsersController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware(['permission:users']);
-    }
 
     public function index()
     {
@@ -105,4 +102,19 @@ class UsersController extends Controller
 
     }
 
+    public function notification_popup(){
+        $n = Notification::where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->paginate();
+
+        return response()->json($n);
+    }
+    public function notification_read($id){
+        $n = Notification::read($id);
+
+        return response()->json($n);
+    }
+    public function notification_remove($id){
+        $n = Notification::remove($id);
+
+        return response()->json($n);
+    }
 }

@@ -8,6 +8,14 @@
   */
 
 /*!
+ * Pusher JavaScript Library v7.0.6
+ * https://pusher.com/
+ *
+ * Copyright 2020, Pusher
+ * Released under the MIT licence.
+ */
+
+/*!
  * perfect-scrollbar v1.5.3
  * Copyright 2021 Hyunje Jun, MDBootstrap and Contributors
  * Licensed under MIT

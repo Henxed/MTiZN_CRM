@@ -13,6 +13,9 @@ module.exports = {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
             },
+            fontSize: {
+                micro: '.65rem'
+            },
             colors: {
                 slate: {
                     200: '#f3f6fd',
