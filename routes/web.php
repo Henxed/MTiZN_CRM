@@ -56,6 +56,11 @@ Route::group(['middleware' => 'auth'], function () {
         })->middleware('permission:cp')->name('settings');
     });
 
+    Route::get('test', function () {
+        App\Models\User::sendNotify('ваипр', "ывамждбыджуа", 1);
+        //event(new App\Events\Notify('notify'));
+        return "Event has been sent!";
+    });
     // Route::get('/messages/{id}', [ChatController::class, 'getMessagesFor'])->name('messages');
     // Route::post('/message/send', [ChatController::class, 'send'])->name('message.send');
 
