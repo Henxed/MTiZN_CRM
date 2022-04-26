@@ -97,21 +97,21 @@ class EnterprisesController extends Controller
         return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие добавлено!');
     }
 
-    public function edit($id)
+    public function edit(Enterprises $enterprise)
     {
-        $data = Enterprises::findOrfail($id);
+        //$data = Enterprises::findOrfail($id);
 
-        if(Auth::user()->checkArea($data->area_id)){
+        if(Auth::user()->checkArea($enterprise->area_id)){
             return abort(403);
         }
         return Inertia::render('Maps/Enterprises/Edit', [
-            'enterprises' => $data,
+            'enterprises' => $enterprise,
             'statuses' => Status::where('model', 'enterprises')->where('active', true)->get(),
         ]);
     }
 
 
-    public function update(Enterprises $enterprises, $id)
+    public function update(Enterprises $enterprise)
     {
         Req::validate([
             'name' => 'required',
@@ -126,24 +126,22 @@ class EnterprisesController extends Controller
             return abort(403);
         }
 
-        $enterprises->where('id', $id)->update(Req::all());
+        $enterprise->update(Req::all());
 
         return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }
 
 
-    public function destroy(Enterprises $enterprises, $id)
+    public function destroy(Enterprises $enterprise)
     {
 
-        $data = Enterprises::findOrfail($id);
-
-        if(Auth::user()->checkArea($data->area_id)){
+        if(Auth::user()->checkArea($enterprise->area_id)){
             return abort(403);
         }
 
-        $data->destroy((int)$id); //удаление
+        $enterprise->destroy($enterprise->id); //удаление
 
-        return Redirect::route('regions.enterprises', $data->area_id)->with('success', "Предприятие удалено!");
+        return Redirect::route('regions.enterprises', $enterprise->area_id)->with('success', "Предприятие удалено!");
     }
 
     // Загрузка данных с excel файла

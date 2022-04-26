@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Events\Notify;
+use Exception;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -13,6 +15,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -114,5 +117,21 @@ class User extends Authenticatable
         }
 
         return false;
+    }
+
+    static function sendNotify($title, $message, $user_id = null, $url = null, $type = 'USER'){
+        $data = Notification::create([
+            'id' => (string) Str::uuid(), //генерирует ид: e00dd748-d2b7-4289-b7d0-36366198545c
+            'type' => $type, //может быть null
+            'user_id' => $user_id, //ид кому, может быть null
+            'data' => json_encode([
+                'title' => $title,
+                'message' => $message,
+                'url' => $url
+            ], JSON_UNESCAPED_UNICODE), //можно добавить всё что угодно
+            'read_at' => null
+        ]); //Формируем данные уведомления и сохраняем в БД
+
+        broadcast(new Notify($data)); //Отправляем пуш на вебсокет
     }
 }
