@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->bigInteger('owner')->unsigned()->nullable();
+            $table->json('entr_filter')->nullable();
             $table->timestamps();
 
             $table->foreign('owner')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('CASCADE');
@@ -28,8 +29,8 @@ return new class extends Migration
             $table->bigInteger('department_id')->unsigned()->nullable();
             $table->bigInteger('user_id')->unsigned()->nullable();
 
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('SET NULL')->onUpdate('CASCADE');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('SET NULL')->onUpdate('CASCADE');
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('CASCADE')->onUpdate('CASCADE');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('CASCADE')->onUpdate('CASCADE');
         });
 
         Schema::create('department_permission', function (Blueprint $table) {

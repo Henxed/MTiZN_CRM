@@ -262,6 +262,10 @@
     }
 }
 
+.min-w-20 {
+    min-width: 236px;
+}
+
 .map{
     .hover{
         .st1 {

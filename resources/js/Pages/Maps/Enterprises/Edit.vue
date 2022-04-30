@@ -3,7 +3,7 @@
         <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-8">
             <Link :href="route('regions.enterprises', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ enterprises.name }}</Link>
-            <div class="text-lg text-slate-500 dark:text-slate-400">{{ $t(`inputs.inn`) }}: {{ enterprises.inn }}</div>
+            <div class="text-lg text-slate-500 dark:text-slate-400">{{ $t(`inputs.ent.inn`) }}: {{ enterprises.inn }}</div>
             <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(enterprises.updated_at).format('LLL') }}</div>
         </div>
         <form @submit.prevent="update" class="border-t border-gray-200 dark:border-slate-700 py-6">
@@ -22,7 +22,7 @@
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
 
                             <div class="flex items-center">
-                                <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
+                                <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.ent.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
                                 <div class="w-full lg:w-1/2 sm:mt-4">
                                     <button class="text-indigo-700 hover:underline decoration-slate-500 decoration-dotted decoration-2 cursor-pointer
                                     disabled:hover:no-underline disabled:opacity-60 disabled:cursor-not-allowed"
@@ -37,25 +37,25 @@
                             </ol>
 
                             <div class="relative">
-                                <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.name`)" />
+                                <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.ent.name`)" />
                                 <div class="absolute right-2 bottom-1 text-lg" @click="form.name = this.enterprises.name" v-if="nalog_selected"
                                 v-tippy="{placement: 'left', content: 'Вернуть предыдущее название'}"><i class="fi fi-rr-time-past"></i></div>
                             </div>
-                            <text-input v-model="form.ogrn" :error="errors.ogrn" :label="$t(`inputs.ogrn`)" />
-                            <text-input v-model="form.rns" :error="errors.rns" :label="$t(`inputs.rns`)" />
+                            <text-input v-model="form.ogrn" :error="errors.ogrn" :label="$t(`inputs.ent.ogrn`)" />
+                            <text-input v-model="form.rns" :error="errors.rns" :label="$t(`inputs.ent.rns`)" />
                             <div class="relative">
-                                <text-input v-model="form.address" :error="errors.address" :label="$t(`inputs.address`)" />
+                                <text-input v-model="form.address" :error="errors.address" :label="$t(`inputs.ent.address`)" />
                                 <div class="absolute right-2 bottom-1 text-lg" @click="form.address = this.enterprises.address" v-if="nalog_selected"
                                 v-tippy="{placement: 'left', content: 'Вернуть предыдущий адрес'}"><i class="fi fi-rr-time-past"></i></div>
                             </div>
                             <div class="relative">
-                                <text-input v-model="form.okvd" :error="errors.okvd" :label="$t(`inputs.okvd`)" required/>
+                                <text-input v-model="form.okvd" :error="errors.okvd" :label="$t(`inputs.ent.okvd`)" required/>
                                 <div class="absolute right-2 bottom-1 text-lg" @click="form.okvd = this.enterprises.okvd" v-if="nalog_selected"
                                 v-tippy="{placement: 'left', content: 'Вернуть предыдущий ОКВЭД'}"><i class="fi fi-rr-time-past"></i></div>
                             </div>
-                            <text-input v-model="form.okvd_name" :error="errors.okvd_name" :label="$t(`inputs.okvd_name`)" required />
+                            <text-input v-model="form.okvd_name" :error="errors.okvd_name" :label="$t(`inputs.ent.okvd_name`)" required />
 
-                            <label class="form-label" for="status_id">{{ $t(`inputs.status_id`) }}:</label>
+                            <label class="form-label" for="status_id">{{ $t(`inputs.ent.status_id`) }}:</label>
                             <select v-model="form.status_id" :error="errors.status_id" id="status_id" class="form-select">
                                 <option :selected="form.status_id === null" disabled>Выбирете статус</option>
                                 <option v-for="item in statuses" :key="item" :value="item.code" :selected="item.code === form.status_id">{{ item.name }}</option>
@@ -87,26 +87,26 @@
 
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
-                            <text-input v-model="form.amy" :error="errors.amy" :label="$t(`inputs.amy`)" type='number'/>
-                            <text-input v-model="form.total_jobs" :error="errors.total_jobs" :label="$t(`inputs.total_jobs`)" type="number"/>
-                            <text-input v-model="form.cw" :error="errors.cw" :label="$t(`inputs.cw`)" type='number'/>
-                            <text-input v-model="form.ane" :error="errors.ane" :label="$t(`inputs.ane`)" type='number' />
-                            <text-input v-model="form.nde" :error="errors.nde" :label="$t(`inputs.nde`)" type='number' />
-                            <text-input v-model="form.factors" :error="errors.factors" :label="$t(`inputs.factors`)" type="number"/>
-                            <text-input v-model="form.workplaces_respect" :error="errors.workplaces_respect" :label="$t(`inputs.workplaces_respect`)" type="number"/>
-                            <text-input v-model="form.workplaces_three" :error="errors.workplaces_three" :label="$t(`inputs.workplaces_three`)" type="number"/>
-                            <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" :label="$t(`inputs.workplaces_four`)" type="number"/>
-                            <text-input v-model="form.total_factors" :error="errors.total_factors" :label="$t(`inputs.total_factors`)" type="number"/>
-                            <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" :label="$t(`inputs.start_year_factors`)" type="number"/>
+                            <text-input v-model="form.amy" :error="errors.amy" :label="$t(`inputs.ent.amy`)" type='number'/>
+                            <text-input v-model="form.total_jobs" :error="errors.total_jobs" :label="$t(`inputs.ent.total_jobs`)" type="number"/>
+                            <text-input v-model="form.cw" :error="errors.cw" :label="$t(`inputs.ent.cw`)" type='number'/>
+                            <text-input v-model="form.ane" :error="errors.ane" :label="$t(`inputs.ent.ane`)" type='number' />
+                            <text-input v-model="form.nde" :error="errors.nde" :label="$t(`inputs.ent.nde`)" type='number' />
+                            <text-input v-model="form.factors" :error="errors.factors" :label="$t(`inputs.ent.factors`)" type="number"/>
+                            <text-input v-model="form.workplaces_respect" :error="errors.workplaces_respect" :label="$t(`inputs.ent.workplaces_respect`)" type="number"/>
+                            <text-input v-model="form.workplaces_three" :error="errors.workplaces_three" :label="$t(`inputs.ent.workplaces_three`)" type="number"/>
+                            <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" :label="$t(`inputs.ent.workplaces_four`)" type="number"/>
+                            <text-input v-model="form.total_factors" :error="errors.total_factors" :label="$t(`inputs.ent.total_factors`)" type="number"/>
+                            <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" :label="$t(`inputs.ent.start_year_factors`)" type="number"/>
 
-                            <text-input v-model="form.sum_arrears" :error="errors.sum_arrears" :label="$t(`inputs.sum_arrears`)" type='number'/>
-                            <text-input v-model="form.employed_public" :error="errors.employed_public" :label="$t(`inputs.employed_public`)" type='number'/>
-                            <text-input v-model="form.employed_temporary" :error="errors.employed_temporary" :label="$t(`inputs.employed_temporary`)" type='number'/>
-                            <text-input v-model="form.work_part" :error="errors.work_part" :label="$t(`inputs.work_part`)" type='number'/>
-                            <text-input v-model="form.idle" :error="errors.idle" :label="$t(`inputs.idle`)" type='number'/>
-                            <text-input v-model="form.vacations" :error="errors.vacations" :label="$t(`inputs.vacations`)" type='number'/>
-                            <text-input v-model="form.dismissed" :error="errors.dismissed" :label="$t(`inputs.dismissed`)" type='number'/>
-                            <text-input v-model="form.remote" :error="errors.remote" :label="$t(`inputs.remote`)" type='number'/>
+                            <text-input v-model="form.sum_arrears" :error="errors.sum_arrears" :label="$t(`inputs.ent.sum_arrears`)" type='number'/>
+                            <text-input v-model="form.employed_public" :error="errors.employed_public" :label="$t(`inputs.ent.employed_public`)" type='number'/>
+                            <text-input v-model="form.employed_temporary" :error="errors.employed_temporary" :label="$t(`inputs.ent.employed_temporary`)" type='number'/>
+                            <text-input v-model="form.work_part" :error="errors.work_part" :label="$t(`inputs.ent.work_part`)" type='number'/>
+                            <text-input v-model="form.idle" :error="errors.idle" :label="$t(`inputs.ent.idle`)" type='number'/>
+                            <text-input v-model="form.vacations" :error="errors.vacations" :label="$t(`inputs.ent.vacations`)" type='number'/>
+                            <text-input v-model="form.dismissed" :error="errors.dismissed" :label="$t(`inputs.ent.dismissed`)" type='number'/>
+                            <text-input v-model="form.remote" :error="errors.remote" :label="$t(`inputs.ent.remote`)" type='number'/>
                         </div>
 
                     </div>

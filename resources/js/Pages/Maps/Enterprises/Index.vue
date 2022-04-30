@@ -16,61 +16,31 @@
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
             </div>
-            <div class="rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
+            <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
                 <div class="mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
                     <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
                     type="text"
                     placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
                     <i class="fi fi-rr-search pt-1 mr-1"></i>
                 </div>
-                <div class="overflow-x-auto">
-                <table class="w-full whitespace-no-wrap table-fixed">
+                <perfect-scrollbar :options="{suppressScrollY: true}">
+                <table class="table-auto min-w-full">
                     <tr class="text-left font-bold">
-                        <th @click.prevent="sortBy('name')" class="w-3/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Предприятие <span v-html="getSortIcon('name')"></span></th>
-                        <th @click.prevent="sortBy('inn')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">ИНН <span v-html="getSortIcon('inn')"></span></th>
-                        <th @click.prevent="sortBy('okvd_name')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Наименование ОКВЭД<span v-html="getSortIcon('okvd_name')"></span></th>
-                        <th @click.prevent="sortBy('ane')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Среднесписочная работников<span v-html="getSortIcon('ane')"></span></th>
-                        <th @click.prevent="sortBy('status_id')" class="w-2/12 hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Состояние <span v-html="getSortIcon('status_id')"></span></th>
-                        <th @click.prevent="sortBy('updated_at')" class="hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200 text-xs leading-4 font-medium uppercase tracking-wider">Актуальность <span v-html="getSortIcon('updated_at')"></span></th>
+                        <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="max-w-sm w-full hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">{{ $t(`inputs.ent.${item}`) }} <span v-html="getSortIcon(item)"></span></th>
                     </tr>
                     <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-5 py-4 flex items-center" :href="route('enterprises.show', item.id)">
-                            <span class="">{{ item.name }}</span>
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
-                            {{ item.inn }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
-                            {{ item.okvd_name }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
-                            {{ item.ane }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
-                            {{ item.status ? item.status.name : 'Без статуса'  }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-4 py-4 flex items-center " :href="route('enterprises.show', item.id)" tabindex="-1">
-                            {{ item.updated_at ? item.updated_at.replace(/-/g, '-').substr(0, 10) : 'Не актуализирован' }}
-                            </Link>
-                        </td>
 
+                        <td v-for="t in table" :key="t" class="border-t dark:border-slate-500">
+                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
+                            {{ type(t, item) }}
+                            </Link>
+                        </td>
                     </tr>
                     <tr v-if="enterprises.data.length === 0">
                     <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
                     </tr>
                 </table>
-                </div>
+                </perfect-scrollbar>
                 <pagination :links="enterprises.links" />
             </div>
         </div>
@@ -100,6 +70,7 @@
             region: Array,
             enterprises: Object,
             access_region: Array,
+            table: Array,
             queryBuilderProps: {
                 type: Object,
                 required: true,
@@ -139,6 +110,19 @@
                 this.queryBuilderData.page = 1;
                 this.queryBuilderData.sort =
                 this.queryBuilderData.sort === column ? `-${column}` : column;
+            },
+            type(t, item){
+                switch (t) {
+                    case 'updated_at':
+                        return item['updated_at'] ? item['updated_at'].replace(/-/g, '-').substr(0, 10) : 'Не актуализирован';
+                        break;
+                    case 'status_id':
+                        return  item.status ? item.status.name : 'Без статуса'
+                        break;
+                    default:
+                        return  item[t] ? item[t] : 'Нет данных'
+                        break;
+                }
             }
         },
         computed: {

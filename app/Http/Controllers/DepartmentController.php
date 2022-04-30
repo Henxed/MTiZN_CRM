@@ -23,9 +23,9 @@ class DepartmentController extends Controller
         $b = [];
         $i=0;
         foreach ($e as $key => $value) {
-            if(strpos(__('inputs.'.$value), 'inputs') === false){
+            if($value !== 'name' && $value !== 'updated_at' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
                 $b[$i]['id'] = $value;
-                $b[$i]['name'] = __('inputs.'.$value);
+                $b[$i]['name'] = __('inputs.ent.'.$value);
                 $i++;
             }
         }
@@ -43,7 +43,10 @@ class DepartmentController extends Controller
             'description' => 'required'
         ]);
 
-        $dep = Department::firstOrCreate(Request::only(['name','description','owner', 'entr_filter']));
+        $dep = Department::firstOrCreate(Request::only(['name','description','owner']));
+        $dep->entr_filter = json_encode(Request::get('entr_filter'));
+        $dep->save();
+
         $workers = collect(Request::get('workers'))->push(Request::get('owner'));
 
         $combination = [];
@@ -57,7 +60,7 @@ class DepartmentController extends Controller
         $dep->permissions()->sync(Request::get('permissions'));
         $dep->workers()->sync($combination);
 
-        return Redirect::back()->with('success', 'Отдел добавлен!');
+        return Redirect::route('departments.edit', $dep->id)->with('success', 'Отдел добавлен!');
     }
 
     public function edit(Department $department){
@@ -66,9 +69,9 @@ class DepartmentController extends Controller
         $b = [];
         $i=0;
         foreach ($e as $key => $value) {
-            if(strpos(__('inputs.'.$value), 'inputs') === false){
+            if($value !== 'name' && $value !== 'updated_at' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
                 $b[$i]['id'] = $value;
-                $b[$i]['name'] = __('inputs.'.$value);
+                $b[$i]['name'] = __('inputs.ent.'.$value);
                 $i++;
             }
         }
@@ -110,7 +113,7 @@ class DepartmentController extends Controller
 
         $department->workers()->sync($combination);
 
-        return Redirect::back()->with('success', 'Отдел обновлен!');
+        return Redirect::route('departments.edit', $department->id)->with('success', 'Отдел обновлен!');
     }
 
     public function destroy(Department $department){

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Areas;
 use App\Models\AreasUser;
+use App\Models\Department;
 use App\Models\Enterprises;
 use App\Models\Status;
 use Illuminate\Support\Facades\Request as Req;
@@ -39,22 +40,36 @@ class EnterprisesController extends Controller
             });
         });
 
+        $default = ['okvd_name', 'inn', 'status_id'];
+
+        // Нужно понять, что ты в отделе и вытаскивать поля отдела
+        $dep = Department::select('entr_filter')->leftJoin('department_user', function($join){
+            $join->on('department_id', 'departments.id');
+        })->where('user_id', Auth::user()->id)->first();
+        if($dep){
+            $dep = json_decode($dep->toArray()['entr_filter']);
+            $dep = count($dep) ? $dep : null;
+        }
+
+        $sort = collect(($dep ?? $default))->prepend('name')->push('updated_at');
+        $filter = collect($sort)->push($globalSearch);
+
         // Сортировка + поиск + страницы
         $enterprises = QueryBuilder::for(Enterprises::class)
             ->defaultSort('name')
-            ->allowedSorts(['name', 'okvd_name', 'ane', 'inn', 'status_id', 'updated_at'])
-            ->allowedFilters(['name', 'okvd_name', 'ane', 'inn', 'status_id', 'updated_at', $globalSearch])
+            ->allowedSorts($sort->toArray())
+            ->allowedFilters($filter->toArray())
             ->with('status')
             ->where('area_id', $id)
             ->whereNull('enterprises_id')
             ->paginate()
             ->withQueryString();
 
-
         return Inertia::render('Maps/Enterprises/Index', [
             'region' => Areas::select(['id', 'region'])->findOrFail($id),
             'enterprises' => $enterprises,
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
+            'table' => $sort,
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем
                 'page'    => Paginator::resolveCurrentPage(), //текущая страница
