@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
 
 class DepartmentController extends Controller
@@ -18,9 +19,21 @@ class DepartmentController extends Controller
     }
 
     public function create(){
+        $e = Schema::getColumnListing('enterprises');
+        $b = [];
+        $i=0;
+        foreach ($e as $key => $value) {
+            if(strpos(__('inputs.'.$value), 'inputs') === false){
+                $b[$i]['id'] = $value;
+                $b[$i]['name'] = __('inputs.'.$value);
+                $i++;
+            }
+        }
+
         return Inertia::render('Settings/Departments/Create', [
             'permissions' => Permission::get(),
-            'users' => User::get()
+            'users' => User::get(),
+            'entr_filter' => $b,
         ]);
     }
 
@@ -30,7 +43,7 @@ class DepartmentController extends Controller
             'description' => 'required'
         ]);
 
-        $dep = Department::firstOrCreate(Request::only(['name','description','owner']));
+        $dep = Department::firstOrCreate(Request::only(['name','description','owner', 'entr_filter']));
         $workers = collect(Request::get('workers'))->push(Request::get('owner'));
 
         $combination = [];
@@ -49,6 +62,17 @@ class DepartmentController extends Controller
 
     public function edit(Department $department){
 
+        $e = Schema::getColumnListing('enterprises');
+        $b = [];
+        $i=0;
+        foreach ($e as $key => $value) {
+            if(strpos(__('inputs.'.$value), 'inputs') === false){
+                $b[$i]['id'] = $value;
+                $b[$i]['name'] = __('inputs.'.$value);
+                $i++;
+            }
+        }
+
         return Inertia::render('Settings/Departments/Edit', [
             'departments' => [
                 'id' => $department->id,
@@ -56,8 +80,10 @@ class DepartmentController extends Controller
                 'description' => $department->description,
                 'owner' => $department->owner,
                 'permissions' => $department->permissions->pluck('id')->all(),
-                'workers' => $department->workers->where('id', '!=',$department->owner)->pluck('id')
+                'workers' => $department->workers->where('id', '!=',$department->owner)->pluck('id'),
+                'entr_filter' => $department->entr_filter
             ],
+            'entr_filter' => $b,
             'permissions' => Permission::get(),
             'users' => User::get()
         ]);
@@ -69,7 +95,7 @@ class DepartmentController extends Controller
             'description' => 'required'
         ]);
 
-        $department->update(Request::only(['name','description','owner']));
+        $department->update(Request::only(['name','description','owner', 'entr_filter' ]));
 
         $department->permissions()->sync(Request::get('permissions'));
         $workers = collect(Request::get('workers'))->push(Request::get('owner'));
@@ -84,7 +110,7 @@ class DepartmentController extends Controller
 
         $department->workers()->sync($combination);
 
-        return Redirect::back()->with('success', 'Отдел обнавлен!');
+        return Redirect::back()->with('success', 'Отдел обновлен!');
     }
 
     public function destroy(Department $department){

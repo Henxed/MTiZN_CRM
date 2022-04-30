@@ -34,6 +34,12 @@
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.permissions" :options="permissions" multiple :normalizer="normalizer" placeholder="Права..." id="permissions" /></dd>
                 </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Фильтры предприятия
+                        <p class="mt-1 text-sm opacity-80">Отображает в таблице "колонки" по умолчанию для данного отдела.</p>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.entr_filter" :options="entr_filter" multiple :normalizer="enterprise" placeholder="Колонки предприятий..." id="enterprise" /></dd>
+                </div>
             </dl>
             <div class="mt-6 flex items-center">
                 <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Добавить</loading-button>
@@ -67,6 +73,7 @@ export default {
         errors: Object,
         permissions: Array,
         users: Array,
+        entr_filter: Array
     },
     data() {
         return {
@@ -76,6 +83,7 @@ export default {
                 owner: null,
                 permissions: [],
                 workers: [],
+                entr_filter: []
             }),
             normalizer(node, disabled) {
                 return {
@@ -83,7 +91,13 @@ export default {
                     label: node.name,
                     isDisabled: disabled | false,
                 }
-            }
+            },
+            enterprise(node) {
+                return {
+                    id: node.id,
+                    label: node.name,
+                }
+            },
         }
     },
     methods: {

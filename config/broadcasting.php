@@ -42,7 +42,7 @@ return [
                 'host' => env('PUSHER_APP_HOST', '127.0.0.1'),
                 'port' => env('PUSHER_APP_PORT', 3001),
                 'scheme' => env('PUSHER_APP_SCHEME', 'http'),
-                'encrypted' => true,
+                'encrypted' => false,
                 'useTLS' => false,
                 'curl_options' => [
                     CURLOPT_SSL_VERIFYHOST => 0,
