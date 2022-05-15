@@ -15,7 +15,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Inertia\Inertia;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Arr;
 
 class EnterprisesController extends Controller
 {
@@ -39,7 +39,16 @@ class EnterprisesController extends Controller
                 $query->where('name', 'LIKE', "%{$value}%")->orWhere('inn', 'LIKE', "%{$value}%");
             });
         });
-
+        $min_amy = AllowedFilter::callback('min_amy', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('amy', '>=', ($value));
+            });
+        });
+        $max_amy = AllowedFilter::callback('max_amy', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('amy', '<=', ($value));
+            });
+        });
         $default = ['okvd_name', 'inn', 'status_id'];
 
         // Нужно понять, что ты в отделе и вытаскивать поля отдела
@@ -52,7 +61,7 @@ class EnterprisesController extends Controller
         }
 
         $sort = collect(($dep ?? $default))->prepend('name')->push('updated_at');
-        $filter = collect($sort)->push($globalSearch);
+        $filter = collect($sort)->push($globalSearch, $min_amy, $max_amy);
 
         // Сортировка + поиск + страницы
         $enterprises = QueryBuilder::for(Enterprises::class)
@@ -67,13 +76,18 @@ class EnterprisesController extends Controller
 
         return Inertia::render('Maps/Enterprises/Index', [
             'region' => Areas::select(['id', 'region'])->findOrFail($id),
+            'region_count' => Enterprises::where('area_id', $id)->count(),
             'enterprises' => $enterprises,
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
             'table' => $sort,
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем
                 'page'    => Paginator::resolveCurrentPage(), //текущая страница
-                'filter' => ['search'  => $request->query('search')],
+                'filter' => [
+                    'search'  => Arr::has($request->filter, 'search') ? $request->filter['search'] : null,
+                    'min_amy' => Arr::has($request->filter, 'min_amy') ? $request->filter['min_amy'] : null,
+                    'max_amy' => Arr::has($request->filter, 'max_amy') ? $request->filter['max_amy'] : null
+                ],
             ]
         ]);
     }

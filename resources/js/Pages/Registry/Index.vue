@@ -16,9 +16,9 @@
                 <Link v-if="$page.props.access.can.includes('registry.add') || $page.props.access.role.includes('super-admin')" :href="route('registry.create')" class="block my-4 bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center" role="button">Добавить</Link>
             </div>
         </div>
-        <div class="rounded-xl bg-white text-slate-900 md:mx-6 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="rounded-xl bg-white text-slate-900 md:mx-6 md:pt-3 dark:bg-slate-800 w-full max-w-screen-2xl">
 
-            <div class="md:sticky top-0 z-40 bg-white dark:bg-slate-800 rounded-xl p-4 md:p-9">
+            <div class="md:sticky top-0 z-40 bg-white dark:bg-slate-800 rounded-xl p-4 md:px-9">
                 <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">{{ category_title }}</div>
                 <div class="grid 2xl:flex grid-cols-2 sm:grid-cols-3 xl:grid-cols-7 gap-6 mt-3 dark:text-slate-300 p-5 pt-0 sm:p-0">
                     <Link :href="route('registry.list', [category, 'all'])">

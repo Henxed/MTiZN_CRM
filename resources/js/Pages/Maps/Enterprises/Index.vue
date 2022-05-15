@@ -7,7 +7,7 @@
                     <Link :href="route('regions.show', region.id)" v-tippy='"Вернуться на страницу региона"' class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                             {{ region.region }}
                     </Link>
-                    <div class="text-2xl dark:text-slate-300">Предприятия региона</div>
+                    <div class="text-2xl dark:text-slate-300">Предприятия региона ({{ region_count }})</div>
 
                 </div>
                 <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)"
@@ -17,17 +17,28 @@
                 </Link>
             </div>
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
-                <div class="mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
-                    <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
-                    type="text"
-                    placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
-                    <i class="fi fi-rr-search pt-1 mr-1"></i>
+                <div class="flex">
+                    <div class="mr-auto mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
+                        <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
+                        type="text"
+                        placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
+                        <i class="fi fi-rr-search pt-1 mr-1"></i>
+                    </div>
+                    <div class="text-gray-400" v-if="amy_status">
+                        от <input type="number" placeholder="мин. ЗП" v-model.lazy="queryBuilderData.filter.min_amy" class="border-none focus:outline-none focus:ring-0 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full">
+                        до <input type="number" placeholder="макс. ЗП" v-model.lazy="queryBuilderData.filter.max_amy" class="border-none focus:outline-none focus:ring-0 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full">
+                    </div>
                 </div>
-                <perfect-scrollbar :options="{suppressScrollY: true}">
-                <table class="table-auto min-w-full">
+                <perfect-scrollbar class="table-container">
+                <table class="table-auto min-w-full h-3/6 relative">
+                    <thead>
                     <tr class="text-left font-bold">
-                        <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="max-w-sm w-full hover:cursor-pointer hover:bg-gray-600/10 hover:dark:bg-slate-600/80 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">{{ $t(`inputs.ent.${item}`) }} <span v-html="getSortIcon(item)"></span></th>
+                        <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="sticky top-0 z-30 max-w-sm w-full hover:cursor-pointer ">
+                            <div class="th hover:bg-gray-300 hover:dark:bg-slate-700 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">{{ $t(`inputs.ent.${item}`) }} <span v-html="getSortIcon(item)"></span></div>
+                        </th>
                     </tr>
+                    </thead>
+                    <tbody>
                     <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
 
                         <td v-for="t in table" :key="t" class="border-t dark:border-slate-500">
@@ -39,6 +50,7 @@
                     <tr v-if="enterprises.data.length === 0">
                     <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
                     </tr>
+                    </tbody>
                 </table>
                 </perfect-scrollbar>
                 <pagination :links="enterprises.links" />
@@ -68,6 +80,7 @@
         },
         props: {
             region: Array,
+            region_count: Number,
             enterprises: Object,
             access_region: Array,
             table: Array,
@@ -78,11 +91,14 @@
         },
         data() {
             return {
+                amy_status: this.table.filter(e => e === 'amy').length ? true : false,
                 queryBuilderData: {
                     page: this.queryBuilderProps.page || 1,
                     sort: this.queryBuilderProps.sort || "",
                     filter: {
-                        search : this.queryBuilderProps.search || ""
+                        min_amy: this.queryBuilderProps.filter.min_amy || "",
+                        max_amy: this.queryBuilderProps.filter.max_amy || "",
+                        search : this.queryBuilderProps.filter.search || "",
                     }
                 },
 
@@ -162,3 +178,23 @@
     })
 </script>
 <style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css"/>
+<style scoped>
+.table-container {
+    height: 80vh;
+}
+.th{
+    padding: 10px;
+    display: block;
+    position: absolute;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+.th:hover {
+    white-space: normal;
+    z-index: 1;
+}
+</style>
