@@ -1,7 +1,7 @@
 <template>
     <app-layout :title="`${region.region} - Регион`">
     <div class="lg:flex w-full">
-        <div class="w-2/6 max-w-sm">
+        <div class="sidebar max-w-sm">
             <div class="lg:sticky lg:top-12 mr-6">
                 <div class="dark:text-slate-300 ">
                     <div class="mb-5 text-lg text-center uppercase">Регионы</div>
@@ -91,7 +91,7 @@
                         </div>
                         <div >
                             <div class="text-2xl font-semibold">{{ region.extra.detdom || '-' }}</div>
-                            <div class="text-sm"> {{ declOfNum(region.extra.detdom, ['Детский дом\\интернат', 'Детских дома\\интерната', 'Детских домов\\интернатов']) }}</div>
+                            <div class="text-sm"> {{ declOfNum(region.extra.detdom, ['Детский дом, интернат', 'Детских дома, интерната', 'Детских домов, интернатов']) }}</div>
                         </div>
                     </div>
                 </div>
@@ -124,21 +124,31 @@
                     </Link>
                     </perfect-scrollbar>
                 </div>
-                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
-                    <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
-                        <div class="absolute -right-5 -bottom-8 text-indigo-300 dark:text-indigo-300/30 text-9xl"><i class="fi fi-rr-shop"></i></div>
-                        <div class="text-lg text-indigo-500">Предприятия</div>
-                    </Link>
+                <div class="">
+                    <div class="flex bg-slate-600/10 dark:bg-slate-400/10 p-4
+                    mb-6 rounded-xl text-lg dark:text-slate-300 leading-tight">
+                        <div class="w-4/6">Численность работников под риском увольнения</div>
+                        <div class="w-2/6 text-center">
+                            <div class="text-2xl font-semibold">{{ sum_people_dismissal || '-' }}</div>
+                            <div class="text-sm -mt-2"> {{ declOfNum(sum_people_dismissal, ['человек', 'человека', 'человек']) }}</div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
+                        <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                            <div class="absolute -right-5 -bottom-8 text-indigo-300 dark:text-indigo-300/30 text-9xl"><i class="fi fi-rr-shop"></i></div>
+                            <div class="text-lg text-indigo-500">Предприятия</div>
+                        </Link>
 
-                    <Link :href="route('registry.list', ['npa', 'all'])" class="flex bg-amber-200 dark:bg-amber-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
-                        <div class="absolute -right-5 -bottom-8 text-amber-300 dark:text-amber-300/30 text-9xl"><i class="fi fi-rr-document-signed"></i></div>
-                        <div class="text-lg text-amber-500">Реестр санкций</div>
-                    </Link>
-        <!--
-                    <Link href="#" class="flex bg-green-200 dark:bg-green-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
-                        <div class="absolute -right-5 -bottom-10 text-green-300 dark:text-green-300/30 text-9xl"><i class="fi fi-rr-bank"></i></div>
-                        <div class="text-lg text-green-500">Сельсоветы</div>
-                    </Link> -->
+                        <Link :href="route('registry.list', ['npa', 'all'])" class="flex bg-amber-200 dark:bg-amber-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                            <div class="absolute -right-5 -bottom-8 text-amber-300 dark:text-amber-300/30 text-9xl"><i class="fi fi-rr-document-signed"></i></div>
+                            <div class="text-lg text-amber-500">Реестр санкций</div>
+                        </Link>
+            <!--
+                        <Link href="#" class="flex bg-green-200 dark:bg-green-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                            <div class="absolute -right-5 -bottom-10 text-green-300 dark:text-green-300/30 text-9xl"><i class="fi fi-rr-bank"></i></div>
+                            <div class="text-lg text-green-500">Сельсоветы</div>
+                        </Link> -->
+                    </div>
                 </div>
             </div>
 
@@ -168,7 +178,8 @@
         props: {
             regions: Array,
             region: Array,
-            access_region: Array
+            access_region: Array,
+            sum_people_dismissal: Number
         },
         data() {
             return {
@@ -185,3 +196,8 @@
     })
 </script>
 <style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css"/>
+<style scoped>
+.sidebar{
+    width: 30%;
+}
+</style>

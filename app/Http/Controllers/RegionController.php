@@ -37,6 +37,9 @@ class RegionController extends Controller
             'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
+            'sum_people_dismissal' => 0/* Enterprises::where('area_id', $id)->sum(function ($row) {
+                return (int)$row->work_part + (int)$row->idle + (int)$row->vacations + (int)$row->dismissed + (int)$row->remote;
+            })*/
         ]);
     }
 

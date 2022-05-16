@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Permission;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 
 class DepartmentController extends Controller
 {
@@ -32,7 +33,7 @@ class DepartmentController extends Controller
 
         return Inertia::render('Settings/Departments/Create', [
             'permissions' => Permission::get(),
-            'users' => User::get(),
+            'users' => User::except(DB::table('department_user')->select('user_id')->get() )->get(),
             'entr_filter' => $b,
         ]);
     }
@@ -76,6 +77,7 @@ class DepartmentController extends Controller
             }
         }
 
+        $worker = $department->workers->pluck('id');
         return Inertia::render('Settings/Departments/Edit', [
             'departments' => [
                 'id' => $department->id,
@@ -88,7 +90,7 @@ class DepartmentController extends Controller
             ],
             'entr_filter' => $b,
             'permissions' => Permission::get(),
-            'users' => User::get()
+            'users' => User::whereNotIn('id', DB::table('department_user')->whereNotIn('user_id', $worker)->pluck('user_id')->all() )->get(),
         ]);
     }
 

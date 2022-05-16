@@ -75,7 +75,7 @@ export default {
         permissions: Array,
         users: Array,
         departments: Array,
-        entr_filter: Array
+        entr_filter: Array,
     },
     data() {
         return {
