@@ -77,6 +77,7 @@ class EnterprisesController extends Controller
         return Inertia::render('Maps/Enterprises/Index', [
             'region' => Areas::select(['id', 'region'])->findOrFail($id),
             'region_count' => Enterprises::where('area_id', $id)->count(),
+            'enterprises_count' => Enterprises::count(),
             'enterprises' => $enterprises,
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
             'table' => $sort,

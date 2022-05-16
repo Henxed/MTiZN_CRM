@@ -7,7 +7,7 @@
                     <Link :href="route('regions.show', region.id)" v-tippy='"Вернуться на страницу региона"' class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                             {{ region.region }}
                     </Link>
-                    <div class="text-2xl dark:text-slate-300">Предприятия региона ({{ region_count }})</div>
+                    <div class="text-2xl dark:text-slate-300">Предприятия региона - {{ region_count }} (общее {{ enterprises_count }})</div>
 
                 </div>
                 <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)"
@@ -81,6 +81,7 @@
         props: {
             region: Array,
             region_count: Number,
+            enterprises_count: Number,
             enterprises: Object,
             access_region: Array,
             table: Array,

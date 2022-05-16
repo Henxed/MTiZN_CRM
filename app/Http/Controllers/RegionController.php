@@ -10,6 +10,7 @@ use App\Models\AreasUser;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\DB;
 
 use Auth;
 
@@ -37,9 +38,7 @@ class RegionController extends Controller
             'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
-            'sum_people_dismissal' => 0/* Enterprises::where('area_id', $id)->sum(function ($row) {
-                return (int)$row->work_part + (int)$row->idle + (int)$row->vacations + (int)$row->dismissed + (int)$row->remote;
-            })*/
+            'people_dismissal' => DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
         ]);
     }
 
