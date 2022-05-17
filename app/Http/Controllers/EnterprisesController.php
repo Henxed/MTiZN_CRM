@@ -187,7 +187,7 @@ class EnterprisesController extends Controller
 
                 if((int)$data[0]){
 
-                    try{
+
                         $d = Enterprises::updateOrCreate(
                             ['rns' => $data[2], 'area_id' => $data[0], ],
                             [
@@ -216,9 +216,7 @@ class EnterprisesController extends Controller
                                 'remote' => str_replace(' ', '', str_replace(',', '.', $data[24]))
                             ]
                         );
-                    }catch(Error){
-                        print_r($i);
-                    }
+
                 }
 
 
