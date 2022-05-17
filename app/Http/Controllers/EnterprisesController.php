@@ -187,27 +187,38 @@ class EnterprisesController extends Controller
 
                 if((int)$data[0]){
 
-
-                    $d = Enterprises::updateOrCreate(
-                        ['inn' => $data[3], 'area_id' => $data[0]],
-                        [
-                            'name' => $data[1],
-                            'rns' => $data[2],
-                            'status_id' => $data[4],
-                            'okvd' => $data[5],
-                            'okvd_name' => $data[6],
-                            'ane' => $data[7],
-                            'nde' => $data[8],
-                            'factors' => $data[9],
-                            'total_jobs' => $data[10],
-                            'workplaces_respect' => $data[11],
-                            'workplaces_three' => $data[12],
-                            'workplaces_four' => $data[13],
-                            'total_factors' => $data[14],
-                            'start_year_factors' => $data[15],
-                            'address' => $data[16],
-                        ]
-                    );
+                    try{
+                        $d = Enterprises::updateOrCreate(
+                            ['rns' => $data[2], 'area_id' => $data[0], ],
+                            [
+                                'name' => $data[1],
+                                'inn' => $data[3],
+                                //'status_id' => $data[4],
+                                'okvd' => $data[5],
+                                'okvd_name' => $data[6],
+                                'ane' => str_replace(' ', '', str_replace(',', '.', $data[7])),
+                                'nde' => str_replace(' ', '', str_replace(',', '.', $data[8])),
+                                'factors' => str_replace(' ', '', str_replace(',', '.', $data[9])),
+                                'total_jobs' => str_replace(' ', '', str_replace(',', '.', $data[10])),
+                                'workplaces_respect' => str_replace(' ', '', str_replace(',', '.', $data[11])),
+                                'workplaces_three' => str_replace(' ', '', str_replace(',', '.', $data[12])),
+                                'workplaces_four' => str_replace(' ', '', str_replace(',', '.', $data[13])),
+                                'total_factors' => str_replace(' ', '', str_replace(',', '.', $data[14])),
+                                'start_year_factors' => str_replace(' ', '', str_replace(',', '.', $data[15])),
+                                'address' => $data[16],
+                                'sum_arrears' => str_replace(' ', '', str_replace(',', '.', $data[17])),
+                                'employed_public' => str_replace(' ', '', str_replace(',', '.', $data[18])),
+                                'employed_temporary' => str_replace(' ', '', str_replace(',', '.', $data[19])),
+                                'work_part' => str_replace(' ', '', str_replace(',', '.', $data[20])),
+                                'idle' => str_replace(' ', '', str_replace(',', '.', $data[21])),
+                                'vacations' => str_replace(' ', '', str_replace(',', '.', $data[22])),
+                                'dismissed' => str_replace(' ', '', str_replace(',', '.', $data[23])),
+                                'remote' => str_replace(' ', '', str_replace(',', '.', $data[24]))
+                            ]
+                        );
+                    }catch(Error){
+                        print_r($i);
+                    }
                 }
 
 

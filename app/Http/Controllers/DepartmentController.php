@@ -33,7 +33,7 @@ class DepartmentController extends Controller
 
         return Inertia::render('Settings/Departments/Create', [
             'permissions' => Permission::get(),
-            'users' => User::except(DB::table('department_user')->select('user_id')->get() )->get(),
+            'users' => User::whereNotIn('id', DB::table('department_user')->pluck('user_id')->all() )->get(),
             'entr_filter' => $b,
         ]);
     }
