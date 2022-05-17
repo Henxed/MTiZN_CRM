@@ -50,16 +50,18 @@ class DepartmentController extends Controller
 
         $workers = collect(Request::get('workers'))->push(Request::get('owner'));
 
-        $combination = [];
-        foreach ($workers as $item_id)
-        {
-            $pivot_data = ['admin' => 0];
-            if ($item_id == Request::get('owner')) $pivot_data = ['admin' => 1];
-            $combination[$item_id] = $pivot_data;
+        if($workers[0] !== null) {
+            $combination = [];
+            foreach ($workers as $item_id)
+            {
+                $pivot_data = ['admin' => 0];
+                if ($item_id == Request::get('owner')) $pivot_data = ['admin' => 1];
+                $combination[$item_id] = $pivot_data;
+            }
+            $dep->workers()->sync($combination);
         }
-
         $dep->permissions()->sync(Request::get('permissions'));
-        $dep->workers()->sync($combination);
+
 
         return Redirect::route('departments.edit', $dep->id)->with('success', 'Отдел добавлен!');
     }
