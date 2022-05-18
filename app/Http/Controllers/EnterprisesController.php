@@ -187,7 +187,6 @@ class EnterprisesController extends Controller
 
                 if((int)$data[0]){
 
-print_r($data);
                         $d = Enterprises::updateOrCreate(
                             ['rns' => $data[2], 'area_id' => $data[0], ],
                             [

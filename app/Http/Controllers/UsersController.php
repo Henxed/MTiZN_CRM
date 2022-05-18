@@ -36,7 +36,7 @@ class UsersController extends Controller
         return Inertia::render('Settings/Users/Create', [
             'roles' => Role::get(),
             'permissions' => Permission::get(),
-            'regions' => Areas::select('id', 'region')->where('areas_id', NULL)->get()
+            'regions' => Areas::select('id', 'region')->get()
         ]);
     }
 
@@ -74,7 +74,7 @@ class UsersController extends Controller
                 'permissions' => $user->permissions->flatten()->pluck('id'),
                 'areas' => $user->areas->flatten()->pluck('id')
             ],
-            'regions' => Areas::select('id', 'region')->where('areas_id', NULL)->get(),
+            'regions' => Areas::select('id', 'region')->get(),
             'roles' => Role::get(),
             'permissions' => Permission::get(),
         ]);
