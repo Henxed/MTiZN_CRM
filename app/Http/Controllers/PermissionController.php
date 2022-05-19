@@ -33,7 +33,8 @@ class PermissionController extends Controller
         ]);
 
         $permission = Permission::create([
-            'name' => Request::get('name')
+            'name' => Request::get('name'),
+            'title' => Request::get('title')
         ]);
 
         $permission->syncRoles(Request::only('role'));
@@ -49,6 +50,7 @@ class PermissionController extends Controller
             'permission' => [
                 'id' => $permission->id,
                 'name' => $permission->name,
+                'title' => $permission->title,
                 'role' => $permission->roles->flatten()->pluck('id')->all()
             ],
             'roles' => Role::all()
@@ -62,7 +64,7 @@ class PermissionController extends Controller
             'name' => ['required', 'max:50'],
         ]);
 
-        $permission->update(Request::only('name'));
+        $permission->update(Request::only(['name', 'title']));
         $permission->syncRoles(Request::only('role'));
 
         return Redirect::back()->with('success', 'Право доступа обновлено');

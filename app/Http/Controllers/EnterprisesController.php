@@ -12,10 +12,14 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Facades\Schema;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
+use App\Exports\EnterprisesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EnterprisesController extends Controller
 {
@@ -80,6 +84,65 @@ class EnterprisesController extends Controller
             'enterprises_count' => Enterprises::count(),
             'enterprises' => $enterprises,
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
+            'table' => $sort,
+            'queryBuilderProps' => [
+                'sort'    => $request->query('sort'), //по какому полю сортируем
+                'page'    => Paginator::resolveCurrentPage(), //текущая страница
+                'filter' => [
+                    'search'  => Arr::has($request->filter, 'search') ? $request->filter['search'] : null,
+                    'min_amy' => Arr::has($request->filter, 'min_amy') ? $request->filter['min_amy'] : null,
+                    'max_amy' => Arr::has($request->filter, 'max_amy') ? $request->filter['max_amy'] : null
+                ],
+            ]
+        ]);
+    }
+
+    public function all(Request $request)
+    {
+        // Поиск по ключевому слову. ?filter[search]=слово
+        $globalSearch = AllowedFilter::callback('search', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('name', 'LIKE', "%{$value}%")->orWhere('inn', 'LIKE', "%{$value}%");
+            });
+        });
+        $min_amy = AllowedFilter::callback('min_amy', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('amy', '>=', ($value));
+            });
+        });
+        $max_amy = AllowedFilter::callback('max_amy', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('amy', '<=', ($value));
+            });
+        });
+        $default = ['okvd_name', 'inn', 'status_id'];
+
+        $e = Schema::getColumnListing('enterprises');
+        $dep = [];
+        $i=0;
+        foreach ($e as $key => $value) {
+            if($value !== 'workplaces_three' && $value !== 'workplaces_four' && $value !== 'total_factors' && $value !== 'start_year_factors' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
+                $dep[$i] = $value;
+                $i++;
+            }
+        }
+
+        $sort = collect(($dep ?? $default));
+        $filter = collect($sort)->push($globalSearch, $min_amy, $max_amy);
+
+        // Сортировка + поиск + страницы
+        $enterprises = QueryBuilder::for(Enterprises::class)
+            ->defaultSort('name')
+            ->allowedSorts($sort->toArray())
+            ->allowedFilters($filter->toArray())
+            ->with('status')
+            ->whereNull('enterprises_id')
+            ->paginate()
+            ->withQueryString();
+
+        return Inertia::render('Maps/Enterprises/All', [
+            'enterprises_count' => Enterprises::count(),
+            'enterprises' => $enterprises,
             'table' => $sort,
             'queryBuilderProps' => [
                 'sort'    => $request->query('sort'), //по какому полю сортируем
@@ -172,6 +235,12 @@ class EnterprisesController extends Controller
         $enterprise->destroy($enterprise->id); //удаление
 
         return Redirect::route('regions.enterprises', $enterprise->area_id)->with('success', "Предприятие удалено!");
+    }
+
+    //выгрузка предприятий
+    public function export()
+    {
+        return Excel::download(new EnterprisesExport, 'предприятия.xlsx');
     }
 
     // Загрузка данных с excel файла

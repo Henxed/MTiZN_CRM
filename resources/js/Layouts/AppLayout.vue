@@ -7,7 +7,7 @@
 <div class="flex justify-between items-center py-4 px-5">
     <div class="flex grow items-center">
       <div class="menu-fake">
-        <button class="menu-side" :class="{'fixed sm:block' : menu}" @click="menu = !menu"><div class="burger" :class="{'is-active' : menu}"></div></button>
+        <button class="menu-side" :class="{'fixed sm:relative' : menu}" @click="menu = !menu"><div class="burger" :class="{'is-active' : menu}"></div></button>
       </div>
       <div class="text-sm sm:text-xl ml-2 sm:mx-8 text-slate-800 dark:text-slate-300 font-bold leading-none">
           Информационно аналитическая система
@@ -80,18 +80,26 @@
                 <i class="fi fi-rr-document"></i>
                 <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
-            <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Регионы' : ''}">
+            <a :href="route('map')" class="app-sidebar-link" :class="{'active' : route().current('map')}" v-tippy="{ placement : 'right', content: !menu ? 'Карта районов' : ''}">
+                <i class="fi fi-rr-map"></i>
+                <span class="text-slate-800 dark:text-slate-100">Карта районов</span>
+            </a>
+            <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Районы' : ''}">
                 <i class="fi fi-rr-map-marker"></i>
-                <span class="text-slate-800 dark:text-slate-100">Регионы</span>
+                <span class="text-slate-800 dark:text-slate-100">Районы</span>
+            </a>
+            <a v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" :href="route('stats.index')" class="app-sidebar-link" :class="{'active' : route().current('stats.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Статистика' : ''}">
+                <i class="fi fi-rr-chart-histogram"></i>
+                <span class="text-slate-800 dark:text-slate-100">Статистика</span>
             </a>
             <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Настройки' : ''}">
                 <i class="fi fi-rr-settings"></i>
                 <span class="text-slate-800 dark:text-slate-100">Настройки</span>
             </a>
         </div>
-
+    <div class="w-full">
         <slot></slot>
-
+    </div>
     </main>
 
     <flash />

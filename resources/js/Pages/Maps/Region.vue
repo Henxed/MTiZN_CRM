@@ -1,10 +1,10 @@
 <template>
-    <app-layout :title="`${region.region} - Регион`">
+    <app-layout :title="`${region.region} - Район`">
     <div class="lg:flex w-full">
         <div class="sidebar max-w-sm">
-            <div class="lg:sticky lg:top-12 mr-6">
+            <div class="lg:sticky lg:top-6 mr-6">
                 <div class="dark:text-slate-300 ">
-                    <div class="mb-5 text-lg text-center uppercase">Регионы</div>
+                    <div class="mb-5 text-lg uppercase">Регионы</div>
                     <perfect-scrollbar class="h-screen-85 max-h-screen pr-3">
                     <Link class="block py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
                             v-for="item in regions" :key="item.id" :ref="`region_${item.id}`"
@@ -20,7 +20,7 @@
 
             <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                 {{ region.region }}
-                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать регион'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
+                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <i class="fi fi-rr-edit"></i>
                 </Link>
             </div>
@@ -116,49 +116,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
-                    <div class="text-2xl font-bold dark:text-slate-300">Информация по сельским советам</div>
-                    <perfect-scrollbar class="pr-3">
-                    <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
-                        {{ index+1 }}. {{ item.name }}
-                    </Link>
-                    </perfect-scrollbar>
+                <div class="block">
+                    <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
+                        <div class="text-xl font-bold dark:text-slate-300">Информация по сельским советам</div>
+                        <perfect-scrollbar class="pr-3 mt-3">
+                        <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
+                            {{ index+1 }}. {{ item.name }}
+                        </Link>
+                        </perfect-scrollbar>
+                    </div>
                 </div>
-                <div class="">
-                    <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-4
+                <div class="block">
+                    <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-6
                     mb-6 rounded-xl dark:text-slate-300 leading-tight" v-if="sum_people_dismissal">
                         <div class="text-xl font-bold dark:text-slate-300">Численность работников</div>
 
-                        <div class="flex items-center my-3 p-3 bg-slate-600/10 rounded-lg">
+                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-400/10 rounded-lg">
                             <div class="w-4/6">Под риском увольнения</div>
                             <div class="w-2/6 text-center">
                                 <div class="text-2xl font-semibold">{{ sum_people_dismissal || '-' }}</div>
                                 <div class="text-sm -mt-2"> {{ declOfNum(sum_people_dismissal, ['человек', 'человека', 'человек']) }}</div>
                             </div>
                         </div>
-                        <div class="divide-y divide-slate-300 dark:divide-slate-500">
-                            <div class="flex items-center py-3" v-if="wp">
+                        <div class="divide-y divide-slate-300 dark:divide-slate-500/30">
+                            <div class="flex items-center p-3" v-if="wp">
                                 <div class="w-4/6">Работающих неполный рабочий день/неделю</div>
                                 <div class="w-2/6 text-center">
                                     <div class="text-2xl font-semibold">{{ wp || '-' }}</div>
                                     <div class="text-sm -mt-2"> {{ declOfNum(wp, ['человек', 'человека', 'человек']) }}</div>
                                 </div>
                             </div>
-                            <div class="flex items-center py-3" v-if="idle">
+                            <div class="flex items-center p-3" v-if="idle">
                                 <div class="w-4/6">Находящихся в простое по вине работодателя</div>
                                 <div class="w-2/6 text-center">
                                     <div class="text-2xl font-semibold">{{ idle || '-' }}</div>
                                     <div class="text-sm -mt-2"> {{ declOfNum(idle, ['человек', 'человека', 'человек']) }}</div>
                                 </div>
                             </div>
-                            <div class="flex items-center py-3" v-if="v">
+                            <div class="flex items-center p-3" v-if="v">
                                 <div class="w-4/6">В отпусках без сохранения зарплаты</div>
                                 <div class="w-2/6 text-center">
                                     <div class="text-2xl font-semibold">{{ v || '-' }}</div>
                                     <div class="text-sm -mt-2"> {{ declOfNum(v, ['человек', 'человека', 'человек']) }}</div>
                                 </div>
                             </div>
-                            <div class="flex items-center py-3" v-if="d">
+                            <div class="flex items-center p-3" v-if="d">
                                 <div class="w-4/6">Предполагаемых к увольнению</div>
                                 <div class="w-2/6 text-center">
                                     <div class="text-2xl font-semibold">{{ d || '-' }}</div>
@@ -174,16 +176,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 ">
-                        <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
-                            <div class="absolute -right-5 -bottom-8 text-indigo-300 dark:text-indigo-300/30 text-9xl"><i class="fi fi-rr-shop"></i></div>
-                            <div class="text-lg text-indigo-500">Предприятия</div>
+                    <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 ">
+                        <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-24 min-w-48 w-full max-w-64">
+                            <div class="absolute -right-2 -bottom-7 text-indigo-300 dark:text-indigo-300/30 text-8xl"><i class="fi fi-rr-shop"></i></div>
+                            <div class="p-2 text-xl font-bold text-indigo-400">Предприятия</div>
                         </Link>
 
-                        <Link :href="route('registry.list', ['npa', 'all'])" class="flex bg-amber-200 dark:bg-amber-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+                        <!-- <Link :href="route('registry.list', ['npa', 'all'])" class="flex bg-amber-200 dark:bg-amber-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                             <div class="absolute -right-5 -bottom-8 text-amber-300 dark:text-amber-300/30 text-9xl"><i class="fi fi-rr-document-signed"></i></div>
                             <div class="text-lg text-amber-500">Реестр санкций</div>
-                        </Link>
+                        </Link> -->
             <!--
                         <Link href="#" class="flex bg-green-200 dark:bg-green-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                             <div class="absolute -right-5 -bottom-10 text-green-300 dark:text-green-300/30 text-9xl"><i class="fi fi-rr-bank"></i></div>

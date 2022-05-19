@@ -10,6 +10,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\StatController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -32,12 +34,17 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('regions', RegionController::class);
     Route::get('regions/{id}/enterprises', [EnterprisesController::class, 'enterprises'])->name('regions.enterprises');
+    Route::get('map', [RegionController::class, 'map'])->name('map');
 
     Route::resource('enterprises', EnterprisesController::class)->except('create');
     Route::get('regions/{id}/enterprises/create', [EnterprisesController::class, 'create'])->name('regions.enterprises.create');
+    Route::get('regions/enterprises/all', [EnterprisesController::class, 'all'])->name('regions.enterprises.all');
+    Route::get('regions/enterprises/all/export', [EnterprisesController::class, 'export']);
 
     Route::resource('registry', RegistController::class);
     Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');
+
+    Route::get('statistics', [StatController::class, 'index'])->name('stats.index');
 
     Route::group(['prefix' => 'settings'], function () {
         Route::resource('users', UsersController::class)->middleware('permission:cp.users');

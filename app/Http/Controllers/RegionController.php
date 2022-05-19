@@ -24,8 +24,20 @@ class RegionController extends Controller
      */
     public function index()
     {
+        return Inertia::render('Maps/Index', [
+            'regions' => Areas::get(),
+            'regions_sum' => Areas::whereNull('areas_id')->count(),
+            'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
+            'enterprises_count' => Enterprises::count(),
+            'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
+        ]);
+    }
+
+    public function map()
+    {
         return Inertia::render('Maps/Regions', [
             'regions' => Areas::with('distance')->whereNotNull('d')->get(),
+            'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }

@@ -2,11 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Model\Stat;
+use App\Models\Stat;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class StatController extends Controller
 {
+    function index(){
+        return Inertia::render('Statistics/Index', [
+
+        ]);
+    }
+
     function get_stat($id) {
         $stat = Stat::find($id);
 
@@ -24,11 +31,6 @@ class StatController extends Controller
         ];
 
         return json_encode($data);
-    }
-
-    function index(){
-        $stats = Stat::all();
-        return view('cp.stats.index', compact('stats'));
     }
 
     public function create()

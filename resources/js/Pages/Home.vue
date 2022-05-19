@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 rounded-xl bg-white p-8 dark:bg-slate-800 w-full max-w-screen-2xl">
             <a :href="route('regions.index')" class="flex bg-orange-100 dark:bg-orange-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-orange-200 dark:text-orange-200/30 text-9xl"><i class="fi fi-rr-map-marker"></i></div>
-                <div class="text-lg text-orange-400">Карта регионов</div>
+                <div class="text-lg text-orange-400">Карта районов</div>
             </a>
 
             <a :href="route('registry.list', ['npa', 'all'])" class="flex bg-blue-100 dark:bg-blue-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
@@ -11,7 +11,7 @@
                 <div class="text-lg text-blue-400">Реестры</div>
             </a>
 
-            <a href="#" class="flex bg-pink-100 dark:bg-pink-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+            <a :href="route('stats.index')" v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" class="flex bg-pink-100 dark:bg-pink-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-pink-200 dark:text-pink-200/30 text-9xl"><i class="fi fi-rr-chart-histogram"></i></div>
                 <div class="text-lg text-pink-400">Статистика</div>
             </a>

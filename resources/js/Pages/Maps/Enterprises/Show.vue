@@ -5,7 +5,7 @@
             <div class="flex justify-between items-center align-center">
                 <div class="py-8">
                     <div class="text-3xl dark:text-slate-300">{{ enterprise.name }}</div>
-                    <Link :href="route('regions.enterprises', region.id)" v-tippy='"Вернуться к списку предприятий региона"' class="text-xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
+                    <Link :href="route('regions.enterprises', region.id)" v-tippy='"Вернуться к списку предприятий района"' class="text-xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
                             {{ region.region }}
                     </Link>
 

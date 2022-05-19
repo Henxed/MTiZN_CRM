@@ -1,6 +1,6 @@
 <template>
 <app-layout title="Права доступа">
-    <setting class="p-9">
+    <setting class="px-9">
 
         <div class="mb-6 flex justify-between items-center align-center">
         <h1 class="mb-8 font-bold text-3xl dark:text-slate-300">Права доступа</h1>
@@ -12,18 +12,18 @@
         <div class="bg-white rounded shadow overflow-x-auto">
         <table class="w-full whitespace-no-wrap table-fixed">
             <tr class="text-left font-bold">
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Название</th>
-            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Права доступа</th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Наименование</th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">Название доступа</th>
             </tr>
             <tr v-for="item in permission.data" :key="item.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
             <td class="border-t">
                 <Link class="px-5 py-4 flex items-center focus:text-pink-500" :href="route('permissions.edit', item.id)">
-                <span class="truncate">{{ item.name }}</span>
+                <span class="truncate">{{ item.title }}</span>
                 </Link>
             </td>
             <td class="border-t">
-                <Link class="px-4 py-4 flex items-center" :href="route('permissions.edit', item.id)" tabindex="-1">
-
+                <Link class="px-5 py-4 flex items-center focus:text-pink-500" :href="route('permissions.edit', item.id)">
+                <span class="truncate">{{ item.name }}</span>
                 </Link>
             </td>
             </tr>

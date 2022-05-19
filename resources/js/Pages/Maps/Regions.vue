@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Карта регионов">
+    <app-layout title="Карта районов">
 
         <div class="w-full grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-12  lg:max-w-screen-lg xl:max-w-screen-2xl">
             <div class="col-span-12 lg:col-span-12 xl:col-span-8 relative">
@@ -63,14 +63,14 @@
                             ВАКАНСИИ — 10819 мест
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
-                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{sum}}%
+                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{regions_sum_b}}%
                         </text>
                     </g>
                 </svg>
 
 
 
-                <div class="flex flex-col items-center justify-center mx-auto mt-10 ">
+                <div class="flex flex-col items-center justify-center mx-auto mt-5 ">
 
                     <div class="flex items-center bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-700  rounded-full"
@@ -107,7 +107,7 @@
                         <label class="tgl-btn rounded-xl" data-tg-off="OFF" data-tg-on="ON" for="ext.name"></label>
                     </div> -->
                 </div>
-                <div class="hidden sm:flex absolute right-9 top-1/4 w-1 h-40 rounded-xl flex-col justify-between" ref='linePct'></div>
+                <div class="hidden sm:flex absolute right-12 top-1/4 w-1 h-40 rounded-xl flex-col justify-between" ref='linePct'></div>
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4" v-if="reg">
                 <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg">
@@ -240,7 +240,8 @@
         },
         props: {
             regions: Array,
-            access_region: Array
+            access_region: Array,
+            regions_sum_b: Number
         },
         data() {
             return {
@@ -250,7 +251,7 @@
                 itemRefs: [],
                 listDistante: [],
                 stats: false,
-                sum: this.regions.reduce((p, c) => p + parseInt(c.lvl), 0), // "p" - предыдущий, "с" - текущий. "р" != массив региона, а "с" - индекс массива
+                //sum: this.regions.reduce((p, c) => p + parseInt(c.lvl), 0), // "p" - предыдущий, "с" - текущий. "р" != массив региона, а "с" - индекс массива
                 percentColors: {
                     'lvl': [
                         { pct: 0, color: { r: 161, g: 208, b: 106 } },  //белый

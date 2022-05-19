@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Карта регионов">
+    <app-layout title="Новый реестр">
         <form @submit.prevent="submit" class="sm:flex" >
         <div>
             <div class="sticky top-5 mb-5">

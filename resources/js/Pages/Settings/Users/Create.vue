@@ -22,7 +22,7 @@
                     <small class="text-sm text-slate-600 dark:text-slate-400/70 hover:opacity-80 cursor-pointer" @click="randomPassword(12)">Сгенерировать</small></dd>
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Доступ к регионам
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Доступ к районам
                         <p class="mt-1 text-sm opacity-80">Если пользователь должен редактировать регионы.</p>
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.regions" :options="regions" multiple :normalizer="normal_a" placeholder="Регионы..." id="role" /></dd>

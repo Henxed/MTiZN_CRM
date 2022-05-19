@@ -1,5 +1,5 @@
 <template>
-    <app-layout title="Редактировать пользователя">
+    <app-layout title="Редактировать район">
 
 <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-8">
@@ -21,8 +21,8 @@
                     <div class="shadow overflow-hidden sm:rounded-md">
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
 
-                            <text-input v-model="form.region" :error="errors.region" label="Название ЦЗН региона" />
-                            <text-input v-model="form.leader" :error="errors.leader" label="Глава региона" />
+                            <text-input v-model="form.region" :error="errors.region" label="Название ЦЗН района" />
+                            <text-input v-model="form.leader" :error="errors.leader" label="Глава района" />
                             <text-input v-model="form.city" :error="errors.city" label="Районый центр" />
                             <text-input v-model="form.population" :error="errors.population" label="Население" type="number" />
                             <text-input v-model="form.area"  @keyup="mask($event, 'area')" :error="errors.area" label="Площадь" />
