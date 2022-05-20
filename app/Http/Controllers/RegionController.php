@@ -30,6 +30,13 @@ class RegionController extends Controller
             'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
             'enterprises_count' => Enterprises::count(),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
+            'people_dismissal' => Enterprises::select(
+                DB::raw('SUM(`work_part`) as wp'),
+                DB::raw('SUM(`idle`) as idle'),
+                DB::raw('SUM(`vacations`) as v'),
+                DB::raw('SUM(`dismissed`) as d'),
+                DB::raw('SUM(`remote`) as r')
+            )->get()[0]
         ]);
     }
 
@@ -50,7 +57,13 @@ class RegionController extends Controller
             'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
-            'people_dismissal' => DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
+            'people_dismissal' => Enterprises::select(
+                DB::raw('SUM(`work_part`) as wp'),
+                DB::raw('SUM(`idle`) as idle'),
+                DB::raw('SUM(`vacations`) as v'),
+                DB::raw('SUM(`dismissed`) as d'),
+                DB::raw('SUM(`remote`) as r')
+            )->where('area_id', $id)->get()[0] //DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
         ]);
     }
 

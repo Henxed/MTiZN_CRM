@@ -58,6 +58,56 @@
                     </Link> -->
                 </div>
 
+                <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-6
+                    mb-6 rounded-xl dark:text-slate-300 leading-tight" v-if="sum_people_dismissal">
+                        <div class="text-xl font-bold dark:text-slate-300">Численность работников</div>
+
+                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-400/10 rounded-lg">
+                            <div class="w-4/6">Под риском увольнения</div>
+                            <div class="w-2/6 text-center">
+                                <div class="text-2xl font-semibold">{{ sum_people_dismissal || '-' }}</div>
+                                <div class="text-sm -mt-2"> {{ declOfNum(sum_people_dismissal, ['человек', 'человека', 'человек']) }}</div>
+                            </div>
+                        </div>
+                        <div class="divide-y divide-slate-300 dark:divide-slate-500/30">
+                            <div class="flex items-center p-3" v-if="wp">
+                                <div class="w-4/6">Работающих неполный рабочий день/неделю</div>
+                                <div class="w-2/6 text-center">
+                                    <div class="text-2xl font-semibold">{{ wp || '-' }}</div>
+                                    <div class="text-sm -mt-2"> {{ declOfNum(wp, ['человек', 'человека', 'человек']) }}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3" v-if="idle">
+                                <div class="w-4/6">Находящихся в простое по вине работодателя</div>
+                                <div class="w-2/6 text-center">
+                                    <div class="text-2xl font-semibold">{{ idle || '-' }}</div>
+                                    <div class="text-sm -mt-2"> {{ declOfNum(idle, ['человек', 'человека', 'человек']) }}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3" v-if="v">
+                                <div class="w-4/6">В отпусках без сохранения зарплаты</div>
+                                <div class="w-2/6 text-center">
+                                    <div class="text-2xl font-semibold">{{ v || '-' }}</div>
+                                    <div class="text-sm -mt-2"> {{ declOfNum(v, ['человек', 'человека', 'человек']) }}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-3" v-if="d">
+                                <div class="w-4/6">Предполагаемых к увольнению</div>
+                                <div class="w-2/6 text-center">
+                                    <div class="text-2xl font-semibold">{{ d || '-' }}</div>
+                                    <div class="text-sm -mt-2"> {{ declOfNum(d, ['человек', 'человека', 'человек']) }}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center pt-3" v-if="r">
+                                <div class="w-4/6">Находящихся на временной удаленной работе по инициативе работодателя</div>
+                                <div class="w-2/6 text-center">
+                                    <div class="text-2xl font-semibold">{{ r || '-' }}</div>
+                                    <div class="text-sm -mt-2"> {{ declOfNum(r, ['человек', 'человека', 'человек']) }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             </div>
         </div>
     </div>
@@ -85,13 +135,22 @@
             enterprises_count: Number,
             regions_sum: Number,
             regions_sum_b: Number,
+            people_dismissal: Array,
         },
         data() {
             return {
-
+                wp: parseInt(this.people_dismissal.wp) || 0,
+                idle: parseInt(this.people_dismissal.idle) || 0,
+                v: parseInt(this.people_dismissal.v) || 0,
+                d: parseInt(this.people_dismissal.d) || 0,
+                r: parseInt(this.people_dismissal.r) || 0,
             }
         },
-
+        computed:{
+            sum_people_dismissal() {
+                return this.wp + this.idle + this.v + this.d + this.r
+            }
+        },
         methods: {
             declOfNum: declOfNum,
 
