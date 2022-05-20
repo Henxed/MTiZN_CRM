@@ -171,7 +171,7 @@
                                     <div class="text-sm -mt-2"> {{ declOfNum(d, ['человек', 'человека', 'человек']) }}</div>
                                 </div>
                             </div>
-                            <div class="flex items-center pt-3" v-if="r">
+                            <div class="flex items-center p-3" v-if="r">
                                 <div class="w-4/6">Находящихся на временной удаленной работе по инициативе работодателя</div>
                                 <div class="w-2/6 text-center">
                                     <div class="text-2xl font-semibold">{{ r || '-' }}</div>
