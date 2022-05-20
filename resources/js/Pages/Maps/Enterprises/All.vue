@@ -25,7 +25,10 @@
                 <perfect-scrollbar class="table-container">
                 <table class="table-auto min-w-full h-3/6 relative">
                     <thead>
-                    <tr class="text-left font-bold">
+                    <tr class="text-left font-bold h-9">
+                        <th class="sticky top-0 z-30 max-w-sm w-full ">
+                            <div class="th px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">Район</div>
+                        </th>
                         <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="sticky top-0 z-30 max-w-sm w-full hover:cursor-pointer ">
                             <div class="th hover:bg-gray-300 hover:dark:bg-slate-700 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider"><span v-html="getSortIcon(item)"></span> {{ $t(`inputs.ent.${item}`) }} </div>
                         </th>
@@ -33,7 +36,11 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
-
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
+                            {{ item.areas.region }}
+                            </Link>
+                        </td>
                         <td v-for="t in table" :key="t" class="border-t dark:border-slate-500">
                             <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
                             {{ type(t, item) }}

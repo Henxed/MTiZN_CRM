@@ -30,7 +30,7 @@
                             <div class="text-sm">{{ declOfNum(enterprises_count, ['Предприятие', 'Предприятия', 'Предприятий']) }}</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-semibold">{{ `${regions_sum_b}%` || '-'}}</div>
+                            <div class="text-2xl font-semibold">{{ `${(regions_sum_b.u/(regions_sum_b.e+regions_sum_b.u)*100).toFixed(2)}%` || '-'}}</div>
                             <div class="text-sm">Безработицы</div>
                         </div>
                     </div>
@@ -80,7 +80,7 @@
             access_region: Array,
             enterprises_count: Number,
             regions_sum: Number,
-            regions_sum_b: Number,
+            regions_sum_b: Array,
         },
         data() {
             return {

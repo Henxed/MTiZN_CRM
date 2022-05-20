@@ -135,7 +135,7 @@ class EnterprisesController extends Controller
             ->defaultSort('name')
             ->allowedSorts($sort->toArray())
             ->allowedFilters($filter->toArray())
-            ->with('status')
+            ->with('status', 'areas')
             ->whereNull('enterprises_id')
             ->paginate()
             ->withQueryString();

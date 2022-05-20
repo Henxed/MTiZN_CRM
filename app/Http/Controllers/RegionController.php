@@ -27,7 +27,10 @@ class RegionController extends Controller
         return Inertia::render('Maps/Index', [
             'regions' => Areas::get(),
             'regions_sum' => Areas::whereNull('areas_id')->count(),
-            'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
+            'regions_sum_b' => Areas::select(
+                DB::raw('SUM(`unemployed`) as u'),
+                DB::raw('SUM(`employed`) as e'),
+            )->whereNull('areas_id')->get()[0],
             'enterprises_count' => Enterprises::count(),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
@@ -37,7 +40,10 @@ class RegionController extends Controller
     {
         return Inertia::render('Maps/Regions', [
             'regions' => Areas::with('distance')->whereNotNull('d')->get(),
-            'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
+            'regions_sum_b' => Areas::select(
+                DB::raw('SUM(`unemployed`) as u'),
+                DB::raw('SUM(`employed`) as e'),
+            )->whereNull('areas_id')->get()[0],
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }
