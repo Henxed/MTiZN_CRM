@@ -63,7 +63,7 @@
                             ВАКАНСИИ — 10819 мест
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
-                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{(regions_sum_b.u/(regions_sum_b.e+regions_sum_b.u)*100).toFixed(2)}}%
+                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{(regions_sum_b/regions.length).toFixed(2)}}%
                         </text>
                     </g>
                 </svg>
@@ -241,7 +241,7 @@
         props: {
             regions: Array,
             access_region: Array,
-            regions_sum_b: Array
+            regions_sum_b: Number
         },
         data() {
             return {

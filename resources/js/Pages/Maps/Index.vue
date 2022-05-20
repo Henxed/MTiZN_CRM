@@ -4,8 +4,12 @@
         <div class="sidebar max-w-sm">
             <div class="lg:sticky lg:top-12 mr-6">
                 <div class="dark:text-slate-300 ">
-                    <div class="mb-5 text-lg text-center uppercase">Районы</div>
-                    <perfect-scrollbar class="h-screen-85 max-h-screen pr-3">
+                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-gray-300 dark:bg-slate-600 dark:text-slate-300 text-13"
+                            :href="route('regions.index')">
+                        Сводная информация
+                    </Link>
+                    <div class="mt-4 text-lg uppercase pl-3 border-b border-b-slate-300">Регионы</div>
+                    <perfect-scrollbar class="h-screen-85 max-h-screen pr-3 mt-2">
                     <Link class="block py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
                             v-for="item in regions" :key="item.id" :ref="`region_${item.id}`"
                             :href="route('regions.show', item.id)">
@@ -30,8 +34,8 @@
                             <div class="text-sm">{{ declOfNum(enterprises_count, ['Предприятие', 'Предприятия', 'Предприятий']) }}</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-semibold">{{ `${(regions_sum_b.u/(regions_sum_b.e+regions_sum_b.u)*100).toFixed(2)}%` || '-'}}</div>
-                            <div class="text-sm">Безработицы</div>
+                            <div class="text-2xl font-semibold">{{ `${(regions_sum_b/regions_sum).toFixed(2)}%` || '-'}}</div>
+                            <div class="text-sm">Уровень безработицы</div>
                         </div>
                     </div>
                 </div>
@@ -80,7 +84,7 @@
             access_region: Array,
             enterprises_count: Number,
             regions_sum: Number,
-            regions_sum_b: Array,
+            regions_sum_b: Number,
         },
         data() {
             return {
