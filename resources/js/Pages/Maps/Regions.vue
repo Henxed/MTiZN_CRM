@@ -60,10 +60,10 @@
                             45901 — индивидуальные предприниматели.
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="170" fill="currentColor" text-anchor="left" font-size="14">
-                            ВАКАНСИИ — 10819 мест
+                            ВАКАНСИИ — {{ regions_sum.v }} мест
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
-                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{(regions_sum_b/regions.length).toFixed(2)}}%
+                            УРОВЕНЬ БЕЗРАБОТИЦЫ — 1.17%
                         </text>
                     </g>
                 </svg>
@@ -241,7 +241,7 @@
         props: {
             regions: Array,
             access_region: Array,
-            regions_sum_b: Number
+            regions_sum: Array
         },
         data() {
             return {

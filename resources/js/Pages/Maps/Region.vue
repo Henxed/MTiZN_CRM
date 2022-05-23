@@ -123,7 +123,7 @@
                 <div class="block">
                     <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
                         <div class="text-xl font-bold dark:text-slate-300">Информация по сельским советам</div>
-                        <perfect-scrollbar class="pr-3 mt-3">
+                        <perfect-scrollbar class="pr-3 mt-3 max-h-80">
                         <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
                             {{ index+1 }}. {{ item.name }}
                         </Link>

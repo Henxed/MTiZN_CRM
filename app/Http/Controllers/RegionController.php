@@ -42,9 +42,13 @@ class RegionController extends Controller
 
     public function map()
     {
+
         return Inertia::render('Maps/Regions', [
             'regions' => Areas::with('distance')->whereNotNull('d')->get(),
-            'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
+            'regions_sum' => Areas::whereNull('areas_id')->select(
+                DB::raw('SUM(`lvl`) as l'),
+                DB::raw('SUM(`vacancy`) as v')
+            )->first(),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }
@@ -63,7 +67,7 @@ class RegionController extends Controller
                 DB::raw('SUM(`vacations`) as v'),
                 DB::raw('SUM(`dismissed`) as d'),
                 DB::raw('SUM(`remote`) as r')
-            )->where('area_id', $id)->get()[0] //DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
+            )->where('area_id', $id)->get()->first()->toArray() //DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
         ]);
     }
 

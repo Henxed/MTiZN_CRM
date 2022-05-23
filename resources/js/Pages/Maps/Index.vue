@@ -34,7 +34,7 @@
                             <div class="text-sm">{{ declOfNum(enterprises_count, ['Предприятие', 'Предприятия', 'Предприятий']) }}</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-semibold">{{ `${(regions_sum_b/regions_sum).toFixed(2)}%` || '-'}}</div>
+                            <div class="text-2xl font-semibold">{{ `1.17%` || '-'}}</div>
                             <div class="text-sm">Уровень безработицы</div>
                         </div>
                     </div>
