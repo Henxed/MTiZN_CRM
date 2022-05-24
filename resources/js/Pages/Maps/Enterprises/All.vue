@@ -92,7 +92,7 @@
                         url: route('regions.index'),
                     },
                     {
-                        title: 'Предприятия все области',
+                        title: 'Предприятия всей области',
                         current: true,
                     },
                 ],

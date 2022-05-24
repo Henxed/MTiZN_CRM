@@ -111,6 +111,11 @@ class RegionController extends Controller
     // Загрузка данных с excel файла
     public function region_data_upload(Request $request)
     {
+        $request->validate([
+            'csv' => 'required',
+        ],[
+            'csv.required' => 'Вы не добавили файл!'
+        ]);
 
         if($request->hasFile('csv')) {
 
@@ -130,9 +135,9 @@ class RegionController extends Controller
 
             }
             fclose($f);
-
+            return Redirect::route('stats-load')->with('success', 'Данные районов массово обновлены!');
         }
 
-        return view('cp.region_data');
+
     }
 }

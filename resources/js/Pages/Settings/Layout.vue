@@ -1,34 +1,32 @@
 <template>
 
     <div class="md:flex w-full">
-        <div class="mb-4">
+        <div class="mb-4 border-l border-l-slate-300 dark:border-l-slate-700 ">
             <div class="sticky top-5">
-                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-5 shadow-lg rounded-2xl md:w-72">
-
-                    <div class="text-slate-400 w-full border-b-2 pb-2 uppercase border-gray-100 dark:border-slate-500 mb-4 text-md font-normal">
-                        Меню
+                <div class=" text-slate-900 dark:text-slate-300 p-5 md:w-72">
+                    <div class="text-slate-400 w-full border-b py-2 uppercase border-slate-300 dark:border-slate-500 mb-4 text-xs font-normal" v-if="$page.props.access.can.includes('cp.users')">
+                        Общее
                     </div>
-
-                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('users.*')}"
-                            :href="route('users.index')" v-if="$page.props.access.can.includes('cp.users') || $page.props.access.role.includes('super-admin')">
-                        Пользователи
-                    </Link>
-                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('roles.*')}"
-                            :href="route('roles.index')" v-if="$page.props.access.can.includes('cp.roles') || $page.props.access.role.includes('super-admin')">
-                        Роли
-                    </Link>
-                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('permissions.*')}"
-                            :href="route('permissions.index')" v-if="$page.props.access.can.includes('cp.permission') || $page.props.access.role.includes('super-admin')">
-                        Права доступа
-                    </Link>
-                    <Link class="block mb-4 p-2 px-4 rounded-xl bg-gray-200/50 dark:bg-slate-600/30"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : route().current('departments.*')}"
-                            :href="route('departments.index')" v-if="$page.props.access.can.includes('cp.departments') || $page.props.access.role.includes('super-admin')">
+                    <slink :href="route('stats-load')" :active="route().current('stats-load')" v-if="$page.props.access.can.includes('cp.stats-load') || $page.props.access.role.includes('super-admin')">
+                        Загрузка статистики районов
+                    </slink>
+                    <slink :href="route('departments.index')" :active="route().current('departments.*')" v-if="$page.props.access.can.includes('cp.departments') || $page.props.access.role.includes('super-admin')">
                         Отделы
-                    </Link>
+                    </slink>
+                    <div class="text-slate-400 w-full border-b py-2 uppercase border-slate-300 dark:border-slate-500 mb-4 text-xs font-normal" v-if="$page.props.access.can.includes('cp.users')">
+                        Администрирование
+                    </div>
+                    <slink :href="route('users.index')" :active="route().current('users.*')" v-if="$page.props.access.can.includes('cp.users') || $page.props.access.role.includes('super-admin')">
+                        Пользователи
+                    </slink>
+                    <slink :href="route('roles.index')" :active="route().current('roles.*')" v-if="$page.props.access.can.includes('cp.roles') || $page.props.access.role.includes('super-admin')">
+                        Роли
+                    </slink>
+                    <slink :href="route('permissions.index')" :active="route().current('permissions.*')" v-if="$page.props.access.can.includes('cp.permission') || $page.props.access.role.includes('super-admin')">
+                        Доступы
+                    </slink>
+
+
                 </div>
             </div>
         </div>
@@ -43,11 +41,13 @@
 <script>
     import { defineComponent } from 'vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
+    import Slink from '@/Shared/LinkSidebar'
 
     export default defineComponent({
         components: {
             Head,
             Link,
+            Slink,
         },
         props: ['class']
     })

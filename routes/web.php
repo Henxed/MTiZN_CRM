@@ -57,6 +57,12 @@ Route::group(['middleware' => 'auth'], function () {
         // Права доступа
         Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('permission:cp.permission');
 
+        Route::get('stats-load', function () {
+            return Inertia::render('Settings/StatsLoad');
+        })->name('stats-load')->middleware('can:cp.stats-load');
+        Route::post('stats-load/upload', [RegionController::class, 'region_data_upload'])->name('cp.upload.stats')->middleware('can:cp.stats-load');
+
+
         // Настройки
         Route::get('/', function () {
             return Inertia::render('Settings/Index');

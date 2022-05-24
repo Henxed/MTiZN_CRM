@@ -93,9 +93,9 @@
                 <i class="fi fi-rr-chart-histogram"></i>
                 <span class="text-slate-800 dark:text-slate-100">Статистика</span>
             </a>
-            <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Настройки' : ''}">
+            <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Администрирование' : ''}">
                 <i class="fi fi-rr-settings"></i>
-                <span class="text-slate-800 dark:text-slate-100">Настройки</span>
+                <span class="text-slate-800 dark:text-slate-100">Администрирование</span>
             </a>
         </div>
     <div class="w-full">

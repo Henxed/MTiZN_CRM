@@ -19,7 +19,10 @@ export default {
                 let text = this.$page.props.flash.error;
 
                 if(Object.keys(this.$page.props.errors).length > 0){
-                    text = "Заполните или выберите данные!"
+                    Object.values(this.$page.props.errors).forEach(element => {
+                        text = element
+                    });
+                    //text = "Заполните или выберите данные!"
                 }
                 this.$toast.open({message: text, type: 'error'})
             }
