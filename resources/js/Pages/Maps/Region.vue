@@ -22,13 +22,13 @@
         </div>
         <div class="w-5/6 max-w-screen-xl">
 
-            <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
-                {{ region.region }}
-                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="inline-block align-middle ml-3 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
+            <div class="font-bold p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9 sm:flex leading-none">
+                <span class="text-3xl text-slate-700 dark:text-slate-200 uppercase">{{ region.region }}</span>
+                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="text-2xl ml-4 mt-1 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <i class="fi fi-rr-edit"></i>
                 </Link>
             </div>
-            <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl grid grid-cols-1 sm:grid-cols-6 gap-4">
 
                 <div class="flex sm:col-span-2 items-center">
                     <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
@@ -37,6 +37,15 @@
                     <div class="ml-4 leading-snug">
                         <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Глава</div>
                         <div class="text-slate-500">{{ region.leader }}</div>
+                    </div>
+                </div>
+                <div class="flex sm:col-span-2  items-center">
+                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                        <i class="fi fi-rr-school"></i>
+                    </div>
+                    <div class="ml-4 leading-snug">
+                        <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Районый центр</div>
+                        <div class="text-slate-500">{{ region.city }}</div>
                     </div>
                 </div>
                 <div class="flex items-center">
@@ -50,6 +59,15 @@
                 </div>
                 <div class="flex items-center">
                     <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                        <i class="fi fi-rr-building pt-1"></i>
+                    </div>
+                    <div class="ml-4 leading-snug">
+                        <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Население</div>
+                        <div class="text-slate-500">{{ region.population }}</div>
+                    </div>
+                </div>
+                <div class="flex sm:col-span-2 items-center">
+                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
                         ₽
                     </div>
                     <div class="ml-4 leading-snug">
@@ -57,22 +75,13 @@
                         <div class="text-slate-500">{{ region.amw }}₽</div>
                     </div>
                 </div>
-                <div class="flex items-center">
+                <div class="flex sm:col-span-3 items-center">
                     <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                        <i class="fi fi-rr-school"></i>
+                        ₽
                     </div>
                     <div class="ml-4 leading-snug">
-                        <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Районый центр</div>
-                        <div class="text-slate-500">{{ region.city }}</div>
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
-                        <i class="fi fi-rr-building pt-1"></i>
-                    </div>
-                    <div class="ml-4 leading-snug">
-                        <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Население</div>
-                        <div class="text-slate-500">{{ region.population }}</div>
+                        <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Размер задолженности по заработной плате</div>
+                        <div class="text-slate-500">{{ sa }}₽</div>
                     </div>
                 </div>
             </div>
@@ -112,11 +121,11 @@
                         </div>
                         <div>
                             <div class="text-2xl font-semibold">{{ region.tension || '-' }}%</div>
-                            <div class="text-sm">Напряженность</div>
+                            <div class="text-sm">Напряженности</div>
                         </div>
                         <div >
                             <div class="text-2xl font-semibold">{{ region.vacancy || '-' }}</div>
-                            <div class="text-sm"> {{ declOfNum(region.vacancy, ['Вакансия', 'Вакансии', 'Вакансий']) }}</div>
+                            <div class="text-sm">{{ declOfNum(region.vacancy, ['Вакансия', 'Вакансии', 'Вакансий']) }}</div>
                         </div>
                     </div>
                 </div>
@@ -181,7 +190,7 @@
                         </div>
                     </div>
                     <div class="grid grid-cols-1 gap-6 sm:grid-cols-1 ">
-                        <Link :href="route('regions.enterprises', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-24 min-w-48 w-full max-w-64">
+                        <Link :href="route('regions.enterprises.index', region.id)" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-24 min-w-48 w-full max-w-64">
                             <div class="absolute -right-2 -bottom-7 text-indigo-300 dark:text-indigo-300/30 text-8xl"><i class="fi fi-rr-shop"></i></div>
                             <div class="p-2 text-xl font-bold text-indigo-400">Предприятия</div>
                         </Link>
@@ -226,15 +235,16 @@
             regions: Array,
             region: Array,
             access_region: Array,
-            people_dismissal: Array
+            entr_sum: Array
         },
         data() {
             return {
-                wp: parseInt(this.people_dismissal.wp) || 0,
-                idle: parseInt(this.people_dismissal.idle) || 0,
-                v: parseInt(this.people_dismissal.v) || 0,
-                d: parseInt(this.people_dismissal.d) || 0,
-                r: parseInt(this.people_dismissal.r) || 0,
+                wp: parseInt(this.entr_sum.wp) || 0,
+                idle: parseInt(this.entr_sum.idle) || 0,
+                v: parseInt(this.entr_sum.v) || 0,
+                d: parseInt(this.entr_sum.d) || 0,
+                r: parseInt(this.entr_sum.r) || 0,
+                sa: parseInt(this.entr_sum.sa) || 0,
             }
         },
         computed:{

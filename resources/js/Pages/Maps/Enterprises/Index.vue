@@ -2,12 +2,13 @@
     <app-layout :title="`${region.region} - Предприятия`">
 
         <div class="w-full max-w-screen-2xl">
+
             <div class="flex justify-between items-center align-center">
-                <div class="py-8">
-                    <Link :href="route('regions.show', region.id)" v-tippy='"Вернуться на страницу района"' class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
-                            {{ region.region }}
-                    </Link>
-                    <div class="text-2xl dark:text-slate-300">Предприятия района - {{ region_count }} (общее {{ enterprises_count }})</div>
+                <div class="py-4">
+                    <div class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 flex items-center ">
+                            Предприятия района
+                    </div>
+                    <div class="text-xl uppercase dark:text-slate-300">{{ region.region }}</div>
 
                 </div>
                 <Link class="btn-green ml-auto" :href="route('regions.enterprises.create', region.id)"
@@ -16,9 +17,19 @@
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
             </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
+                <breadcrumbs :data="bread" class="my-4"/>
+                <div class="justify-self-end text-slate-600 dark:text-slate-400">
+
+                        По району - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2 mr-2">{{ region_count }}</span>
+                        По области - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
+
+                </div>
+            </div>
+
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
                 <div class="flex">
-                    <div class="mr-auto mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
+                    <div class="mb-6 mr-auto flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
                         type="text"
                         placeholder="Поиск по названию или ИНН" v-model="queryBuilderData.filter.search">
@@ -42,7 +53,7 @@
                     <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
 
                         <td v-for="t in table" :key="t" class="border-t dark:border-slate-500">
-                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
+                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('regions.enterprises.show', [region.id, item.id])">
                             {{ type(t, item) }}
                             </Link>
                         </td>
@@ -68,6 +79,7 @@
     import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     import Pagination from '@/Shared/Pagination'
     import pickBy from "lodash/pickBy";
+    import Breadcrumbs from '@/Shared/Breadcrumbs'
 
 
     export default defineComponent({
@@ -76,7 +88,8 @@
             Head,
             Link,
             PerfectScrollbar,
-            Pagination
+            Pagination,
+            Breadcrumbs
         },
         props: {
             region: Array,
@@ -92,6 +105,20 @@
         },
         data() {
             return {
+                bread: [
+                    {
+                        title: 'Районы',
+                        url: route('regions.index'),
+                    },
+                    {
+                        title: this.region.region,
+                        url: route('regions.show', this.region.id),
+                    },
+                    {
+                        title: 'Предприятия',
+                        current: true,
+                    },
+                ],
                 amy_status: this.table.filter(e => e === 'amy').length ? true : false,
                 queryBuilderData: {
                     page: this.queryBuilderProps.page || 1,
@@ -105,9 +132,6 @@
 
 
             }
-        },
-        mounted(){
-
         },
         methods: {
             getSortIcon(name) {
@@ -136,10 +160,16 @@
                     case 'status_id':
                         return  item.status ? item.status.name : 'Без статуса'
                         break;
+                    case 'amy':
+                        return  item.amy ? this.ruble(item.amy)+'₽' : 'Нет данных'
+                        break;
                     default:
                         return  item[t] ? item[t] : 'Нет данных'
                         break;
                 }
+            },
+            ruble(number) {
+                return new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(number)
             }
         },
         computed: {

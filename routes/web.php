@@ -11,6 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\StatController;
+use Glhd\Gretel\Routing\ResourceBreadcrumbs;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,11 +34,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('enterprises_u', [EnterprisesController::class, 'data_upload'])->name('csv_u')->middleware('role:super-admin');
 
     Route::resource('regions', RegionController::class);
-    Route::get('regions/{id}/enterprises', [EnterprisesController::class, 'enterprises'])->name('regions.enterprises');
     Route::get('map', [RegionController::class, 'map'])->name('map');
 
-    Route::resource('enterprises', EnterprisesController::class)->except('create');
-    Route::get('regions/{id}/enterprises/create', [EnterprisesController::class, 'create'])->name('regions.enterprises.create');
+    Route::resource('regions.enterprises', EnterprisesController::class);
+
     Route::get('regions/enterprises/all', [EnterprisesController::class, 'all'])->name('regions.enterprises.all');
     Route::get('regions/enterprises/all/export', [EnterprisesController::class, 'export']);
 

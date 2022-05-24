@@ -1,11 +1,15 @@
 <template>
     <app-layout :title="'Редактирование предприятие - ' + enterprises.name">
         <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
-        <div class="py-8">
-            <Link :href="route('regions.enterprises', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ enterprises.name }}</Link>
-            <div class="text-lg text-slate-500 dark:text-slate-400">{{ $t(`inputs.ent.inn`) }}: {{ enterprises.inn }}</div>
-            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(enterprises.updated_at).format('LLL') }}</div>
+        <div class="py-4">
+            <Link :href="route('regions.enterprises.index', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ enterprises.name }}</Link>
         </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
+                <breadcrumbs :data="bread" class="my-4"/>
+                <div class="justify-self-end text-slate-600 dark:text-slate-400">
+                    <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(enterprises.updated_at).format('LLL') }}</div>
+                </div>
+            </div>
         <form @submit.prevent="update" class="border-t border-gray-200 dark:border-slate-700 py-6">
 
             <div class="mt-10 sm:mt-0">
@@ -139,7 +143,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
-
+import Breadcrumbs from '@/Shared/Breadcrumbs'
 
 export default {
     components: {
@@ -147,15 +151,35 @@ export default {
         LoadingButton,
         SelectInput,
         TextInput,
-        Link
+        Link,
+        Breadcrumbs
     },
     props: {
+        region: Array,
         enterprises: Array,
         statuses: Array,
         errors: Object,
     },
     data() {
         return {
+            bread: [
+                {
+                    title: 'Районы',
+                    url: route('regions.index'),
+                },
+                {
+                    title: this.region.region,
+                    url: route('regions.show', this.region.id),
+                },
+                {
+                    title: 'Предприятия',
+                    url: route('regions.enterprises.index', this.region.id),
+                },
+                {
+                    title: 'Редактирование',
+                    current: true,
+                },
+            ],
             form: this.$inertia.form({
                 name: this.enterprises.name,
                 amy: this.enterprises.amy,
@@ -196,12 +220,12 @@ export default {
 
         update() {
             this.$toast.open({message: 'Обновляю предприятие... Ожидайте!', type: 'default'})
-            this.form.put(route('enterprises.update', this.enterprises.id))
+            this.form.put(route('regions.enterprises.update', [this.enterprises.area_id, this.enterprises.id]))
         },
         destroy() {
             if (confirm('Вы уверены, что хотите удалить это предприятие?')) {
                 this.$toast.open({message: 'Удаляю предприятие... Ожидайте!', type: 'warning'})
-                this.$inertia.delete(route('enterprises.destroy', this.enterprises.id))
+                this.$inertia.delete(route('regions.enterprises.destroy', [this.enterprises.area_id, this.enterprises.id]))
             }
         },
         mask (e, model) {

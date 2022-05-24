@@ -3,10 +3,14 @@
 
         <div class="w-full max-w-screen-2xl">
             <div class="flex justify-between items-center align-center">
-                <div class="py-8">
+                <div class="py-4">
                     <div class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0">Все предприятия районов</div>
-                    <div class="text-xl dark:text-slate-300">Общее количество - {{ enterprises_count }}</div>
-
+                </div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
+                <breadcrumbs :data="bread" class="my-4"/>
+                <div class="justify-self-end text-slate-600 dark:text-slate-400">
+                    По области - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
                 </div>
             </div>
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
@@ -26,9 +30,6 @@
                 <table class="table-auto min-w-full h-3/6 relative">
                     <thead>
                     <tr class="text-left font-bold h-9">
-                        <th class="sticky top-0 z-30 max-w-sm w-full ">
-                            <div class="th px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider">Район</div>
-                        </th>
                         <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="sticky top-0 z-30 max-w-sm w-full hover:cursor-pointer ">
                             <div class="th hover:bg-gray-300 hover:dark:bg-slate-700 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider"><span v-html="getSortIcon(item)"></span> {{ $t(`inputs.ent.${item}`) }} </div>
                         </th>
@@ -36,13 +37,8 @@
                     </thead>
                     <tbody>
                     <tr v-for="item in enterprises.data" :key="item.id" class="hover:bg-slate-400/10 text-gray-500 dark:text-slate-400 text-sm">
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
-                            {{ item.areas.region }}
-                            </Link>
-                        </td>
                         <td v-for="t in table" :key="t" class="border-t dark:border-slate-500">
-                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('enterprises.show', item.id)">
+                            <Link class="px-5 py-4 flex items-center min-w-20" :href="route('regions.enterprises.show', [item.area_id, item.id])">
                             {{ type(t, item) }}
                             </Link>
                         </td>
@@ -68,7 +64,7 @@
     import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     import Pagination from '@/Shared/Pagination'
     import pickBy from "lodash/pickBy";
-
+    import Breadcrumbs from '@/Shared/Breadcrumbs'
 
     export default defineComponent({
         components: {
@@ -76,7 +72,8 @@
             Head,
             Link,
             PerfectScrollbar,
-            Pagination
+            Pagination,
+            Breadcrumbs
         },
         props: {
             enterprises_count: Number,
@@ -89,6 +86,16 @@
         },
         data() {
             return {
+                bread: [
+                    {
+                        title: 'Районы',
+                        url: route('regions.index'),
+                    },
+                    {
+                        title: 'Предприятия все области',
+                        current: true,
+                    },
+                ],
                 amy_status: this.table.filter(e => e === 'amy').length ? true : false,
                 queryBuilderData: {
                     page: this.queryBuilderProps.page || 1,
@@ -131,10 +138,16 @@
                     case 'status_id':
                         return  item.status ? item.status.name : 'Без статуса'
                         break;
+                    case 'amy':
+                        return  item.amy ? this.ruble(item.amy)+'₽' : 'Нет данных'
+                        break;
                     default:
                         return  item[t] ? item[t] : 'Нет данных'
                         break;
                 }
+            },
+            ruble(number) {
+                return new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(number)
             }
         },
         computed: {
@@ -176,7 +189,7 @@
 <style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css"/>
 <style scoped>
 .table-container {
-    height: 80vh;
+    height: 70vh;
 }
 .th{
     padding: 10px;

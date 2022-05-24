@@ -17,11 +17,7 @@ use Auth;
 class RegionController extends Controller
 {
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+    // Сводная информация про все районы
     public function index()
     {
         return Inertia::render('Maps/Index', [
@@ -30,16 +26,18 @@ class RegionController extends Controller
             'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
             'enterprises_count' => Enterprises::count(),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
-            'people_dismissal' => Enterprises::select(
+            'entr_sum' => Enterprises::select(
                 DB::raw('SUM(`work_part`) as wp'),
                 DB::raw('SUM(`idle`) as idle'),
                 DB::raw('SUM(`vacations`) as v'),
                 DB::raw('SUM(`dismissed`) as d'),
-                DB::raw('SUM(`remote`) as r')
+                DB::raw('SUM(`remote`) as r'),
+                DB::raw('SUM(`sum_arrears`) as sa'),
             )->get()[0]
         ]);
     }
 
+    // Карта всех районов
     public function map()
     {
 
@@ -61,17 +59,18 @@ class RegionController extends Controller
             'regions' => Areas::get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
-            'people_dismissal' => Enterprises::select(
+            'entr_sum' => Enterprises::select(
                 DB::raw('SUM(`work_part`) as wp'),
                 DB::raw('SUM(`idle`) as idle'),
                 DB::raw('SUM(`vacations`) as v'),
                 DB::raw('SUM(`dismissed`) as d'),
-                DB::raw('SUM(`remote`) as r')
+                DB::raw('SUM(`remote`) as r'),
+                DB::raw('SUM(`sum_arrears`) as sa'),
             )->where('area_id', $id)->get()->first()->toArray() //DB::select('SELECT SUM(`work_part`) as wp, SUM(`idle`) as idle, SUM(`vacations`) as v, SUM(`dismissed`) as d, SUM(`remote`) as r FROM `enterprises` WHERE `area_id` = ?', [$id])[0] ?? 0,
         ]);
     }
 
-
+    // редактирование района
     public function edit(Request $request, $id)
     {
 

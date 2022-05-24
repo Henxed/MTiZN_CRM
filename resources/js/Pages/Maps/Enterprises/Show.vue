@@ -2,20 +2,17 @@
     <app-layout :title="`${region.region} - Предприятия`">
 
         <div class="w-full max-w-screen-2xl">
-            <div class="flex justify-between items-center align-center">
-                <div class="py-8">
+            <div class="grid sm:grid-cols-4 items-center">
+                <div class="py-4 sm:col-span-3">
                     <div class="text-3xl dark:text-slate-300">{{ enterprise.name }}</div>
-                    <Link :href="route('regions.enterprises', region.id)" v-tippy='"Вернуться к списку предприятий района"' class="text-xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">
-                            {{ region.region }}
-                    </Link>
-
                 </div>
-                <Link class="btn-blue ml-auto" :href="route('enterprises.edit', enterprise.id)"
+                <Link class="btn-blue ml-auto" :href="route('regions.enterprises.edit', [region.id, enterprise.id])"
                 v-if="$page.props.access.can.includes('enterprise.create') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <span>Редактировать</span>
                     <span class="hidden md:inline"> предприятие</span>
                 </Link>
             </div>
+            <breadcrumbs :data="bread" class="my-4"/>
             <div class="rounded-xl shadow bg-white text-slate-900 dark:text-slate-400 dark:bg-slate-800 p-4">
 
                 <div class="px-4 py-5 sm:px-6">
@@ -143,13 +140,14 @@
     import { defineComponent } from 'vue';
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import AppLayout from '@/Layouts/AppLayout';
-
+    import Breadcrumbs from '@/Shared/Breadcrumbs'
 
     export default defineComponent({
         components: {
             AppLayout,
             Head,
             Link,
+            Breadcrumbs
         },
         props: {
             region: Array,
@@ -158,7 +156,24 @@
         },
         data() {
             return {
-
+                bread: [
+                    {
+                        title: 'Районы',
+                        url: route('regions.index'),
+                    },
+                    {
+                        title: this.region.region,
+                        url: route('regions.show', this.region.id),
+                    },
+                    {
+                        title: 'Предприятия',
+                        url: route('regions.enterprises.index', this.region.id),
+                    },
+                    {
+                        title: 'Полная информация',
+                        current: true,
+                    },
+                ],
             }
         },
         mounted(){

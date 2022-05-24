@@ -2,7 +2,7 @@
     <div>
     <Head :title="title" />
 
-    <jet-banner />
+
 
 <div class="flex justify-between items-center py-4 px-5">
     <div class="flex grow items-center">
@@ -69,6 +69,7 @@
     </div>
   </div>
 
+<jet-banner />
 
     <main class="flex h-full p-4 ">
         <div class="py-6 mr-6 flex-col sm:flex sm:self-start sm:sticky sm:top-2" :class="menu ? 'menu-side-open flex' : 'hidden'">

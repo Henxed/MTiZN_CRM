@@ -2,9 +2,10 @@
     <app-layout :title="'Новое предприятие - ' + region.region">
 
  <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
-        <div class="py-8">
-            <Link :href="route('regions.enterprises', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">Новое предприятие</Link>
+        <div class="py-4">
+            <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Новое предприятие</div>
         </div>
+        <breadcrumbs :data="bread" class="my-4"/>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
 
             <div class="mt-10 sm:mt-0">
@@ -123,7 +124,7 @@ import LoadingButton from '@/Shared/LoadingButton'
 import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
-
+import Breadcrumbs from '@/Shared/Breadcrumbs'
 
 export default {
     components: {
@@ -131,7 +132,8 @@ export default {
         LoadingButton,
         SelectInput,
         TextInput,
-        Link
+        Link,
+        Breadcrumbs
     },
     props: {
         region: Array,
@@ -140,6 +142,24 @@ export default {
     },
     data() {
         return {
+            bread: [
+                {
+                    title: 'Районы',
+                    url: route('regions.index'),
+                },
+                {
+                    title: this.region.region,
+                    url: route('regions.show', this.region.id),
+                },
+                {
+                    title: 'Предприятия',
+                    url: route('regions.enterprises.index', this.region.id),
+                },
+                {
+                    title: 'Новое',
+                    current: true,
+                },
+            ],
             form: this.$inertia.form({
                 name: '',
                 amy: '',
@@ -177,7 +197,7 @@ export default {
     methods: {
         submit() {
             this.$toast.open({message: 'Добавляю... Ожидайте!', type: 'default'})
-            this.form.post(route('enterprises.store'))
+            this.form.post(route('regions.enterprises.store', this.region.id))
         },
         mask (e, model) {
             this.$data['form'][model] = e.target.value.replace(',', '.').replace(/[^\d.]/g, '')

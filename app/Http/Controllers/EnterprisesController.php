@@ -24,9 +24,9 @@ use Maatwebsite\Excel\Facades\Excel;
 class EnterprisesController extends Controller
 {
 
-    public function show($id)
+    public function show($id, $enterprises)
     {
-        $data = Enterprises::with('status')->findOrfail($id);
+        $data = Enterprises::with('status')->findOrfail($enterprises);
 
         return Inertia::render('Maps/Enterprises/Show', [
             'region' => Areas::select(['id', 'region'])->findOrFail($data->area_id),
@@ -35,7 +35,7 @@ class EnterprisesController extends Controller
         ]);
     }
 
-    public function enterprises(Request $request, $id)
+    public function index(Request $request, $id)
     {
         // Поиск по ключевому слову. ?filter[search]=слово
         $globalSearch = AllowedFilter::callback('search', function ($query, $value) {
@@ -118,8 +118,8 @@ class EnterprisesController extends Controller
         $default = ['okvd_name', 'inn', 'status_id'];
 
         $e = Schema::getColumnListing('enterprises');
-        $dep = [];
-        $i=0;
+        $dep = ['region'];
+        $i=1;
         foreach ($e as $key => $value) {
             if($value !== 'workplaces_three' && $value !== 'workplaces_four' && $value !== 'total_factors' && $value !== 'start_year_factors' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
                 $dep[$i] = $value;
@@ -135,7 +135,11 @@ class EnterprisesController extends Controller
             ->defaultSort('name')
             ->allowedSorts($sort->toArray())
             ->allowedFilters($filter->toArray())
-            ->with('status', 'areas')
+            ->with('status')
+            ->select( 'enterprises.*', 'areas.region')
+            ->leftJoin('areas', function($join) {
+                $join->select('region')->on('areas.id', '=', 'enterprises.area_id');
+            })
             ->whereNull('enterprises_id')
             ->paginate()
             ->withQueryString();
@@ -187,10 +191,10 @@ class EnterprisesController extends Controller
 
         Enterprises::create($request->all());
 
-        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие добавлено!');
+        return Redirect::route('regions.enterprises.index', Req::get('area_id'))->with('success', 'Предприятие добавлено!');
     }
 
-    public function edit(Enterprises $enterprise)
+    public function edit($id, Enterprises $enterprise)
     {
         //$data = Enterprises::findOrfail($id);
 
@@ -198,13 +202,14 @@ class EnterprisesController extends Controller
             return abort(403);
         }
         return Inertia::render('Maps/Enterprises/Edit', [
+            'region' => Areas::select(['id', 'region'])->findOrfail($id),
             'enterprises' => $enterprise,
             'statuses' => Status::where('model', 'enterprises')->where('active', true)->get(),
         ]);
     }
 
 
-    public function update(Enterprises $enterprise)
+    public function update($id, Enterprises $enterprise)
     {
         Req::validate([
             'name' => 'required',
@@ -221,11 +226,11 @@ class EnterprisesController extends Controller
 
         $enterprise->update(Req::all());
 
-        return Redirect::route('regions.enterprises', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
+        return Redirect::route('regions.enterprises.index', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }
 
 
-    public function destroy(Enterprises $enterprise)
+    public function destroy($id, Enterprises $enterprise)
     {
 
         if(Auth::user()->checkArea($enterprise->area_id)){
@@ -234,7 +239,7 @@ class EnterprisesController extends Controller
 
         $enterprise->destroy($enterprise->id); //удаление
 
-        return Redirect::route('regions.enterprises', $enterprise->area_id)->with('success', "Предприятие удалено!");
+        return Redirect::route('regions.enterprises.index', $enterprise->area_id)->with('success', "Предприятие удалено!");
     }
 
     //выгрузка предприятий
