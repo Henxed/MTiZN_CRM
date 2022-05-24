@@ -4,15 +4,15 @@
 
 
 
-<div class="flex justify-between items-center py-4 px-5">
+<div class="flex justify-between items-center py-4 pr-5 pl-4">
     <div class="flex grow items-center">
-      <div class="menu-fake">
-        <button class="menu-side" :class="{'fixed sm:relative' : menu}" @click="menu = !menu"><div class="burger" :class="{'is-active' : menu}"></div></button>
-      </div>
-      <div class="text-sm sm:text-xl ml-2 sm:mx-8 text-slate-800 dark:text-slate-300 font-bold leading-none">
-          Информационно аналитическая система
-          <div class="text-sm font-normal hidden sm:block text-slate-500">Министерства труда и занятости населения Оренбургской области</div>
-      </div>
+
+    <logo class="w-10 h-10"/>
+
+    <div class="text-sm sm:text-xl ml-2 sm:mx-5 text-slate-800 dark:text-slate-300 font-bold leading-none">
+        Информационно аналитическая система
+        <div class="text-sm font-normal hidden sm:block text-slate-500">Министерства труда и занятости населения Оренбургской области</div>
+    </div>
       <!-- <div class="flex items-center bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10 overflow-hidden">
         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-800  rounded-full" type="text" placeholder="Поиск">
         <i class="fi fi-rr-search pt-1"></i>
@@ -75,27 +75,21 @@
         <div class="py-6 mr-6 flex-col sm:flex sm:self-start sm:sticky sm:top-2" :class="menu ? 'menu-side-open flex' : 'hidden'">
             <a :href="route('home')" class="app-sidebar-link" :class="{'active' : route().current('home')}" v-tippy="{ placement : 'right', content: !menu ? 'Главная' : '' }">
                 <i class="fi fi-rr-home"></i>
-                <span class="text-slate-800 dark:text-slate-100">Главная</span>
             </a>
             <a :href="route('registry.list', ['npa', 'all'])" class="app-sidebar-link" :class="{'active' : route().current('registry.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Реестры' : '' }">
                 <i class="fi fi-rr-document"></i>
-                <span class="text-slate-800 dark:text-slate-100">Реестры</span>
             </a>
             <a :href="route('map')" class="app-sidebar-link" :class="{'active' : route().current('map')}" v-tippy="{ placement : 'right', content: !menu ? 'Карта районов' : ''}">
                 <i class="fi fi-rr-map"></i>
-                <span class="text-slate-800 dark:text-slate-100">Карта районов</span>
             </a>
             <a :href="route('regions.index')" class="app-sidebar-link" :class="{'active' : route().current('regions.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Районы' : ''}">
                 <i class="fi fi-rr-map-marker"></i>
-                <span class="text-slate-800 dark:text-slate-100">Районы</span>
             </a>
             <a v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" :href="route('stats.index')" class="app-sidebar-link" :class="{'active' : route().current('stats.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Статистика' : ''}">
                 <i class="fi fi-rr-chart-histogram"></i>
-                <span class="text-slate-800 dark:text-slate-100">Статистика</span>
             </a>
             <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Администрирование' : ''}">
                 <i class="fi fi-rr-settings"></i>
-                <span class="text-slate-800 dark:text-slate-100">Администрирование</span>
             </a>
         </div>
     <div class="w-full">
@@ -120,6 +114,7 @@
     import Flash from '@/Shared/Flash.vue'
     import ThemeToggler from "@/Shared/ThemeToggler.vue";
     import Notify from '@/Shared/Notify.vue';
+    import Logo from '@/Jetstream/ApplicationLogo.vue'
 
     export default defineComponent({
         props: {
@@ -138,6 +133,7 @@
             Flash,
             ThemeToggler,
             Notify,
+            Logo
         },
         beforeMount() {
             this.$store.dispatch("initTheme");

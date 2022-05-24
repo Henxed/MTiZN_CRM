@@ -198,7 +198,6 @@
     flex-shrink: 0;
     width: 40px;
     height: 40px;
-    padding-left: 1.8rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -210,47 +209,10 @@
     }
     &.active:not(span){
         @apply bg-slate-800 text-slate-100 dark:text-slate-800 dark:bg-slate-100;
-        span {
-            @apply dark:text-slate-100;
-        }
-    }
-    span {
-        padding-left: 1.8rem;
-        font-size: 14px;
-        @apply w-0 inline-block overflow-x-hidden uppercase;
-
     }
 
     &:hover:not(.active):not(span){
         @apply bg-slate-800 text-slate-100 dark:text-slate-800 dark:bg-slate-100;
-    }
-}
-
-.menu-side-open {
-    width: 180px;
-    position: relative;
-    @media (max-width: 640px) {
-        top: 0;
-        left: 0;
-        padding-top: .5rem;
-        padding-left: 5rem;
-        position: fixed;
-        z-index: 900;
-        width: 100%;
-        height: 100%;
-        background: rgba(255, 255, 255, 0.83);
-
-        @supports(backdrop-filter: blur(5px)) {
-            backdrop-filter: blur(5px);
-            background: transparent;
-        }
-     }
-    .app-sidebar-link {
-        span {
-            overflow-x: unset;
-            line-height: 1;
-            display: flex;
-        }
     }
 }
 
