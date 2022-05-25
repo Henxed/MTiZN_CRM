@@ -52,7 +52,9 @@ export default {
     },
     methods: {
         submit() {
-            this.form.post(route('cp.upload.stats'))
+            this.form.post(route('cp.upload.stats')).then(() => {
+                this.form.csv = ''
+            })
         }
 
     },
