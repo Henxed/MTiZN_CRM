@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('stats-load', function () {
             return Inertia::render('Settings/StatsLoad');
-        })->name('stats-load')->middleware('can:cp.stats-load');
+        })->name('stats-load')->middleware('permission:cp.stats-load');
         Route::post('stats-load/upload', [RegionController::class, 'region_data_upload'])->name('cp.upload.stats')->middleware('can:cp.stats-load');
 
 

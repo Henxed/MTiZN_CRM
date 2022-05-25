@@ -4,7 +4,7 @@
         <div class="mb-4 border-l border-l-slate-300 dark:border-l-slate-700 ">
             <div class="sticky top-5">
                 <div class=" text-slate-900 dark:text-slate-300 p-5 md:w-72">
-                    <div class="text-slate-400 w-full border-b py-2 uppercase border-slate-300 dark:border-slate-500 mb-4 text-xs font-normal" v-if="$page.props.access.can.includes('cp.users')">
+                    <div class="text-slate-400 w-full border-b py-2 uppercase border-slate-300 dark:border-slate-500 mb-4 text-xs font-normal">
                         Общее
                     </div>
                     <slink :href="route('stats-load')" :active="route().current('stats-load')" v-if="$page.props.access.can.includes('cp.stats-load') || $page.props.access.role.includes('super-admin')">

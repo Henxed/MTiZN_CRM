@@ -88,7 +88,7 @@ export default {
         normalizer(node) {
             return {
                 id: node.id,
-                label: node.name,
+                label: node.title || node.name,
             }
         },
         normal_a(node) {
