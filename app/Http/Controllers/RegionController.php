@@ -124,16 +124,19 @@ class RegionController extends Controller
 
                 if((int)$data[0]){
                     //echo $data[0] . " - " . $data[2] . " - " . $data[3] . " - " .$data[4] . " - " . $data[5]. " <br> ";
-                    $region = Areas::findOrfail($data[0]);
-                    $region->unemployed = $data[2]; // количество безработных
-                    $region->lvl = $data[3]; // уровень безработных
-                    $region->vacancy = $data[4]; // вакансий
-                    $region->tension = $data[5]; // напряженность / Безработные к вакансиям, %
-                    $region->save();
+                    $region = Areas::find($data[0]);
+                    if($region){
+                        $region->unemployed = str_replace(' ', '', str_replace(',', '.', $data[2])) ?? 0; // количество безработных
+                        $region->lvl = str_replace(' ', '', str_replace(',', '.', $data[3])) ?? 0; // уровень безработных
+                        $region->vacancy = str_replace(' ', '', str_replace(',', '.', $data[4])) ?? 0; // вакансий
+                        $region->tension = str_replace(' ', '', str_replace(',', '.', $data[5])) ?? 0; // напряженность / Безработные к вакансиям, %
+                        $region->save();
+                    }else{
+                        return Redirect::back()->with('error', 'Такого района нет или другая ошибка!');
+                    }
                 }
-
-
             }
+
             fclose($f);
             return Redirect::route('stats-load')->with('success', 'Данные районов массово обновлены!');
         }
