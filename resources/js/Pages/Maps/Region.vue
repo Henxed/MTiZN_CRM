@@ -117,11 +117,11 @@
                         </div>
                         <div>
                             <div class="text-2xl font-semibold">{{ region.lvl || '-' }}%</div>
-                            <div class="text-sm">Безработица</div>
+                            <div class="text-sm">Уровень безработицы</div>
                         </div>
                         <div>
-                            <div class="text-2xl font-semibold">{{ region.tension || '-' }}%</div>
-                            <div class="text-sm">Напряженности</div>
+                            <div class="text-2xl font-semibold">{{ region.tension || '-' }}</div>
+                            <div class="text-sm">Напряженность</div>
                         </div>
                         <div >
                             <div class="text-2xl font-semibold">{{ region.vacancy || '-' }}</div>

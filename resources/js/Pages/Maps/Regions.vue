@@ -91,7 +91,7 @@
                     <div class="flex">
                         <input class="peer hidden" id="stats_t" type="radio" v-model="stats" value="tension" />
                         <label for="stats_t" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
-                            Уровень напряженности
+                            Напряженность
                         </label>
                     </div>
                     <div class="flex">
