@@ -23,7 +23,7 @@ mix.js('resources/js/app.js', 'public/js').vue()
     })
     //.browserSync('map.loc')
     .webpackConfig(require('./webpack.config'))
-    .i18n('./resources/lang')
+    .i18n('resources/lang')
 if (mix.inProduction()) {
-    mix.version().i18n('resources/lang');
+    mix.version();
 }

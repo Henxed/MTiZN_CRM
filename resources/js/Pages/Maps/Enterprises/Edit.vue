@@ -93,7 +93,6 @@
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
                             <text-input v-model="form.amy" :error="errors.amy" :label="$t(`inputs.ent.amy`)" type='number'/>
                             <text-input v-model="form.total_jobs" :error="errors.total_jobs" :label="$t(`inputs.ent.total_jobs`)" type="number"/>
-                            <text-input v-model="form.cw" :error="errors.cw" :label="$t(`inputs.ent.cw`)" type='number'/>
                             <text-input v-model="form.ane" :error="errors.ane" :label="$t(`inputs.ent.ane`)" type='number' />
                             <text-input v-model="form.nde" :error="errors.nde" :label="$t(`inputs.ent.nde`)" type='number' />
                             <text-input v-model="form.factors" :error="errors.factors" :label="$t(`inputs.ent.factors`)" type="number"/>
@@ -183,7 +182,6 @@ export default {
             form: this.$inertia.form({
                 name: this.enterprises.name,
                 amy: this.enterprises.amy,
-                cw: this.enterprises.cw,
                 inn: this.enterprises.inn,
                 area_id: this.enterprises.area_id,
                 rns: this.enterprises.rns,

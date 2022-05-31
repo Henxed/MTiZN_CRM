@@ -60,8 +60,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('stats-load', [SettingsController::class, 'statsLoad'])->name('stats-load')->middleware('permission:cp.stats-load');
         Route::post('stats-load/upload', [RegionController::class, 'region_data_upload'])->name('cp.upload.stats')->middleware('permission:cp.stats-load');
 
-        Route::get('entr-load', [SettingsController::class, 'entrLoad'])->name('entr-load')->middleware('permission:cp.stats-load');
-        Route::post('entr-load/upload', [SettingsController::class, 'uploadEntrLoad'])->name('cp.upload.entr')->middleware('permission:cp.stats-load');
+        Route::get('entr-load', [SettingsController::class, 'entrLoad'])->name('entr-load')->middleware('permission:cp.entr-load');
+        Route::post('entr-load/upload', [SettingsController::class, 'uploadEntrLoad'])->name('cp.upload.entr')->middleware('permission:cp.entr-load');
 
 
         // Настройки
