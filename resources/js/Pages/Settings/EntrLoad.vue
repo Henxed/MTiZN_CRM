@@ -1,22 +1,11 @@
 <template>
     <app-layout title="Загрузка статистики">
         <setting class="pr-9">
-        <div class="flex mb-3 rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
-            <form @submit.prevent="setLvl">
-                <div class="px-3 mb-3 grid grid-cols-2 items-center">
-                    <text-input v-model="lvl" @keyup="mask($event, 'lvl')" label="Уровень безработицы по области" />
-                    <div class="mt-5 ml-2">
-                        <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Сохранить</loading-button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-        <div class="flex rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="flex mb-4 rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
             <form @submit.prevent="submit">
                 <div class="px-3 mb-3">
-                    <div class="text-xl">Как сохранить в CSV?</div>
-                    <div>Скачайте <a href="../help/csv-preview.csv" class="text-pink-600">пример</a> с ID регионами в .csv, чтобы подготовить к загрузке. Первая строка и строки без региона - игнорируются!</div>
+                    <div class="text-xl">Загрузка Отдела трудоустройства и специальных программ</div>
+                    <div>Скачайте <a href="../help/csv-preview.csv" class="text-pink-600">подготовленный файл</a> с ID регионами в .csv, чтобы подготовить к загрузке. Первая строка и строки без региона - игнорируются! Для каждого региона нужно ставить ID, а название района не важно.</div>
                     <div>
                         <img src="../../../images/csv-save.jpeg" class="shadow-lg">
                     </div>
@@ -28,6 +17,11 @@
 
                 <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Загрузить</loading-button>
             </form>
+        </div>
+        <div class="rounded-xl bg-red-300 text-slate-900 dark:text-slate-300 p-4 dark:bg-red-500/50 w-full max-w-screen-2xl" v-if="this.$page.props.flash.error">
+            <div class="text-xl font-bold">Все предприятия обновлены, кроме: (не обновляйте страницу, чтобы не потерять данные)</div>
+            <div v-for="(item, i) in this.$page.props.flash.error" :key="item">{{ i+1 }}. <strong>{{ item.inn }}</strong> отсутсвует в районе <strong>{{ item.region }}</strong> </div>
+
         </div>
         </setting>
     </app-layout>
@@ -53,30 +47,19 @@ export default {
     },
     props: {
         errors: Object,
-        lvl_all: Array,
     },
     data() {
         return {
             form: this.$inertia.form({
                 csv: ''
             }),
-            lvl: this.lvl_all.value || 0,
         }
     },
     methods: {
         submit() {
-            this.form.post(route('cp.upload.stats')).then(() => {
+            this.form.post(route('cp.upload.entr')).then(() => {
                 this.form.csv = ''
             })
-        },
-        setLvl() {
-            axios.post(route('set-lvl'), {
-                    lvl_all: this.lvl
-            }).then((response) => {
-                this.$toast.open({message: 'Данные сохранены!', type: 'success'})
-            }).catch((error) => {
-                this.$toast.open({message: "Произошла ошибка при сохранение!", type: 'error'})
-            });
         },
         mask (e, model) {
             this.$data[model] = e.target.value.replace(',', '.').replace(/[^\d.]/g, '')
