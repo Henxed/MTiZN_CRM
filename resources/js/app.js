@@ -14,7 +14,7 @@ import storeState from "./store";
 import moment from 'moment'
 moment.locale('ru');
 
-const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
+const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'CRM';
 
 const store = createStore({
     modules: {

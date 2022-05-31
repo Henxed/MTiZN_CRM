@@ -21,7 +21,7 @@
         "browser-sync": "^2.27.5",
         "browser-sync-webpack-plugin": "^2.3.0",
         "copy-webpack-plugin": "^9.0.1",
-        "imagemin-webpack-plugin": "^2.1.5",
+        "imagemin-webpack-plugin": "^1.5.2",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.4.4",

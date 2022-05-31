@@ -7,6 +7,7 @@ use App\Models\Enterprises;
 use App\Models\AreasExtra;
 use App\Models\AreasLog;
 use App\Models\AreasUser;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Redirect;
@@ -21,6 +22,7 @@ class RegionController extends Controller
     public function index()
     {
         return Inertia::render('Maps/Index', [
+            'lvl_all' => Setting::where('key', 'lvl_all')->first(),
             'regions' => Areas::get(),
             'regions_sum' => Areas::whereNull('areas_id')->count(),
             'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
@@ -42,11 +44,9 @@ class RegionController extends Controller
     {
 
         return Inertia::render('Maps/Regions', [
+            'lvl_all' => Setting::where('key', 'lvl_all')->first(),
             'regions' => Areas::with('distance')->whereNotNull('d')->get(),
-            'regions_sum' => Areas::whereNull('areas_id')->select(
-                DB::raw('SUM(`lvl`) as l'),
-                DB::raw('SUM(`vacancy`) as v')
-            )->first(),
+            'vacancy' => Areas::whereNull('areas_id')->sum('vacancy'),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
         ]);
     }

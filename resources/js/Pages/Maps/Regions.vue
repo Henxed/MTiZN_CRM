@@ -60,10 +60,10 @@
                             45901 — индивидуальные предприниматели.
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="170" fill="currentColor" text-anchor="left" font-size="14">
-                            ВАКАНСИИ — {{ regions_sum.v }} мест
+                            ВАКАНСИИ — {{ vacancy }} мест
                         </text>
                         <text class="text-slate-500 dark:text-slate-400" x="500" y="190" fill="currentColor" text-anchor="left" font-size="14">
-                            УРОВЕНЬ БЕЗРАБОТИЦЫ — 1.17%
+                            УРОВЕНЬ БЕЗРАБОТИЦЫ — {{ lvl_all.value }}%
                         </text>
                     </g>
                 </svg>
@@ -239,9 +239,10 @@
             Link,
         },
         props: {
+            lvl_all: Array,
             regions: Array,
             access_region: Array,
-            regions_sum: Array
+            vacancy: Number
         },
         data() {
             return {

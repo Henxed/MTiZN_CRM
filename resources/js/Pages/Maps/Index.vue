@@ -33,7 +33,7 @@
                     <div class="text-sm">{{ declOfNum(enterprises_count, ['Предприятие', 'Предприятия', 'Предприятий']) }}</div>
                 </div>
                 <div>
-                    <div class="text-2xl font-semibold">{{ `1.17%` || '-'}}</div>
+                    <div class="text-2xl font-semibold">{{ `${lvl_all.value}%` || '-'}}</div>
                     <div class="text-sm">Уровень безработицы</div>
                 </div>
                 <div>
@@ -131,6 +131,7 @@
             regions_sum: Number,
             regions_sum_b: Number,
             entr_sum: Array,
+            lvl_all: Array,
         },
         data() {
             return {

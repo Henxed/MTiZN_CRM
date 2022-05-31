@@ -121,7 +121,7 @@ class EnterprisesController extends Controller
         $dep = ['region'];
         $i=1;
         foreach ($e as $key => $value) {
-            if($value !== 'workplaces_three' && $value !== 'workplaces_four' && $value !== 'total_factors' && $value !== 'start_year_factors' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
+            if($value !== 'cw' && $value !== 'workplaces_three' && $value !== 'workplaces_four' && $value !== 'total_factors' && $value !== 'start_year_factors' && strpos(__('inputs.ent.'.$value), 'inputs.ent') === false){
                 $dep[$i] = $value;
                 $i++;
             }

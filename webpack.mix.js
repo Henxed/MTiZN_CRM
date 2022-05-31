@@ -21,9 +21,9 @@ mix.js('resources/js/app.js', 'public/js').vue()
             require("tailwindcss"),
         ],
     })
-    // .browserSync('a635-145-255-21-216.ngrok.io')
+    //.browserSync('map.loc')
     .webpackConfig(require('./webpack.config'))
-    .i18n('resources/lang')
+    //.i18n('./resources/lang')
 if (mix.inProduction()) {
     mix.version();
 }

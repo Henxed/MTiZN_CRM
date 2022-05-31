@@ -11,7 +11,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\StatController;
-use Glhd\Gretel\Routing\ResourceBreadcrumbs;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,10 +57,11 @@ Route::group(['middleware' => 'auth'], function () {
         // Права доступа
         Route::resource('permissions', PermissionController::class)->except(['show'])->middleware('permission:cp.permission');
 
-        Route::get('stats-load', function () {
-            return Inertia::render('Settings/StatsLoad');
-        })->name('stats-load')->middleware('permission:cp.stats-load');
+        Route::get('stats-load', [SettingsController::class, 'statsLoad'])->name('stats-load')->middleware('permission:cp.stats-load');
         Route::post('stats-load/upload', [RegionController::class, 'region_data_upload'])->name('cp.upload.stats')->middleware('permission:cp.stats-load');
+
+        Route::get('entr-load', [SettingsController::class, 'entrLoad'])->name('entr-load')->middleware('permission:cp.stats-load');
+        Route::post('entr-load/upload', [RegionController::class, 'region_data_upload'])->name('cp.upload.stats')->middleware('permission:cp.stats-load');
 
 
         // Настройки
