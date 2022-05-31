@@ -90,7 +90,7 @@ export default {
             normalizer(node) {
                 return {
                     id: node.id,
-                    label: node.title,
+                    label: node.title || node.name,
                 }
             },
             enterprise(node) {

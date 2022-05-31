@@ -77,7 +77,6 @@ export default {
     data() {
         return {
         form: this.$inertia.form({
-            _method: 'put',
             name: this.users.name,
             email: this.users.email,
             password: this.users.password,
@@ -110,7 +109,7 @@ export default {
             this.form.password = pass;
         },
         submit() {
-            this.form.post(this.route('users.update', this.users.id), {
+            this.form.put(this.route('users.update', this.users.id), {
             onSuccess: () => this.form.reset('password'),
         })
         },
