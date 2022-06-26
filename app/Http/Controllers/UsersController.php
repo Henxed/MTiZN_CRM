@@ -31,6 +31,13 @@ class UsersController extends Controller
         ]);
     }
 
+    public function show($username)
+    {
+        return Inertia::render('Profile/User', [
+            'user_info' => User::where('username', $username)->firstOrFail()
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render('Settings/Users/Create', [

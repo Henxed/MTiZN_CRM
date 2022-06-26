@@ -194,7 +194,7 @@ export default {
     },
     methods: {
         submit() {
-            this.$toast.open({message: 'Добавляю... Ожидайте!', type: 'default'})
+            this.$toast.show('Добавляю... Ожидайте!')
             this.form.post(route('regions.enterprises.store', this.region.id))
         },
         mask (e, model) {

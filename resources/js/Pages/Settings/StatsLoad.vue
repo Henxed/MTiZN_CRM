@@ -6,7 +6,7 @@
                 <div class="px-3 mb-3 grid grid-cols-2 items-center">
                     <text-input v-model="lvl" @keyup="mask($event, 'lvl')" label="Уровень безработицы по области" />
                     <div class="mt-5 ml-2">
-                        <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Сохранить</loading-button>
+                        <loading-button :loading="lvlBtn" class="btn-green mx-auto w-full max-w-xs" type="submit">Сохранить</loading-button>
                     </div>
                 </div>
 
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="mt-3">Загрузите <strong>.csv</strong> с регионами</div>
-                    <file-input v-model="form.csv" accept=".csv"/>
+                    <file-input v-model="form.csv" accept=".csv" required/>
 
                 </div>
 
@@ -61,6 +61,7 @@ export default {
                 csv: ''
             }),
             lvl: this.lvl_all.value || 0,
+            lvlBtn: false,
         }
     },
     methods: {
@@ -70,12 +71,17 @@ export default {
             })
         },
         setLvl() {
+            this.lvlBtn = !this.lvlBtn
             axios.post(route('set-lvl'), {
                     lvl_all: this.lvl
             }).then((response) => {
-                this.$toast.open({message: 'Данные сохранены!', type: 'success'})
+                this.lvlBtn = !this.lvlBtn
+                this.$toast.success('Новый уровень безработицы установлен!', {
+                    title: 'Сохранил',
+                })
             }).catch((error) => {
-                this.$toast.open({message: "Произошла ошибка при сохранение!", type: 'error'})
+                this.lvlBtn = !this.lvlBtn
+                this.$toast.error("Произошла ошибка при сохранение!")
             });
         },
         mask (e, model) {

@@ -21,7 +21,7 @@
             leave-to-class="transform opacity-0 scale-95">
             <div class="absolute z-50 mt-2 rounded-md shadow-lg w-80 bg-white dark:bg-slate-700 top-10 right-0" v-show="isOpen" >
                 <div class="px-4 p-3 font-bold text-center">Уведомления</div>
-                <perfect-scrollbar class="px-4 max-h-60 h-full" v-if="data.length" :options="{suppressScrollX: true}">
+                <perfect-scrollbar class="px-4 max-h-60 h-full pb-4" v-if="data.length" :options="{suppressScrollX: true}">
                     <div class="relative group px-3 py-2 my-2 rounded-xl leading-none" v-for="item in data" :key="item.id" :ref="item.id"
                     :class="item.read_at ? 'bg-slate-200 dark:bg-slate-600 text-slate-800/40 dark:text-slate-400' : 'bg-gray-200 dark:bg-slate-600 dark:text-slate-300'">
                         <div class="flex items-center">

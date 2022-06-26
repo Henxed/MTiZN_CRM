@@ -9,25 +9,25 @@
         </template>
 
         <template #content>
-            <h3 class="text-lg font-medium text-gray-900" v-if="twoFactorEnabled">
+            <h3 class="text-lg font-medium text-gray-900 dark:text-slate-200" v-if="twoFactorEnabled">
                 Вы включили двухфакторную аутентификацию.
             </h3>
 
-            <h3 class="text-lg font-medium text-gray-900" v-else>
+            <h3 class="text-lg font-medium text-gray-900 dark:text-slate-200" v-else>
                 Вы не включили двухфакторную аутентификацию.
             </h3>
 
-            <div class="mt-3 max-w-xl text-sm text-gray-600">
+            <div class="mt-3 max-w-xl text-sm text-gray-600 dark:text-slate-400">
                 <p>
-                    Если включена двухфакторная аутентификация, во время аутентификации вам будет предложено ввести безопасный случайный маркер. Вы можете получить этот токен из приложения Authy 2-Factor или Google Authenticator вашего телефона.
+                    Если включена двухфакторная аутентификация, во время аутентификации вам будет предложено ввести безопасный случайный код (токен). Вы можете получить этот код (токен) из приложения <a href="https://authy.com/download/" target="_blank" class="text-red-500 hover:underline" title="Откроется в новом окне">Authy 2-Factor</a> или Google Authenticator вашего устройства.
                 </p>
             </div>
 
             <div v-if="twoFactorEnabled">
                 <div v-if="qrCode">
-                    <div class="mt-4 max-w-xl text-sm text-gray-600">
+                    <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-slate-400">
                         <p class="font-semibold">
-                            Теперь включена двухфакторная аутентификация. Отсканируйте следующий QR-код с помощью приложения-аутентификатора вашего телефона.
+                            Двухфакторная аутентификация включена. Отсканируйте QR-код с помощью приложения-аутентификатора вашего устройства.
                         </p>
                     </div>
 
@@ -36,13 +36,13 @@
                 </div>
 
                 <div v-if="recoveryCodes.length > 0">
-                    <div class="mt-4 max-w-xl text-sm text-gray-600">
+                    <div class="mt-4 max-w-xl text-sm text-gray-600 dark:text-slate-400">
                         <p class="font-semibold">
-                            Храните эти коды восстановления в безопасном менеджере паролей. Они могут быть использованы для восстановления доступа к вашей учетной записи, если ваше устройство двухфакторной аутентификации утеряно.
+                            Храните эти ключи (коды) восстановления в безопасном менеджере паролей. Они могут быть использованы для восстановления доступа к вашей учетной записи, если ваше устройство будет недоступно для генерации кода (токена).
                         </p>
                     </div>
 
-                    <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 rounded-lg">
+                    <div class="grid gap-1 max-w-xl mt-4 px-4 py-4 font-mono text-sm bg-gray-100 dark:bg-slate-600 dark:text-slate-300 rounded-lg">
                         <div v-for="code in recoveryCodes" :key="code">
                             {{ code }}
                         </div>

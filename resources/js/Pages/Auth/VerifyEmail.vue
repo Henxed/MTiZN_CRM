@@ -1,5 +1,5 @@
 <template>
-    <Head title="Email Verification" />
+    <Head title="Проверка электронной почты" />
 
     <jet-authentication-card>
         <template #logo>
@@ -7,20 +7,20 @@
         </template>
 
         <div class="mb-4 text-sm text-gray-600">
-            Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.
+            Спасибо, что зарегистрировались! Прежде чем приступить к работе, не могли бы вы подтвердить свой адрес электронной почты, нажав на ссылку, которую мы только что отправили вам по электронной почте? Если вы не получили письмо, мы с радостью вышлем вам другое.
         </div>
 
         <div class="mb-4 font-medium text-sm text-green-600" v-if="verificationLinkSent" >
-            A new verification link has been sent to the email address you provided during registration.
+            На адрес электронной почты, указанный вами при регистрации, была отправлена новая ссылка для проверки.
         </div>
 
         <form @submit.prevent="submit">
             <div class="mt-4 flex items-center justify-between">
                 <jet-button :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                    Resend Verification Email
+                    Повторная отправка электронного письма с подтверждением
                 </jet-button>
 
-                <Link :href="route('logout')" method="post" as="button" class="underline text-sm text-gray-600 hover:text-gray-900">Log Out</Link>
+                <Link :href="route('logout')" method="post" as="button" class="underline text-sm text-gray-600 hover:text-gray-900">Выйти из системы</Link>
             </div>
         </form>
     </jet-authentication-card>

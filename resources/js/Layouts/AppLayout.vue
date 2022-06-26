@@ -11,7 +11,7 @@
 
     <div class="text-sm sm:text-xl ml-2 sm:mx-5 text-slate-800 dark:text-slate-300 font-bold leading-none">
         Информационно аналитическая система
-        <div class="text-sm font-normal hidden sm:block text-slate-500">Министерства труда и занятости населения Оренбургской области</div>
+        <div class="text-sm font-normal hidden sm:block text-slate-400">Министерства труда и занятости населения Оренбургской области</div>
     </div>
       <!-- <div class="flex items-center bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10 overflow-hidden">
         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-800  rounded-full" type="text" placeholder="Поиск">
@@ -31,7 +31,7 @@
                     </button>
                     <button type="button" class="flex font-bold px-2 text-sm text-slate-800 dark:text-slate-100 focus:outline-none uppercase">
                         <div class="hidden sm:flex">
-                            {{ $page.props.user.email.split('@')[0] }}
+                            {{ $page.props.user.username }}
 
                             <svg class="ml-1 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                                 <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
@@ -42,13 +42,12 @@
             </template>
 
             <template #content>
-                <!-- Account Management -->
-                <div class="block px-4 py-2 text-xs text-slate-600 dark:text-slate-200">
-                    Настройки аккаунта
-                </div>
-
-                <jet-dropdown-link :href="route('profile.show')">
+                <jet-dropdown-link :href="route('profile.show', $page.props.user.username)">
                     Профиль
+                </jet-dropdown-link>
+
+                <jet-dropdown-link :href="route('profile.settings')">
+                    Настройки
                 </jet-dropdown-link>
 
                 <jet-dropdown-link :href="route('api-tokens.index')" v-if="$page.props.jetstream.hasApiFeatures">
@@ -87,6 +86,9 @@
             </a>
             <a v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" :href="route('stats.index')" class="app-sidebar-link" :class="{'active' : route().current('stats.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Статистика' : ''}">
                 <i class="fi fi-rr-chart-histogram"></i>
+            </a>
+            <a v-if="$page.props.access.can.includes('safety') || $page.props.access.role.includes('super-admin')" :href="route('safety.partners.index')" class="app-sidebar-link" :class="{'active' : route().current('safety.partners.index')}" v-tippy="{ placement : 'right', content: !menu ? 'Охрана труда' : ''}">
+                <i class="fi fi-rr-shield-check"></i>
             </a>
             <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Администрирование' : ''}">
                 <i class="fi fi-rr-settings"></i>

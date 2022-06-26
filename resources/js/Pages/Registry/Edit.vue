@@ -3,7 +3,7 @@
         <form @submit.prevent="update" class="sm:flex" >
         <div>
             <div class="sticky top-5 mb-5">
-                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl sm:w-72">
+                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl sm:w-72" :class="{ 'border border-red-500' : errors.category_id}">
                     <div class=" text-lg text-center uppercase">Реестры</div>
                     <div class="mb-5 text-sm text-center">Выберите категорию реестра</div>
 
@@ -100,18 +100,26 @@ export default {
     },
     data() {
         return {
-        status_name: null,
-        form: this.$inertia.form({
-            _method: 'put',
-            title: this.regist.title,
-            npa: this.regist.npa,
-            depart: this.regist.depart,
-            term: this.regist.term ? this.regist.term.replace(/-/g, '-').substr(0, 10) : '',
-            category_id: this.regist.category_id,
-            status_id: this.regist.status_id,
-            files: this.regist.files
-        })
+            status_name: null,
+            form: this.$inertia.form({
+                _method: 'put',
+                title: this.regist.title,
+                npa: this.regist.npa,
+                depart: this.regist.depart,
+                term: this.regist.term ? this.regist.term.replace(/-/g, '-').substr(0, 10) : '',
+                category_id: this.regist.category_id,
+                status_id: this.regist.status_id,
+                files: this.regist.files
+            }),
+            shouldPrevent: false
         }
+    },
+    beforeMount() {
+        window.addEventListener("beforeunload", this.preventNav)
+    },
+    beforeUnmount() {
+        // Don't forget to clean up event listeners
+        window.removeEventListener("beforeunload", this.preventNav)
     },
     mounted() {
         this.$nextTick(() => {
@@ -160,28 +168,34 @@ export default {
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
         update() {
-            this.$toast.open({message: 'Обновляю реестр... Ожидайте!', type: 'default'})
+            this.$toast.show('Обновляю реестр... Ожидайте!')
             this.form.post(route('registry.update', this.regist.id))
         },
         deleteFile(file) {
             if (confirm('Вы действительно хотите удалить файл?')) {
                 axios.get(route('registry.file.destroy', file.id)).then((response) => {
-                        this.$toast.open({message: 'Файл удален.'})
+                        this.$toast.success('Файл удален.')
                         this.form.files = this.form.files.filter(f => {
                             return f != file;
                         });
                     }).catch((error) => {
-                        this.$toast.open({message: "Файл не удалился!", type: 'error'})
+                        this.$toast.error("Файл не удалился!")
                     });
             }
         },
         destroy() {
             if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
-                this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'warning'})
-                this.$inertia.delete(route('registry.destroy', this.regist.id))
+                this.$toast.warning('Удаляю реестр...')
+                this.$inertia.delete(route('registry.destroy', this.regist.id)).then((response) => {
+                    this.$toast.success('Реестр удален.')
+                })
             }
         },
-
+        preventNav: function(e) {
+            if (this.shouldPrevent) return
+            e.preventDefault()
+            e.returnValue = ""
+        },
     },
 }
 </script>

@@ -1,5 +1,8 @@
 .form-label {
   @apply mb-1 block text-slate-600 dark:text-slate-400 select-none;
+  &.error {
+  @apply text-red-600;
+}
 }
 
 .form-input,
@@ -35,6 +38,6 @@
 }
 
 .form-error {
-  @apply text-red-600 mt-2 text-sm;
+  @apply text-red-400 mt-1 text-sm;
 }
 

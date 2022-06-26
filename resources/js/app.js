@@ -4,8 +4,7 @@ import { createApp, h } from 'vue';
 import { createInertiaApp, Link } from '@inertiajs/inertia-vue3';
 import { InertiaProgress } from '@inertiajs/progress';
 import { createStore } from 'vuex'
-import VueToast from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
+import toast from '@/Plugins/Toast/index'
 import VueTippy from 'vue-tippy';
 import { i18nVue } from 'laravel-vue-i18n'
 import BodyScrollLock from '@/Plugins/BodyScrollLock'
@@ -30,7 +29,7 @@ createInertiaApp({
         let ap = createApp({ render: () => h(app, props) })
             .use(plugin)
             .use(store)
-            .use(VueToast)
+            .use(toast)
             .use(BodyScrollLock)
             .use(VueTippy, {
                 defaultProps: { placement: 'bottom', theme: 'crm', arrow: false },

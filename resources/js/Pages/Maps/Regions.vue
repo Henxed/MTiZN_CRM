@@ -206,10 +206,10 @@
                         </div>
                     </div>
 
-                    <Link :href="route('regions.show', reg.id)" class="block btn-default mt-4" >
+                    <Link :href="route('regions.show', reg.id)" class="block w-full btn-default mt-4" >
                         Подробнее
                     </Link>
-                    <Link :href="route('regions.edit', reg.id)" class="block btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
+                    <Link :href="route('regions.edit', reg.id)" class="block w-full btn-default mt-4" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(reg.id)">
                         Редактировать
                     </Link>
                 </div>

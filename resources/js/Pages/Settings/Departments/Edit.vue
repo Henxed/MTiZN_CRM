@@ -38,7 +38,7 @@
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Фильтры предприятия
                         <p class="mt-1 text-sm opacity-80">Отображает в таблице "колонки" по умолчанию для данного отдела.</p>
                     </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.entr_filter" :options="entr_filter" multiple :normalizer="enterprise" placeholder="Колонки предприятий..." id="enterprise" /></dd>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><treeselect v-model="form.entr_filter" :options="entr_filter" multiple :normalizer="normalizer" placeholder="Колонки предприятий..." id="enterprise" /></dd>
                 </div>
             </dl>
             <div class="p-6 flex items-center">
@@ -92,13 +92,7 @@ export default {
                     id: node.id,
                     label: node.title || node.name,
                 }
-            },
-            enterprise(node) {
-                return {
-                    id: node.id,
-                    label: node.name,
-                }
-            },
+            }
         }
     },
     methods: {

@@ -83,7 +83,7 @@ export default {
             roles: null,
             permissions: null,
         }),
-                normalizer(node) {
+        normalizer(node) {
             return {
                 id: node.id,
                 label: node.name,

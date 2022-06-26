@@ -4,9 +4,9 @@
         <div class="py-4">
             <Link :href="route('regions.enterprises.index', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ enterprises.name }}</Link>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
+        <div class="flex items-center">
                 <breadcrumbs :data="bread" class="my-4"/>
-                <div class="justify-self-end text-slate-600 dark:text-slate-400">
+                <div class="justify-self-end text-slate-600 dark:text-slate-400 ml-auto">
                     <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(enterprises.updated_at).format('LLL') }}</div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                             <div class="flex items-center">
                                 <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.ent.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
                                 <div class="w-full lg:w-1/2 sm:mt-4">
-                                    <button class="text-indigo-700 hover:underline decoration-slate-500 decoration-dotted decoration-2 cursor-pointer
+                                    <button class="text-slate-700 dark:text-slate-500 hover:underline decoration-slate-500 decoration-dotted decoration-2 cursor-pointer
                                     disabled:hover:no-underline disabled:opacity-60 disabled:cursor-not-allowed"
                                     @click.prevent="nalog(form.inn)" :disabled="nalog_status">Получить данные с налоговой</button>
                                 </div>
@@ -59,8 +59,8 @@
                             </div>
                             <text-input v-model="form.okvd_name" :error="errors.okvd_name" :label="$t(`inputs.ent.okvd_name`)" required />
 
-                            <label class="form-label" for="status_id">{{ $t(`inputs.ent.status_id`) }}:</label>
-                            <select v-model="form.status_id" :error="errors.status_id" id="status_id" class="form-select">
+                            <label class="form-label" :class="{ error: errors.status_id}" for="status_id">{{ $t(`inputs.ent.status_id`) }}:</label>
+                            <select v-model="form.status_id" :class="{ error: errors.status_id}" :error="errors.status_id" id="status_id" class="form-select">
                                 <option :selected="form.status_id === null" disabled>Выбирете статус</option>
                                 <option v-for="item in statuses" :key="item" :value="item.code" :selected="item.code === form.status_id">{{ item.name }}</option>
                             </select>
@@ -217,12 +217,12 @@ export default {
     methods: {
 
         update() {
-            this.$toast.open({message: 'Обновляю предприятие... Ожидайте!', type: 'default'})
+            this.$toast.show('Обновляю предприятие... Ожидайте!')
             this.form.put(route('regions.enterprises.update', [this.enterprises.area_id, this.enterprises.id]))
         },
         destroy() {
             if (confirm('Вы уверены, что хотите удалить это предприятие?')) {
-                this.$toast.open({message: 'Удаляю предприятие... Ожидайте!', type: 'warning'})
+                this.$toast.warning('Удаляю предприятие... Ожидайте!')
                 this.$inertia.delete(route('regions.enterprises.destroy', [this.enterprises.area_id, this.enterprises.id]))
             }
         },

@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Regist extends Model
 {
+    use SoftDeletes;
+    
     protected $fillable = ['title','npa','depart', 'status_id', 'category_id', 'file', 'term'];
 
     public function status()

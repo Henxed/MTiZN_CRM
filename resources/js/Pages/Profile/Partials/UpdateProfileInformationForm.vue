@@ -48,6 +48,16 @@
                 <jet-input-error :message="form.errors.name" class="mt-2" />
             </div>
 
+            <!-- userName -->
+            <div class="col-span-6 sm:col-span-4">
+                <jet-label for="username" value="Уникальное имя (на англ.)" />
+                <div class="relative">
+                    <div class="absolute top-0 left-0 flex justify-center items-center bg-slate-300 dark:bg-slate-600 dark:text-slate-100 w-5 h-5 p-5 rounded-l-md border border-transparent">@</div>
+                    <jet-input id="username" type="text" class="mt-1 block w-full pl-12" v-model="form.username" autocomplete="username" />
+                </div>
+                <jet-input-error :message="form.errors.username" class="mt-2" />
+            </div>
+
             <!-- Email -->
             <div class="col-span-6 sm:col-span-4">
                 <jet-label for="email" value="Электронная почта" />
@@ -98,6 +108,7 @@
                     name: this.user.name,
                     email: this.user.email,
                     photo: null,
+                    username: this.user.username
                 }),
 
                 photoPreview: null,

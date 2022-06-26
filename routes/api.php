@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\EnterprisesController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,4 +29,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('notifications/get/popup', [UsersController::class, 'notification_popup'])->name('notification.get.popup');
     Route::get('notifications/set/{id}/read', [UsersController::class, 'notification_read'])->name('notification.set.read');
     Route::get('notifications/remove/{id}', [UsersController::class, 'notification_remove'])->name('notification.remove');
+
+    Route::post('enterprise/get/all', [EnterprisesController::class, 'apiAll'])->name('enterpises.get.all');
 });

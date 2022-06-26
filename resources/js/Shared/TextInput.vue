@@ -1,6 +1,6 @@
 <template>
   <div :class="$attrs.class" class="mb-2">
-    <label v-if="label" class="form-label" :for="id">{{ label }}:</label>
+    <label v-if="label" class="form-label" :class="{error : error}" :for="id">{{ label }}:</label>
     <input :id="id" ref="input" v-bind="{ ...$attrs, class: null }" class="form-input pr-8 disabled:opacity-60 disabled:cursor-not-allowed" :class="{ error: error }" :type="type" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" />
     <small class="text-slate-600 dark:text-slate-400/70" v-if="help">{{ help }}</small>
     <div v-if="error" class="form-error">{{ error }}</div>
@@ -34,10 +34,7 @@ export default {
     },
     select() {
       this.$refs.input.select()
-    },
-    setSelectionRange(start, end) {
-      this.$refs.input.setSelectionRange(start, end)
-    },
+    }
   },
 }
 </script>

@@ -178,7 +178,7 @@ class EnterprisesController extends Controller
     {
         Req::validate([
             'name' => 'required',
-            'inn' => 'required',
+            'inn' => 'required|min:6',
             'okvd' => 'required',
             'okvd_name' => 'required',
             'status_id' => 'required',
@@ -213,7 +213,7 @@ class EnterprisesController extends Controller
     {
         Req::validate([
             'name' => 'required',
-            'inn' => 'required',
+            'inn' => 'required|min:6',
             'okvd' => 'required',
             'okvd_name' => 'required',
             'status_id' => 'required',
@@ -240,6 +240,23 @@ class EnterprisesController extends Controller
         $enterprise->destroy($enterprise->id); //удаление
 
         return Redirect::route('regions.enterprises.index', $enterprise->area_id)->with('success', "Предприятие удалено!");
+    }
+
+    public function apiAll()
+    {
+        $search = AllowedFilter::callback('search', function ($query, $value) {
+            $query->where(function ($query) use ($value) {
+                $query->where('name', 'LIKE', "%{$value}%")->orWhere('inn', 'LIKE', "%{$value}%");
+            });
+        });
+
+        $data = QueryBuilder::for(Enterprises::class)
+            ->select('id', 'name as label')
+            ->defaultSort('name')
+            ->allowedFilters($search)
+            ->paginate(30)->withQueryString();
+
+        return $data;
     }
 
     //выгрузка предприятий

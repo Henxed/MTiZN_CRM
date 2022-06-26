@@ -3,7 +3,7 @@
         <form @submit.prevent="submit" class="sm:flex" >
         <div>
             <div class="sticky top-5 mb-5">
-                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl sm:w-72">
+                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl sm:w-72" :class="{ 'border border-red-500' : errors.category_id}">
                     <div class=" text-lg text-center uppercase">Реестры</div>
                     <div class="mb-5 text-sm text-center">Выберите категорию реестра</div>
 
@@ -103,8 +103,17 @@ export default {
             category_id: null,
             status_id: null,
             files: []
-        })
+        }),
+        shouldPrevent: true
         }
+    },
+    beforeMount() {
+        window.addEventListener("beforeunload", this.preventNav)
+    },
+
+    beforeUnmount() {
+        // Don't forget to clean up event listeners
+        window.removeEventListener("beforeunload", this.preventNav)
     },
     methods: {
         filesize(size) {
@@ -113,6 +122,7 @@ export default {
         },
         changeFile(event) {
             this.form.files.push(...this.$refs.file.files)
+            this.shouldPrevent = !this.shouldPrevent
         },
         addFile(e) {
             let droppedFiles = e.dataTransfer.files;
@@ -147,14 +157,18 @@ export default {
         status_name_change: function(e){
             this.status_name = e.target.options[e.target.options.selectedIndex].text;
         },
-        submit() {
-            this.$toast.open({message: 'Добавляю реестр... Ожидайте!', type: 'default'})
+        submit: function() {
             this.form.post(this.route('registry.store'), {
-                onSuccess: () => this.$toast.open({message: 'Реестр добавлен!'}),
+                onSuccess: () => this.$toast.success('Реестр добавлен!'),
             }).catch(() => {
-                this.$toast.open({message: 'Возникла ошибка при добавление...', type: 'error'})
+                this.$toast.error('Возникла ошибка при добавление...')
             })
-        }
+        },
+        preventNav: function(e) {
+            if (this.shouldPrevent) return
+            e.preventDefault()
+            e.returnValue = ""
+        },
 
     },
 }

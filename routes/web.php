@@ -12,6 +12,8 @@ use App\Http\Controllers\EnterprisesController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\StatController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\SafetyController;
+use Laravel\Jetstream\Http\Controllers\Inertia\UserProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,24 +30,36 @@ Route::group(['middleware' => 'auth'], function () {
         return Inertia::render('Home');
     })->name('home');
 
-    Route::get('/csv', function () {
-        return Inertia::render('Maps/Enterprises/File');
-    })->name('csv')->middleware('role:super-admin');
-    Route::post('enterprises_u', [EnterprisesController::class, 'data_upload'])->name('csv_u')->middleware('role:super-admin');
+    // Пользователи
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('settings', [UserProfileController::class, 'show'])->name('profile.settings');
+        Route::get('@{username}', [UsersController::class, 'show'])->name('profile.show');
+    });
 
+    // Охрана труда
+    Route::resource('safety/partners', SafetyController::class, ['as' => 'safety']);
+
+
+    // Регионы
     Route::resource('regions', RegionController::class);
+    // Карта всех регионов
     Route::get('map', [RegionController::class, 'map'])->name('map');
 
+    // Предприятия регионов
     Route::resource('regions.enterprises', EnterprisesController::class);
-
+    // Предприятя сводной
     Route::get('regions/enterprises/all', [EnterprisesController::class, 'all'])->name('regions.enterprises.all');
+    // Выгрузка всех предприятий
     Route::get('regions/enterprises/all/export', [EnterprisesController::class, 'export']);
 
+    // Реестры
     Route::resource('registry', RegistController::class);
     Route::get('registry/{slug}/{parametr}', [RegistController::class, 'list'])->name('registry.list');
 
+    // Статистика
     Route::get('statistics', [StatController::class, 'index'])->name('stats.index');
 
+    // Администрирование
     Route::group(['prefix' => 'settings'], function () {
         Route::resource('users', UsersController::class)->middleware('permission:cp.users');
         // Роли
@@ -69,6 +83,14 @@ Route::group(['middleware' => 'auth'], function () {
             return Inertia::render('Settings/Index');
         })->middleware('permission:cp')->name('settings');
     });
+
+
+    // Ниже тестовые или для пару раз
+
+    Route::get('/csv', function () { // загрузка предприятий массово
+        return Inertia::render('Maps/Enterprises/File');
+    })->name('csv')->middleware('role:super-admin');
+    Route::post('enterprises_u', [EnterprisesController::class, 'data_upload'])->name('csv_u')->middleware('role:super-admin');
 
     Route::get('test', function () {
         App\Models\User::sendNotify('ваипр', "ывамждбыджуа", 1);

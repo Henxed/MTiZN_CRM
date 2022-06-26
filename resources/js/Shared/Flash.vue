@@ -13,7 +13,7 @@ export default {
     methods: {
         toast() {
             if(this.$page.props.flash.success){
-                    this.$toast.open({message: this.$page.props.flash.success, type: 'success'})
+                    this.$toast.success(this.$page.props.flash.success)
             }else if(this.$page.props.flash.error || Object.keys(this.$page.props.errors).length > 0) {
 
                 let text = this.$page.props.flash.error;
@@ -24,7 +24,7 @@ export default {
                     });
                     //text = "Заполните или выберите данные!"
                 }
-                this.$toast.open({message: text, type: 'error'})
+                this.$toast.error(text)
             }
         }
     }

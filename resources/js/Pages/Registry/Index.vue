@@ -13,7 +13,7 @@
                         {{ item.name }}
                     </Link>
                 </div>
-                <Link v-if="$page.props.access.can.includes('registry.add') || $page.props.access.role.includes('super-admin')" :href="route('registry.create')" class="block my-4 bg-emerald-400 dark:bg-emerald-600 text-white p-2 px-4 rounded-xl text-center" role="button">Добавить</Link>
+                <Link v-if="$page.props.access.can.includes('registry.add') || $page.props.access.role.includes('super-admin')" :href="route('registry.create')" class="my-4 w-full btn-green block" role="button">Добавить реестр</Link>
             </div>
         </div>
         <div class="rounded-xl bg-white text-slate-900 md:mx-6 md:pt-3 dark:bg-slate-800 w-full max-w-screen-2xl">
@@ -63,13 +63,13 @@
                         <div class="text-sm mb-3 text-gray-500 dark:text-slate-400">{{ item.depart }}</div>
                     </div>
                     <div class="flex justify-center sm:justify-end order-last sm:order-none bottom-t-1 mt-3">
-                        <Link :href="route('registry.edit', item.id)" class="flex items-center justify-center leading-none h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
+                        <Link :href="route('registry.edit', item.id)" class="flex items-center justify-center leading-none h-10 px-2 sm:w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
                         v-tippy='"Редактировать"'
                         v-if="$page.props.access.can.includes('registry.edit') || $page.props.access.role.includes('super-admin')">
                             <i class="fi fi-rr-edit"></i>
                             <span class="ml-2 sm:hidden">Редактировать</span>
                         </Link>
-                        <div class="flex items-center justify-center leading-none mx-2 h-10 px-2 sm:w-10 rounded-md bg-slate-400/10 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
+                        <div class="flex items-center justify-center leading-none mx-2 h-10 px-2 sm:w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500"
                         v-tippy='"Удалить"'
                         @click="destroy(item.id)"
                         v-if="$page.props.access.can.includes('registry.delete') || $page.props.access.role.includes('super-admin')">
@@ -200,12 +200,12 @@
             },
              destroy(e) {
                 if (confirm('Вы уверены, что хотите удалить этот реестр?')) {
-                    this.$toast.open({message: 'Удаляю реестр... Ожидайте!', type: 'default'})
+                    this.$toast.show('Удаляю реестр... Ожидайте!')
                     axios.post(route('registry.destroy', e), {_method: 'delete'} ).then(() => {
                         this.$refs['reg_'+e][0].remove()
-                        this.$toast.open({message: 'Реестр удален!'})
+                        this.$toast.success('Реестр удален!')
                     }).catch(() => {
-                        this.$toast.open({message: 'Не могу удалить реестр...', type: 'error'})
+                        this.$toast.error('Не могу удалить реестр...')
                     })
                 }
             },

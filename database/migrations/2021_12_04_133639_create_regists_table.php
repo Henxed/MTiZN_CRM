@@ -21,6 +21,7 @@ class CreateRegistsTable extends Migration
             $table->string('status')->nullable();
             $table->text('file')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

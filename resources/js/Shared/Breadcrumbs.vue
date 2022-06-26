@@ -1,5 +1,5 @@
 <template>
-    <nav v-if="breadcrumbs" class="bg-grey-light rounded-md w-full">
+    <nav v-if="breadcrumbs" class="bg-grey-light rounded-md">
         <ol class="list-reset flex">
             <li v-for="page in breadcrumbs" :key="page">
                 <div>
