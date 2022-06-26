@@ -21,7 +21,7 @@
                 <div class="text-lg text-pink-400">Статистика</div>
             </a>
 
-            <a :href="route('stats.index')" v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" class="flex bg-lime-100 dark:bg-lime-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
+            <a :href="route('safety.partners.index')" v-if="$page.props.access.can.includes('safety') || $page.props.access.role.includes('super-admin')" class="flex bg-lime-100 dark:bg-lime-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-lime-200 dark:text-lime-200/30 text-9xl"><i class="fi fi-rr-shield-check"></i></div>
                 <div class="text-lg text-lime-500">Охрана труда</div>
             </a>

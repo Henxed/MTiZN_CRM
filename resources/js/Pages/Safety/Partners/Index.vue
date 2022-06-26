@@ -68,8 +68,8 @@
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
-                            <Link class="px-3 py-4 flex items-center" :href="route('safety.partners.edit', item.id)">
-                            {{ item.collective_agreement }}
+                            <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
+                            {{ item.collective_agreement ? item.collective_agreement.split(' ')[0]  : '-'}}
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
@@ -78,33 +78,33 @@
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
-                            <Link class="px-3 py-4 flex items-center" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_group_at }}
+                            <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
+                            {{ item.accidents_group_at ? item.accidents_group_at.split(' ')[0] : '-' }}
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
                             <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_group }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-3 py-4 flex items-center" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_heavy_at }}
+                            {{ item.accidents_group || '-' }}
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
                             <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_heavy }}
-                            </Link>
-                        </td>
-                        <td class="border-t dark:border-slate-500">
-                            <Link class="px-3 py-4 flex items-center" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_deadly_at }}
+                            {{ item.accidents_heavy_at ? item.accidents_heavy_at.split(' ')[0] : '-' }}
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">
                             <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
-                            {{ item.accidents_deadly }}
+                            {{ item.accidents_heavy || '-' }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
+                            {{ item.accidents_deadly_at ? item.accidents_deadly_at.split(' ')[0] : '-' }}
+                            </Link>
+                        </td>
+                        <td class="border-t dark:border-slate-500">
+                            <Link class="px-3 py-4" :href="route('safety.partners.edit', item.id)">
+                            {{ item.accidents_deadly || '-' }}
                             </Link>
                         </td>
                         <td class="border-t dark:border-slate-500">

@@ -15,6 +15,14 @@ use Illuminate\Support\Arr;
 
 class SafetyController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('permission:safety.partners.create', ['only' => ['create','store']]);
+        $this->middleware('permission:safety.partners.edit', ['only' => ['edit','update']]);
+        $this->middleware('permission:safety.partners.destroy', ['only' => ['destroy']]);
+    }
+
     public function index(Request $request): Object
     {
          // Поиск по ключевому слову. ?filter[search]=слово
@@ -72,8 +80,21 @@ class SafetyController extends Controller
     public function edit(Safety $partner)
     {
         return Inertia::render('Safety/Partners/Edit', [
-            'enterprise' => Enterprises::select(['id', 'name as label'])->where('id', $partner->enterprise_id)->get(),
+            'enterprise' => Enterprises::select(['id', 'name as label'])->where('id', $partner->enterprise_id)->first(),
             'partner' => $partner,
         ]);
+    }
+
+    public function update(Safety $partner)
+    {
+        Req::validate([
+            'enterprise_id' => 'required',
+            'collective_agreement' => 'required',
+            'sum_contractual' => 'required',
+        ]);
+
+        $partner->update(Req::all());
+
+        return Redirect::route('safety.partners.index')->with('success', 'Информация обновлена!');
     }
 }

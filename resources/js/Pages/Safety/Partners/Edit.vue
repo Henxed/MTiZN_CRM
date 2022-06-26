@@ -3,7 +3,7 @@
 
  <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-4">
-            <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Новые данные по партнеру</div>
+            <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Редактировать данные у "{{ enterprise.label }}"</div>
         </div>
 
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
@@ -22,8 +22,8 @@
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
 
                             <div class="mb-2">
-                                <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }}:</label>
-                                <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :async="true" :class="{error : errors.enterprise_id}" :options="enterprise" placeholder="Предприятия..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
+                                <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }} (выбрано "{{ enterprise.label }}"):</label>
+                                <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :async="true" :class="{error : errors.enterprise_id}" placeholder="Найти другое предприятие..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
                                 <div v-if="errors.enterprise_id" class="form-error">{{ errors.enterprise_id }}</div>
                             </div>
 
@@ -34,17 +34,17 @@
                             <div class="flex flex-wrap mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.group`) }}</div>
                                 <text-input v-model="form.accidents_group_at" :error="errors.accidents_group_at" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_group" />
-                                <text-input v-model="form.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" />
+                                <text-input v-model="form.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" placeholder="Оставьте пустым, если нет данных"/>
                             </div>
                             <div class="flex flex-wrap mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.heavy`) }}</div>
                                 <text-input v-model="form.accidents_heavy_at" :error="errors.accidents_heavy_at" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_heavy" />
-                                <text-input v-model="form.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_heavy_at" />
+                                <text-input v-model="form.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_heavy_at" placeholder="Оставьте пустым, если нет данных"/>
                             </div>
                             <div class="flex flex-wrap mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.deadly`) }}</div>
                                 <text-input v-model="form.accidents_deadly_at" :error="errors.accidents_deadly_at" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_deadly" />
-                                <text-input v-model="form.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_deadly_at" />
+                                <text-input v-model="form.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_deadly_at" placeholder="Оставьте пустым, если нет данных"/>
                             </div>
 
                             <div class="text-lg mt-6">{{ $t(`inputs.safety.learn_safety`) }}</div>
@@ -68,7 +68,7 @@
             </div>
 
             <div class="mt-6">
-                <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Добавить</loading-button>
+                <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Обновить</loading-button>
             </div>
         </form>
     </div>
@@ -103,7 +103,7 @@ export default {
     data() {
         return {
             form: this.$inertia.form({
-                enterprise_id: this.enterprise_id,
+                enterprise_id: this.partner.enterprise_id,
                 sum_contractual: this.partner.sum_contractual,
                 collective_agreement: this.partner.collective_agreement ? this.partner.collective_agreement.replace(/-/g, '-').substr(0, 10) : '',
                 accidents_group_at: this.partner.accidents_group_at ? this.partner.accidents_group_at.replace(/-/g, '-').substr(0, 10) : '',
@@ -119,7 +119,7 @@ export default {
     },
     methods: {
         submit() {
-            this.form.post(route('safety.partners.store'))
+            this.form.put(route('safety.partners.update', this.partner.id))
         },
         async loadOptions({ action, searchQuery, callback }) {
             if (action === ASYNC_SEARCH) {
