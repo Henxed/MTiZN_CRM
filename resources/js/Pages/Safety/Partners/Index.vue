@@ -7,6 +7,22 @@
                     <div class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0">Охрана труда и социальное партнерство</div>
                 </div>
             </div>
+            <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl mb-6">
+                            <div class="grid grid-cols-1 sm:flex gap-x-6 sm:gap-12 dark:text-slate-400 p-5 pt-0 sm:p-0">
+                                <div>
+                                    <div class="text-2xl font-semibold">{{ safety_sum.ca || '-' }}</div>
+                                    <div class="text-sm">Заключено коллективных договоров</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-semibold">{{ safety_sum.sc || '-'}}</div>
+                                    <div class="text-sm">Работники, охваченные коллективными договорами</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-semibold">{{ safety_sum.qa || '-'}}</div>
+                                    <div class="text-sm">Несчастные случаи на производстве (квартал)</div>
+                                </div>
+                            </div>
+                        </div>
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
                 <div class="flex items-center mb-6">
                     <div class="flex items-center border border-slate-300 dark:border-slate-600  dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-md max-w-sm w-full pr-3 h-10" style="height: 42px;">
@@ -154,6 +170,7 @@
             Treeselect
         },
         props: {
+            safety_sum: Array,
             regions: Array,
             enterprises: Object,
             queryBuilderProps: {

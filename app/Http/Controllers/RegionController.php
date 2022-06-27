@@ -7,6 +7,7 @@ use App\Models\Enterprises;
 use App\Models\AreasExtra;
 use App\Models\AreasLog;
 use App\Models\AreasUser;
+use App\Models\Safety;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -35,7 +36,11 @@ class RegionController extends Controller
                 DB::raw('SUM(`dismissed`) as d'),
                 DB::raw('SUM(`remote`) as r'),
                 DB::raw('SUM(`sum_arrears`) as sa'),
-            )->get()[0]
+            )->first(),
+            'safety_sum' => Safety::select(
+                DB::raw('COUNT(`collective_agreement`) ca'),
+                DB::raw('(SELECT SUM(`accidents_group`) + SUM(`accidents_heavy`) + SUM(`accidents_deadly`) FROM `safeties` WHERE `deleted_at` IS NULL AND  (QUARTER(`accidents_group_at`) = QUARTER(NOW()) OR QUARTER(`accidents_heavy_at`) = QUARTER(NOW()) OR QUARTER(`accidents_deadly_at`) = QUARTER(NOW()))) qa'),
+            )->first()
         ]);
     }
 

@@ -44,10 +44,25 @@
         </div>
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 my-6">
                 <div class="grid gap-6">
-                    <Link :href="route('regions.enterprises.all')" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-24 min-w-48 w-full max-w-64">
-                        <div class="absolute -right-2 -bottom-7 text-indigo-300 dark:text-indigo-300/30 text-8xl"><i class="fi fi-rr-shop"></i></div>
-                        <div class="p-2 text-xl font-bold text-indigo-400">Сводная по предприятиям</div>
-                    </Link>
+                    <section>
+                        <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl mb-6">
+                            <div class="text-xl font-bold dark:text-slate-300">Охрана труда и социальное партнерство</div>
+                            <div class="grid grid-cols-1 sm:flex gap-x-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
+                                <div>
+                                    <div class="text-2xl font-semibold">{{ safety_sum.ca || '-' }}</div>
+                                    <div class="text-sm">Заключено коллективных договоров</div>
+                                </div>
+                                <div>
+                                    <div class="text-2xl font-semibold">{{ safety_sum.qa || '-'}}</div>
+                                    <div class="text-sm">Несчастные случаи на производстве (квартал)</div>
+                                </div>
+                            </div>
+                        </div>
+                        <Link :href="route('regions.enterprises.all')" class="flex bg-indigo-200 dark:bg-indigo-500/30 p-3 rounded-xl overflow-hidden relative h-24 min-w-48 w-full max-w-64">
+                            <div class="absolute -right-2 -bottom-7 text-indigo-300 dark:text-indigo-300/30 text-8xl"><i class="fi fi-rr-shop"></i></div>
+                            <div class="p-2 text-xl font-bold text-indigo-400">Сводная по предприятиям</div>
+                        </Link>
+                    </section>
                 </div>
 
                 <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-6
@@ -131,6 +146,7 @@
             regions_sum: Number,
             regions_sum_b: Number,
             entr_sum: Array,
+            safety_sum: Array,
             lvl_all: Array,
         },
         data() {

@@ -13,6 +13,7 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class SafetyController extends Controller
 {
@@ -32,15 +33,6 @@ class SafetyController extends Controller
                 $query->where('name', 'LIKE', "%{$value}%")->orWhere('inn', 'LIKE', "%{$value}%");
             });
         });
-        // $region = AllowedFilter::callback('region', function ($query, $value) {
-        //     dd($value);
-        //     $query->where(function ($query) use ($value) {
-        //         $query->whereIn('enterprises.area_id', [$value]);
-        //     });
-        // });
-
-        //$filter = collect($globalSearch)->push($region);
-
 
         // Сортировка + поиск + страницы
         $enterprises = QueryBuilder::for(Safety::class)
@@ -61,6 +53,11 @@ class SafetyController extends Controller
             ->withQueryString();
 
         return Inertia::render('Safety/Partners/Index', [
+            'safety_sum' => Safety::select(
+                DB::raw('COUNT(`collective_agreement`) ca'),
+                DB::raw('SUM(`sum_contractual`) sc'),
+                DB::raw('(SELECT SUM(`accidents_group`) + SUM(`accidents_heavy`) + SUM(`accidents_deadly`) FROM `safeties` WHERE `deleted_at` IS NULL AND  (QUARTER(`accidents_group_at`) = QUARTER(NOW()) OR QUARTER(`accidents_heavy_at`) = QUARTER(NOW()) OR QUARTER(`accidents_deadly_at`) = QUARTER(NOW()))) qa'),
+            )->first(),
             'regions' => Areas::select('id', 'region as label')->get(),
             'enterprises' => $enterprises,
             'queryBuilderProps' => [
