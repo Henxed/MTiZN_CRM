@@ -92,7 +92,7 @@
 	padding-left: 5px;
 	padding-right: 5px;
 	height: 42px;
-	@apply table table-fixed bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600  rounded-md shadow-sm w-full;
+	@apply table table-fixed bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600  rounded-md w-full;
 }
 
 .vue-treeselect--disabled .vue-treeselect__control {
@@ -141,7 +141,7 @@
 	pointer-events: none
 }
 .vue-treeselect__placeholder {
-	color: #bdbdbd
+	@apply text-slate-400
 }
 .vue-treeselect__single-value {
 	@apply text-slate-600 dark:text-slate-200;

@@ -9,13 +9,16 @@
             </div>
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
                 <div class="flex items-center mb-6">
-                    <div class="mr-auto flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
-                        <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"
+                    <div class="flex items-center border border-slate-300 dark:border-slate-600  dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-md max-w-sm w-full pr-3 h-10" style="height: 42px;">
+                        <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 dark:bg-slate-700 placeholder:text-slate-400 rounded-full"
                         type="text"
                         placeholder="Поиск по предприятию или ИНН" v-model="queryBuilderData.filter.search">
                         <i class="fi fi-rr-search pt-1 mr-1"></i>
                     </div>
-                    <div class="">
+                    <div class="mx-4 max-w-lg">
+                        <treeselect v-model="queryBuilderData.filter.region" :options="regions" placeholder="Фильтрация по региону..."  noResultsText="Нет результата" loadingText="Ищу регион..." />
+                    </div>
+                    <div class="ml-auto">
                         <Link class="btn-green ml-auto" :href="route('safety.partners.create')"
                         v-if="$page.props.access.can.includes('safety.partners.create') || $page.props.access.role.includes('super-admin')">
                             <span>Добавить</span>
@@ -31,10 +34,10 @@
                         </th>
                     </tr> -->
                     <tr>
-                        <th rowspan="3" width="250">{{ $t(`inputs.safety.enterprise_id`) }}</th>
-                        <th rowspan="3" width="180">{{ $t(`inputs.ent.region`) }}</th>
-                        <th rowspan="3">{{ $t(`inputs.safety.collective_agreement`) }}</th>
-                        <th rowspan="3">{{ $t(`inputs.safety.sum_contractual`) }}</th>
+                        <th rowspan="3" width="250" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('name')"><span v-html="getSortIcon('name')"></span> {{ $t(`inputs.safety.enterprise_id`) }}</th>
+                        <th rowspan="3" width="180" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('region')"><span v-html="getSortIcon('region')"></span> {{ $t(`inputs.ent.region`) }}</th>
+                        <th rowspan="3" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('collective_agreement')"><span v-html="getSortIcon('collective_agreement')"></span> {{ $t(`inputs.safety.collective_agreement`) }}</th>
+                        <th rowspan="3" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('sum_contractual')"><span v-html="getSortIcon('sum_contractual')"></span> {{ $t(`inputs.safety.sum_contractual`) }}</th>
                         <th colspan="6">{{ $t(`inputs.safety.accidents`) }}</th>
                         <th colspan="2" width="110">{{ $t(`inputs.safety.learn_safety`) }}</th>
                     </tr>
@@ -42,16 +45,16 @@
                         <th colspan="2">{{ $t(`inputs.safety.group`) }}</th>
                         <th colspan="2">{{ $t(`inputs.safety.heavy`) }}</th>
                         <th colspan="2">{{ $t(`inputs.safety.deadly`) }}</th>
-                        <th rowspan="2">{{ $t(`inputs.safety.in_total`) }}</th>
-                        <th rowspan="2">{{ $t(`inputs.safety.start_year`) }}</th>
+                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('in_total')"><span v-html="getSortIcon('in_total')"></span> {{ $t(`inputs.safety.in_total`) }}</th>
+                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('start_year')"><span v-html="getSortIcon('start_year')"></span> {{ $t(`inputs.safety.start_year`) }}</th>
                     </tr>
                     <tr>
-                        <th width="160">{{ $t(`inputs.safety.accidents_group_at`) }}</th>
-                        <th >{{ $t(`inputs.safety.accidents_group`) }}</th>
-                        <th>{{ $t(`inputs.safety.accidents_heavy_at`) }}</th>
-                        <th>{{ $t(`inputs.safety.accidents_heavy`) }}</th>
-                        <th>{{ $t(`inputs.safety.accidents_deadly_at`) }}</th>
-                        <th>{{ $t(`inputs.safety.accidents_deadly`) }}</th>
+                        <th width="160" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_group_at')"><span v-html="getSortIcon('accidents_group_at')"></span> {{ $t(`inputs.safety.accidents_group_at`) }}</th>
+                        <th class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_group')"><span v-html="getSortIcon('accidents_group')"></span> {{ $t(`inputs.safety.accidents_group`) }}</th>
+                        <th class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_heavy_at')"><span v-html="getSortIcon('accidents_heavy_at')"></span> {{ $t(`inputs.safety.accidents_heavy_at`) }}</th>
+                        <th class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_heavy')"><span v-html="getSortIcon('accidents_heavy')"></span> {{ $t(`inputs.safety.accidents_heavy`) }}</th>
+                        <th class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_deadly_at')"><span v-html="getSortIcon('accidents_deadly_at')"></span> {{ $t(`inputs.safety.accidents_deadly_at`) }}</th>
+                        <th class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_deadly')"><span v-html="getSortIcon('accidents_deadly')"></span> {{ $t(`inputs.safety.accidents_deadly`) }}</th>
                     </tr>
 
                     </thead>
@@ -119,7 +122,7 @@
                         </td>
                     </tr>
                     <tr v-if="enterprises.data.length === 0">
-                    <td class="border-t px-6 py-4" colspan="4">Ничего нет.</td>
+                    <td class="border-t px-6 py-4" colspan="12">Ничего нет.</td>
                     </tr>
                     </tbody>
                 </table>
@@ -139,6 +142,7 @@
     import { PerfectScrollbar } from 'vue3-perfect-scrollbar'
     import Pagination from '@/Shared/Pagination'
     import pickBy from "lodash/pickBy";
+    import { Treeselect} from '@bosquig/vue3-treeselect'
 
     export default defineComponent({
         components: {
@@ -146,9 +150,11 @@
             Head,
             Link,
             PerfectScrollbar,
-            Pagination
+            Pagination,
+            Treeselect
         },
         props: {
+            regions: Array,
             enterprises: Object,
             queryBuilderProps: {
                 type: Object,
@@ -161,7 +167,8 @@
                     page: this.queryBuilderProps.page || 1,
                     sort: this.queryBuilderProps.sort || "",
                     filter: {
-                        search : this.queryBuilderProps.filter.search || "",
+                        region: this.queryBuilderProps.filter.region || null,
+                        search : this.queryBuilderProps.filter.search || [],
                     }
                 },
             }
@@ -189,15 +196,21 @@
             }
         },
         computed: {
+
             queryBuilderString() {
+                //this.queryBuilderData.filter.region = this.queryBuilderData.filter.region.join();
                 let query = qs.stringify(this.queryBuilderData, {
                     filter(prefix, value) {
+
                         if (typeof value === "object" && value !== null) {
                             return pickBy(value);
                         }
+
                         return value;
                     },
                     encode: false,
+                    arrayFormat: 'comma',
+                    commaRoundTrip: true,
                     skipNulls: true,
                     strictNullHandling: true,
                 });

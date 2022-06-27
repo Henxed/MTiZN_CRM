@@ -67,8 +67,9 @@
                 </div>
             </div>
 
-            <div class="mt-6">
+            <div class="mt-6 flex flex-col">
                 <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Обновить</loading-button>
+                <button @click.prevent="destroy" class="text-red-600/90 dark:text-red-400 mt-4">Удалить данные</button>
             </div>
         </form>
     </div>
@@ -126,6 +127,12 @@ export default {
                 await axios.post(route('enterpises.get.all') + '?filter[search]=' + searchQuery).then((res) => {
                     callback(null, res.data.data)
                 })
+            }
+        },
+        destroy() {
+            if (confirm('Вы уверены, что хотите удалить эти данные?')) {
+                this.$toast.warning('Удаляю... Ожидайте!')
+                this.$inertia.delete(route('safety.partners.destroy', this.partner.id))
             }
         },
     },
