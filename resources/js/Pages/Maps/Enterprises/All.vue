@@ -189,7 +189,7 @@
 <style src="vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css"/>
 <style scoped>
 .table-container {
-    height: 70vh;
+    height: 65vh;
 }
 .th{
     padding: 10px;

@@ -25,7 +25,6 @@ export default {
     props: ['data'],
     computed:{
         breadcrumbs() {
-            console.log(this.data);
             return this.insertBetween(this.data || [], '>')
         }
     },

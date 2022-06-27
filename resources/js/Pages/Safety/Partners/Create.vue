@@ -5,7 +5,7 @@
         <div class="py-4">
             <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Новые данные по партнеру</div>
         </div>
-
+        <breadcrumbs :data="bread" class="my-4"/>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
 
             <div class="mt-10 sm:mt-0">
@@ -13,7 +13,7 @@
                 <div class="md:col-span-1">
                     <div class="px-4 sm:px-0 sticky top-5">
                         <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-slate-200">Партнерская информация</h3>
-                        <p class="mt-1 text-sm text-gray-600 dark:text-slate-400">Дополнительная информацию предприятия по договору.</p>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-slate-400">Дополнительная информация предприятия по договору.</p>
                     </div>
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
@@ -83,7 +83,7 @@ import SelectInput from '@/Shared/SelectInput'
 import TextInput from '@/Shared/TextInput'
 import { Link } from '@inertiajs/inertia-vue3'
 import {ASYNC_SEARCH, Treeselect} from '@bosquig/vue3-treeselect'
-
+import Breadcrumbs from '@/Shared/Breadcrumbs'
 
 export default {
     components: {
@@ -92,13 +92,24 @@ export default {
         SelectInput,
         TextInput,
         Link,
-        Treeselect
+        Treeselect,
+        Breadcrumbs
     },
     props: {
         errors: Object,
     },
     data() {
         return {
+            bread: [
+                {
+                    title: 'Охрана труда и социальное партнерство',
+                    url: route('safety.partners.index'),
+                },
+                {
+                    title: 'Новые данные',
+                    current: true,
+                },
+            ],
             form: this.$inertia.form({
                 enterprise_id: null,
                 sum_contractual: '',

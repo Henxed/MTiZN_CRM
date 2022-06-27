@@ -221,7 +221,6 @@ export default {
 
                 this.more_inn = JSON.parse(result).suggestions;
 
-                console.log(JSON.parse(result).suggestions);
             })
             .catch(error => console.log("error", error));
         },
