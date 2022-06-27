@@ -86,6 +86,7 @@ class User extends Authenticatable
         return $this->belongsToMany(Areas::class);
     }
 
+
     public function All_Permissions()
     {
         $perm_team = Arr::pluck(DB::select('SELECT p.name FROM permissions p LEFT JOIN department_permission dp ON dp.permission_id = p.id LEFT JOIN department_user du ON du.department_id = dp.department_id WHERE du.user_id = ?', [Auth::user()->id]), 'name');

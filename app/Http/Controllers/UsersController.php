@@ -34,7 +34,15 @@ class UsersController extends Controller
     public function show($username)
     {
         return Inertia::render('Profile/User', [
-            'user_info' => User::where('username', $username)->firstOrFail()
+            'user_info' => User::select('departments.name as d_name', 'users.*')
+            ->leftJoin('department_user', function($join) {
+                $join->on('department_user.user_id', 'users.id');
+            })
+            ->leftJoin('departments', function($join) {
+                $join->select('departments.name')->on('departments.id', 'department_id');
+            })
+            ->where('username', $username)
+            ->firstOrFail()
         ]);
     }
 

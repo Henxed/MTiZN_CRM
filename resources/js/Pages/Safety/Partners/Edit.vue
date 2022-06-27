@@ -22,7 +22,7 @@
                         <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
 
                             <div class="mb-2">
-                                <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }} (выбрано "{{ enterprise.label }}"):</label>
+                                <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }}:</label>
                                 <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :defaultOptions="[enterprise]" :async="true" :class="{error : errors.enterprise_id}" placeholder="Найти другое предприятие..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
                                 <div v-if="errors.enterprise_id" class="form-error">{{ errors.enterprise_id }}</div>
                             </div>
