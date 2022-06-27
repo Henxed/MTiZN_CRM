@@ -23,7 +23,7 @@
 
                             <div class="mb-2">
                                 <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }} (выбрано "{{ enterprise.label }}"):</label>
-                                <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :async="true" :class="{error : errors.enterprise_id}" placeholder="Найти другое предприятие..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
+                                <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :defaultOptions="[enterprise]" :async="true" :class="{error : errors.enterprise_id}" placeholder="Найти другое предприятие..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
                                 <div v-if="errors.enterprise_id" class="form-error">{{ errors.enterprise_id }}</div>
                             </div>
 
@@ -134,6 +134,7 @@ export default {
             this.form.put(route('safety.partners.update', this.partner.id))
         },
         async loadOptions({ action, searchQuery, callback }) {
+            console.log('Load!');
             if (action === ASYNC_SEARCH) {
                 await axios.post(route('enterpises.get.all') + '?filter[search]=' + searchQuery).then((res) => {
                     callback(null, res.data.data)
