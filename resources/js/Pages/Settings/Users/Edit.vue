@@ -14,7 +14,11 @@
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Электронная почта <p class="mt-1 text-sm opacity-80">Обновите адрес электронной почты, которая является логином для входа. </p></dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.email" :error="errors.email" type="email" /></dd>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.email" @input="nickname" :error="errors.email" type="email" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Никнейм (Псевдоним) <p class="mt-1 text-sm opacity-80">Уникальное сетевое имя, по которому можно найти пользователя в системе.</p></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.username" :error="errors.username" /></dd>
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Пароль <p class="mt-1 text-sm opacity-80">Обновите пароль, если пользователь забыл его и не может восстановить в автоматическом режиме. </p></dt>
@@ -78,6 +82,7 @@ export default {
         return {
         form: this.$inertia.form({
             name: this.users.name,
+            username: this.users.username,
             email: this.users.email,
             password: this.users.password,
             regions: this.users.areas.length ? this.users.areas : null,
@@ -99,6 +104,10 @@ export default {
         }
     },
     methods: {
+        nickname(event) {
+            let email = event.target.value;
+            this.form.username = email.substring(0, email.lastIndexOf("@")) ? email.substring(0, email.lastIndexOf("@")) : email
+        },
         randomPassword(length) {
             var chars = "%!*#$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
             var pass = "";

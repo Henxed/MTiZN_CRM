@@ -14,7 +14,11 @@
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Электронная почта <p class="mt-1 text-sm opacity-80">Является логином для входа и отправки уведомлений, если потеряется доступ к аккаунту.</p></dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.email" :error="errors.email" type="email" /></dd>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.email" @input="nickname" :error="errors.email" type="email" /></dd>
+                </div>
+                <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Никнейм (Псевдоним) <p class="mt-1 text-sm opacity-80">Уникальное сетевое имя, по которому можно найти пользователя в системе.</p></dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2"><text-input v-model="form.username" :error="errors.username" /></dd>
                 </div>
                 <div class="px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                     <dt class="text-md font-medium text-gray-500 dark:text-gray-400">Пароль <p class="mt-1 text-sm opacity-80">Защищает аккаунт от несанкционированного доступа. </p></dt>
@@ -77,6 +81,7 @@ export default {
         sending: false,
         form: this.$inertia.form({
             name: '',
+            username: '',
             email: '',
             password: '',
             regions: null,
@@ -98,18 +103,22 @@ export default {
         }
     },
     methods: {
-            randomPassword(length) {
-                var chars = "%!*#$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
-                var pass = "";
-                for (var x = 0; x < length; x++) {
-                    var i = Math.floor(Math.random() * chars.length);
-                    pass += chars.charAt(i);
-                }
-                this.form.password = pass;
-            },
-            submit() {
-            this.form.post(this.route('users.store'))
+        nickname(event) {
+            let email = event.target.value;
+            this.form.username = email.substring(0, email.lastIndexOf("@")) ? email.substring(0, email.lastIndexOf("@")) : email
+        },
+        randomPassword(length) {
+            var chars = "%!*#$abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOP1234567890";
+            var pass = "";
+            for (var x = 0; x < length; x++) {
+                var i = Math.floor(Math.random() * chars.length);
+                pass += chars.charAt(i);
             }
+            this.form.password = pass;
+        },
+        submit() {
+            this.form.post(this.route('users.store'))
+        }
 
     },
 }

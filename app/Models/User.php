@@ -99,7 +99,7 @@ class User extends Authenticatable
     public function hasPermission($permission) {
         $perm_team = Arr::pluck(DB::select('SELECT p.name FROM permissions p LEFT JOIN department_permission dp ON dp.permission_id = p.id LEFT JOIN department_user du ON du.department_id = dp.department_id WHERE du.user_id = ?', [Auth::user()->id]), 'name');
         $perm_user = Auth::user()->getAllPermissions()->pluck('name');
-        $all_perm = $perm_user->merge($perm_team)->unique();
+        $all_perm = $perm_user->merge($perm_team)->unique()->values();
         foreach($all_perm as $item){
             if($permission === $item) {
                 return true;

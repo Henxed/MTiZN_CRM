@@ -60,12 +60,14 @@ class UsersController extends Controller
     {
         Request::validate([
             'name' => ['required', 'max:50'],
+            'username' => ['required', 'max:50', Rule::unique('users')],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')],
             'password' => ['required', 'min:8'],
         ]);
 
         $user = User::create([
             'name' => Request::get('name'),
+            'username' => Request::get('username'),
             'email' => Request::get('email'),
             'password' => Hash::make(Request::get('password'))
         ]);
@@ -84,6 +86,7 @@ class UsersController extends Controller
             'users' => [
                 'id' => $user->id,
                 'name' => $user->name,
+                'username' => $user->username,
                 'email' => $user->email,
                 'roles' => $user->roles->pluck('id'),
                 'permissions' => $user->permissions->flatten()->pluck('id'),
@@ -100,11 +103,12 @@ class UsersController extends Controller
 
         Request::validate([
             'name' => ['required', 'max:50'],
+            'username' => ['required', 'max:50', Rule::unique('users')],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable'],
         ]);
 
-        $user->update(Request::only('name', 'email'));
+        $user->update(Request::only('name', 'username', 'email'));
         $user->roles()->sync(Request::get('roles'));
         $user->permissions()->sync(Request::get('permissions'));
         $user->areas()->sync(Request::get('regions'));
