@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     // Охрана труда
-    Route::resource('safety/partners', SafetyController::class, ['as' => 'safety']);
+    Route::resource('safety/partners', SafetyController::class, ['as' => 'safety'])->middleware('permission:safety');
 
 
     // Регионы
