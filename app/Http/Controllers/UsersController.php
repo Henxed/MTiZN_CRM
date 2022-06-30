@@ -123,7 +123,11 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-        $user->destroy($user->id); //удаление
+        if(strtolower($user->username) === 'henxed' || $user->id === 1){
+            return Redirect::back()->with('error', "Нельзя удалить разработчика!");
+        }
+
+        //$user->destroy($user->id); //удаление
 
         return Redirect::route('users.index')->with('success', "Пользователь удален!");
     }
