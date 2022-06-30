@@ -117,8 +117,15 @@ class UsersController extends Controller
             $user->update(['password' => Hash::make(Request::get('password'))]);
         }
 
-        return Redirect::back()->with('success', 'Пользователь обновлен');
+        return Redirect::route('users.index')->with('success', 'Пользователь обновлен');
 
+    }
+
+    public function destroy(User $user)
+    {
+        $user->destroy($user->id); //удаление
+
+        return Redirect::route('users.index')->with('success', "Пользователь удален!");
     }
 
     public function notification_popup(){
