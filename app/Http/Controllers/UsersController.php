@@ -127,7 +127,7 @@ class UsersController extends Controller
             return Redirect::back()->with('error', "Нельзя удалить разработчика!");
         }
 
-        //$user->destroy($user->id); //удаление
+        $user->destroy($user->id); //удаление
 
         return Redirect::route('users.index')->with('success', "Пользователь удален!");
     }
