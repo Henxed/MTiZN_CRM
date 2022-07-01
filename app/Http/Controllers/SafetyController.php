@@ -14,6 +14,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class SafetyController extends Controller
 {
@@ -79,11 +80,13 @@ class SafetyController extends Controller
     public function store(Request $request)
     {
         Req::validate([
-            'enterprise_id' => 'required',
+            'enterprise_id' => 'required|unique:safeties',
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
             'in_total' => 'required',
             'start_year' => 'required',
+        ],[
+            'enterprise_id.unique' => 'Данные с таким предприятием уже существуют, вы можете их отредактировать.'
         ]);
 
         Safety::create($request->all());
@@ -102,11 +105,13 @@ class SafetyController extends Controller
     public function update(Safety $partner)
     {
         Req::validate([
-            'enterprise_id' => 'required',
+            'enterprise_id' => 'required|unique:safeties',
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
             'in_total' => 'required',
             'start_year' => 'required',
+        ],[
+            'enterprise_id.unique' => 'Данные с таким предприятием уже существуют, вы можете их отредактировать.'
         ]);
 
         $partner->update(Req::all());
