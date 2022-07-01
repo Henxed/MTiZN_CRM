@@ -82,6 +82,8 @@ class SafetyController extends Controller
             'enterprise_id' => 'required',
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
+            'in_total' => 'min:0',
+            'start_year' => 'required',
         ]);
 
         Safety::create($request->all());
@@ -103,6 +105,8 @@ class SafetyController extends Controller
             'enterprise_id' => 'required',
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
+            'in_total' => 'required',
+            'start_year' => 'required',
         ]);
 
         $partner->update(Req::all());
