@@ -82,7 +82,7 @@ class SafetyController extends Controller
             'enterprise_id' => 'required',
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
-            'in_total' => 'min:0',
+            'in_total' => 'required',
             'start_year' => 'required',
         ]);
 
