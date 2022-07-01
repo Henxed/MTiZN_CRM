@@ -259,6 +259,24 @@ class EnterprisesController extends Controller
         return $data;
     }
 
+    public function analytics($id = null)
+    {
+
+        // (COUNT(*) as mounth / (SELECT COUNT(*) FROM `enterprises`) as all * 100) as percent
+
+        $data = Enterprises::select(
+                'region',
+                DB::raw("count(enterprises.id) as e_all"),
+                DB::raw("(SELECT COUNT(*) FROM `enterprises` e WHERE `updated_at` >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND area_id = enterprises.area_id) as mounth"),
+                DB::raw("(SELECT COUNT(*) FROM `enterprises` e WHERE inn IS NULL AND area_id = enterprises.area_id) as no_inn")
+            )->leftJoin('areas', function($join) {
+                $join->select('region')->on('areas.id', 'enterprises.area_id');
+            })->where(function ($query) use($id) {
+                if($id) $query->where('area_id', $id);
+            })->groupBy('region', 'enterprises.area_id')->get();
+        return $data;
+    }
+
     //выгрузка предприятий
     public function export()
     {

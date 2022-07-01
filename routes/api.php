@@ -31,4 +31,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('notifications/remove/{id}', [UsersController::class, 'notification_remove'])->name('notification.remove');
 
     Route::post('enterprise/get/all', [EnterprisesController::class, 'apiAll'])->name('enterpises.get.all');
+    Route::get('enterprise/analytics/{id?}', [EnterprisesController::class, 'analytics'])->name('enterpises.analytics');
 });

@@ -54,7 +54,7 @@
                     API токены
                 </jet-dropdown-link>
 
-                <div class="border-t border-slate-400 my-2"></div>
+                <div class="border-t border-slate-300 dark:border-slate-600 my-2"></div>
 
                 <!-- Authentication -->
                 <form @submit.prevent="logout">
@@ -87,7 +87,7 @@
             <a v-if="$page.props.access.can.includes('stats') || $page.props.access.role.includes('super-admin')" :href="route('stats.index')" class="app-sidebar-link" :class="{'active' : route().current('stats.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Статистика' : ''}">
                 <i class="fi fi-rr-chart-histogram"></i>
             </a>
-            <a v-if="$page.props.access.can.includes('safety') || $page.props.access.role.includes('super-admin')" :href="route('safety.partners.index')" class="app-sidebar-link" :class="{'active' : route().current('safety.partners.index')}" v-tippy="{ placement : 'right', content: !menu ? 'Охрана труда' : ''}">
+            <a v-if="$page.props.access.can.includes('safety') || $page.props.access.role.includes('super-admin')" :href="route('safety.partners.index')" class="app-sidebar-link" :class="{'active' : route().current('safety.partners.*')}" v-tippy="{ placement : 'right', content: !menu ? 'Охрана труда' : ''}">
                 <i class="fi fi-rr-shield-check"></i>
             </a>
             <a v-if="$page.props.access.can.includes('cp') || $page.props.access.role.includes('super-admin')" :href="route('settings')" class="app-sidebar-link" :class="{'active' : 'settings' === $page.url.split('/')[1]}" v-tippy="{ placement : 'right', content: !menu ? 'Администрирование' : ''}">

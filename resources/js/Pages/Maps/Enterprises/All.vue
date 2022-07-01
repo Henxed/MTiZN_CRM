@@ -9,8 +9,9 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
                 <breadcrumbs :data="bread" class="my-4"/>
-                <div class="justify-self-end text-slate-600 dark:text-slate-400">
-                    По области - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
+                <div class="flex items-center justify-self-end text-slate-600 dark:text-slate-400">
+                    <div class="cursor-pointer hover:text-slate-500 mr-4" @click.prevent="open=true">Аналитика</div>
+                    По области - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
                 </div>
             </div>
             <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
@@ -30,7 +31,7 @@
                 <table class="table-auto min-w-full h-3/6 relative">
                     <thead>
                     <tr class="text-left font-bold h-9">
-                        <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="sticky top-0 z-30 max-w-sm w-full hover:cursor-pointer ">
+                        <th v-for="item in table" :key="item" @click.prevent="sortBy(item)" class="sticky top-0 z-20 max-w-sm w-full hover:cursor-pointer ">
                             <div class="th hover:bg-gray-300 hover:dark:bg-slate-700 px-4 py-3 border-b border-gray-200 dark:border-slate-500 bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-gray-200  text-xs leading-4 font-medium uppercase tracking-wider"><span v-html="getSortIcon(item)"></span> {{ $t(`inputs.ent.${item}`) }} </div>
                         </th>
                     </tr>
@@ -52,6 +53,7 @@
                 <pagination :links="enterprises.links" />
             </div>
         </div>
+        <analytics v-model:open="open" @open="hasOpen" />
     </app-layout>
 </template>
 
@@ -65,6 +67,7 @@
     import Pagination from '@/Shared/Pagination'
     import pickBy from "lodash/pickBy";
     import Breadcrumbs from '@/Shared/Breadcrumbs'
+    import Analytics from '@/Shared/AnalyticsEnterprise'
 
     export default defineComponent({
         components: {
@@ -73,7 +76,8 @@
             Link,
             PerfectScrollbar,
             Pagination,
-            Breadcrumbs
+            Breadcrumbs,
+            Analytics
         },
         props: {
             enterprises_count: Number,
@@ -96,6 +100,7 @@
                         current: true,
                     },
                 ],
+                open: false,
                 amy_status: this.table.filter(e => e === 'amy').length ? true : false,
                 queryBuilderData: {
                     page: this.queryBuilderProps.page || 1,
@@ -148,6 +153,9 @@
             },
             ruble(number) {
                 return new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(number)
+            },
+            hasOpen(e) {
+                this.open = e
             }
         },
         computed: {

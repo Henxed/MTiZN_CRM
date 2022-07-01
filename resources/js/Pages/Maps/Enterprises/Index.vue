@@ -19,10 +19,10 @@
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
                 <breadcrumbs :data="bread" class="my-4"/>
-                <div class="justify-self-end text-slate-600 dark:text-slate-400">
-
-                        По району - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2 mr-2">{{ region_count }}</span>
-                        По области - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
+                <div class="flex items-center justify-self-end text-slate-600 dark:text-slate-400">
+                        <div class="cursor-pointer hover:text-slate-500 mr-4" @click.prevent="open=true">Аналитика</div>
+                        По району - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2 mr-2">{{ region_count }}</span>
+                        По области - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
 
                 </div>
             </div>
@@ -67,6 +67,7 @@
                 <pagination :links="enterprises.links" />
             </div>
         </div>
+        <analytics :id="region.id" v-model:open="open" @open="hasOpen" />
     </app-layout>
 </template>
 
@@ -80,7 +81,7 @@
     import Pagination from '@/Shared/Pagination'
     import pickBy from "lodash/pickBy";
     import Breadcrumbs from '@/Shared/Breadcrumbs'
-
+    import Analytics from '@/Shared/AnalyticsEnterprise'
 
     export default defineComponent({
         components: {
@@ -89,7 +90,8 @@
             Link,
             PerfectScrollbar,
             Pagination,
-            Breadcrumbs
+            Breadcrumbs,
+            Analytics
         },
         props: {
             region: Array,
@@ -119,6 +121,7 @@
                         current: true,
                     },
                 ],
+                open: false,
                 amy_status: this.table.filter(e => e === 'amy').length ? true : false,
                 queryBuilderData: {
                     page: this.queryBuilderProps.page || 1,
@@ -170,6 +173,9 @@
             },
             ruble(number) {
                 return new Intl.NumberFormat('ru-RU', { maximumSignificantDigits: 3 }).format(number)
+            },
+            hasOpen(e) {
+                this.open = e
             }
         },
         computed: {
