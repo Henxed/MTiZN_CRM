@@ -80,7 +80,7 @@ class SafetyController extends Controller
     public function store(Request $request)
     {
         Req::validate([
-            'enterprise_id' => 'required|unique:safeties',
+            'enterprise_id' => ['required', Rule::unique('safeties')],
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
             'in_total' => 'required',
@@ -105,7 +105,7 @@ class SafetyController extends Controller
     public function update(Safety $partner)
     {
         Req::validate([
-            'enterprise_id' => 'required|unique:safeties',
+            'enterprise_id' => ['required', Rule::unique('safeties')->ignore($partner->id)],
             'collective_agreement' => 'required',
             'sum_contractual' => 'required',
             'in_total' => 'required',
