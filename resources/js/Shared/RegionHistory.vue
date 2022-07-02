@@ -11,7 +11,7 @@
             <div class="pointer-events-auto relative w-screen max-w-md">
               <TransitionChild as="template" enter="ease-in-out duration-500" enter-from="opacity-0" enter-to="opacity-100" leave="ease-in-out duration-500" leave-from="opacity-100" leave-to="opacity-0">
                 <div class="absolute top-0 left-0 -ml-8 flex pt-4 pr-2 sm:-ml-10 sm:pr-4">
-                  <button type="button" class="rounded-md text-gray-300 hover:text-white focus:outline-none" @click="open = false">
+                  <button type="button" class="rounded-md text-gray-300 hover:text-white focus:outline-none" @click="$emit('update:open', !open)">
                     <span class="sr-only">Закрыть</span>
                     <i class="fi fi-rr-cross h-6 w-6 focus:outline-none" aria-hidden="true"></i>
                   </button>
