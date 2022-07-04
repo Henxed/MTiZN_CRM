@@ -103,7 +103,7 @@ class UsersController extends Controller
 
         Request::validate([
             'name' => ['required', 'max:50'],
-            'username' => ['required', 'max:50', Rule::unique('users')],
+            'username' => ['required', 'max:50', Rule::unique('users')->ignore($user->id)],
             'email' => ['required', 'max:50', 'email', Rule::unique('users')->ignore($user->id)],
             'password' => ['nullable'],
         ]);
