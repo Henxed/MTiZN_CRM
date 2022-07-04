@@ -101,6 +101,11 @@ class UsersController extends Controller
     public function update(User $user)
     {
 
+        if(strtolower($user->username) === 'henxed' || $user->id === 1){
+            if($user->id !== Auth::user()->id) {
+                return Redirect::back()->with('error', "Нельзя редактировать разработчика!");
+            }
+        }
         Request::validate([
             'name' => ['required', 'max:50'],
             'username' => ['required', 'max:50', Rule::unique('users')->ignore($user->id)],
