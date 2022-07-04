@@ -1,6 +1,6 @@
 <template>
     <app-layout title="Главная">
-        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 rounded-xl bg-white p-8 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4 p-8 w-full max-w-screen-2xl">
             <a :href="route('map')" class="flex bg-orange-100 dark:bg-orange-500/30 p-3 rounded-xl overflow-hidden relative h-48 min-w-48 w-full max-w-64">
                 <div class="absolute -right-5 -bottom-8 text-orange-200 dark:text-orange-200/30 text-9xl"><i class="fi fi-rr-map"></i></div>
                 <div class="text-lg text-orange-400">Карта районов</div>
@@ -30,6 +30,8 @@
                 <div class="absolute -right-5 -bottom-8 text-gray-200 dark:text-gray-200/30 text-9xl"><i class="fi fi-rr-settings"></i></div>
                 <div class="text-lg text-gray-400">Администрирование системы</div>
             </a>
+
+            <!-- <link-card :href="route('settings')" :color="'lime'" :icon="'settings'">tt</link-card> -->
         </div>
     </app-layout>
 </template>
@@ -39,14 +41,15 @@
     import { defineComponent } from 'vue'
     import { Head, Link } from '@inertiajs/inertia-vue3';
     import AppLayout from '@/Layouts/AppLayout'
-
+    // import LinkCard from '@/Shared/LinkCard'
 
 
     export default defineComponent({
         components: {
             AppLayout,
             Head,
-            Link
+            Link,
+            // LinkCard
         },
         data() {
             return {

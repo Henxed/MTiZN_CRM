@@ -14,7 +14,7 @@
                     По области - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ enterprises_count }}</span>
                 </div>
             </div>
-            <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
+            <div class="grid card p-4">
                 <div class="flex">
                     <div class="mr-auto mb-6 flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"

@@ -4,15 +4,15 @@
         <div class="sidebar max-w-sm">
             <div class="lg:sticky lg:top-6 mr-6">
                 <div class="dark:text-slate-300 ">
-                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-slate-400/20 hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
+                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-slate-600/30 hover:bg-slate-600/50 dark:hover:bg-slate-600/50 text-13"
                             :href="route('regions.index')">
                         Сводная информация
                     </Link>
                     <div class="mt-4 text-lg uppercase pl-3 border-b border-b-slate-300">Регионы</div>
                     <perfect-scrollbar class="h-screen-85 max-h-screen pr-3 mt-2">
-                    <Link class="block uppercase py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
+                    <Link class="block uppercase py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-600/40 text-13"
                             v-for="item in regions" :key="item.id" :ref="`region_${item.id}`"
-                            :class="{ 'bg-gray-300 dark:bg-slate-600 dark:text-slate-300' : item.id === region.id}"
+                            :class="{ 'bg-gray-300 dark:bg-slate-600/40 dark:text-slate-300' : item.id === region.id}"
                             :href="route('regions.show', item.id)">
                         {{ item.region }}
                     </Link>
@@ -24,11 +24,11 @@
 
             <div class="font-bold p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9 sm:flex leading-none">
                 <span class="text-3xl text-slate-700 dark:text-slate-200 uppercase">{{ region.region }}</span>
-                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="text-2xl ml-4 mt-1 text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
+                <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="text-2xl ml-4 mt-1 text-slate-700 dark:text-slate-400 hover:text-slablu-500 dark:hover:text-slablu-300" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <i class="fi fi-rr-edit"></i>
                 </Link>
             </div>
-            <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl grid grid-cols-1 sm:grid-cols-6 gap-4">
+            <div class="bg-slate-600/10 dark:bg-slate-600/20 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-6 gap-4">
 
                 <div class="flex sm:col-span-2 items-center">
                     <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
@@ -87,7 +87,7 @@
             </div>
 
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 my-6">
-                <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
+                <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl">
                     <div class="text-xl font-bold dark:text-slate-300">Информация по учебным заведениям</div>
                     <div class="grid grid-cols-2 sm:flex gap-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                         <div v>
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
+                <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl">
                     <div class="text-xl font-bold dark:text-slate-300">Регистрируемый рынок труда</div>
                     <div class="grid grid-cols-2 sm:flex gap-4 2xl:gap-12  mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                         <div>
@@ -130,21 +130,21 @@
                     </div>
                 </div>
                 <div class="block">
-                    <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
+                    <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl">
                         <div class="text-xl font-bold dark:text-slate-300">Информация по сельским советам</div>
                         <perfect-scrollbar class="pr-3 mt-3 max-h-80">
-                        <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-pink-600 hover:text-pink-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
+                        <Link class="block text-slate-700 dark:text-slate-400 dark:hover:text-slablu-300 hover:text-slablu-500 leading-thin" v-for="(item, index) in region.selsoviet" :key="item">
                             {{ index+1 }}. {{ item.name }}
                         </Link>
                         </perfect-scrollbar>
                     </div>
                 </div>
                 <div class="block">
-                    <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-6
+                    <div class="grid bg-slate-600/10 dark:bg-slate-600/20 p-6
                     mb-6 rounded-xl dark:text-slate-300 leading-tight" v-if="sum_people_dismissal">
                         <div class="text-xl font-bold dark:text-slate-300">Численность работников</div>
 
-                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-400/10 rounded-lg">
+                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-600/30 rounded-lg">
                             <div class="w-4/6">Под риском увольнения</div>
                             <div class="w-2/6 text-center">
                                 <div class="text-2xl font-semibold">{{ sum_people_dismissal || '-' }}</div>

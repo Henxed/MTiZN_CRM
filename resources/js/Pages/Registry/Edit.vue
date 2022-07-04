@@ -3,7 +3,7 @@
         <form @submit.prevent="update" class="sm:flex" >
         <div>
             <div class="sticky top-5 mb-5">
-                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl sm:w-72" :class="{ 'border border-red-500' : errors.category_id}">
+                <div class="card p-7 sm:w-72" :class="{ 'border border-red-500 dark:border-red-500' : errors.category_id}">
                     <div class=" text-lg text-center uppercase">Реестры</div>
                     <div class="mb-5 text-sm text-center">Выберите категорию реестра</div>
 
@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="grid grid-cols-1 gap-4 rounded-xl bg-white text-slate-900 p-4 sm:p-9 sm:mx-6 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card grid grid-cols-1 gap-4 sm:p-9 sm:mx-6 w-full max-w-screen-2xl">
             <div class="relative grid grid-cols-1 sm:grid-cols-5 gap-x-4 bg-gray-200 dark:bg-slate-600 dark:text-slate-300 p-4 rounded-xl
                 before:absolute before:top-5 before:bottom-5 before:-left-0.5 before:w-1 before:rounded-full"
                 :class="status_color(form.status_id)">

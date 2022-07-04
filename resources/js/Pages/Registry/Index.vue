@@ -3,7 +3,7 @@
     <div class="md:flex w-full">
         <div>
             <div class="sticky top-5">
-                <div class="bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-300 p-7 rounded-xl md:w-72">
+                <div class="card p-7 md:w-72">
                     <div class="mb-5 text-lg text-center uppercase">Реестры</div>
 
                     <Link class="block mb-4 p-2 px-4 rounded-xl "
@@ -16,7 +16,7 @@
                 <Link v-if="$page.props.access.can.includes('registry.add') || $page.props.access.role.includes('super-admin')" :href="route('registry.create')" class="my-4 w-full btn-green block" role="button">Добавить реестр</Link>
             </div>
         </div>
-        <div class="rounded-xl bg-white text-slate-900 md:mx-6 md:pt-3 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card md:mx-6 md:pt-3 w-full max-w-screen-2xl">
 
             <div class="md:sticky top-0 z-40 bg-white dark:bg-slate-800 rounded-xl p-4 md:px-9">
                 <div class="text-2xl font-bold dark:text-slate-300 p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9">{{ category_title }}</div>

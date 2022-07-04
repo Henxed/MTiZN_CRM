@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     protected function defaultProfilePhotoUrl()
     {
-        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=f3f6fd&background=94a3b8';
+        return 'https://ui-avatars.com/api/?name='.urlencode($this->name).'&color=cbd5e1&background=64748b';
     }
 
     public function scopeFilter($query, array $filters)

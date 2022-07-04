@@ -19,7 +19,15 @@
         @routes
         <script src="{{ mix('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased bg-slate-200 dark:bg-slate-900">
+    <body class="font-sans antialiased bg-slate-200 dark:bg-slate-900 page">
+    <svg version="1.1" class="absolute -z-10 hidden dark:block" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1440 715" style="enable-background:new 0 0 1440 715;" xml:space="preserve">
+        <linearGradient id="grad" gradientUnits="userSpaceOnUse" x1="482.9734" y1="919.9106" x2="725.6234" y2="345.1806" gradientTransform="matrix(1 0 0 -1 0 716)">
+            <stop  offset="0" style="stop-color: rgb(39 54 86 / 78%)"/>
+            <stop  offset="1" style="stop-color:#0F1725;stop-opacity:0"/>
+        </linearGradient>
+        <path fill="url(#grad)" d="M0,0h1440v715H0V0z"/>
+    </svg>
         @inertia
 
         {{-- @env ('local')

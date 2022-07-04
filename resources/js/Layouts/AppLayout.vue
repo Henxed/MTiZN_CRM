@@ -23,7 +23,7 @@
         <notify class="mr-3 flex items-center justify-center leading-none h-10 w-10 rounded-md text-slate-700 hover:bg-slate-300  dark:text-slate-300 dark:hover:bg-slate-600 focus:outline-none"/>
 
 
-        <jet-dropdown align="right" width="48" class="border-l-2 border-l-slate-300 pl-3">
+        <jet-dropdown :align="'right'" width="48" class="border-l-2 border-l-slate-300 dark:border-l-slate-600 pl-3">
             <template #trigger>
                 <div class="block w-8 pt-1 sm:pt-0 sm:flex items-center relative sm:w-auto">
                     <button v-if="$page.props.jetstream.managesProfilePhotos" class="text-sm rounded-full focus:outline-none transition">

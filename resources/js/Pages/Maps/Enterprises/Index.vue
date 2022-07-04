@@ -4,7 +4,7 @@
         <div class="w-full max-w-screen-2xl">
 
             <div class="flex justify-between items-center align-center">
-                <div class="py-4">
+                <div class="pb-4">
                     <div class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0 flex items-center ">
                             Предприятия района
                     </div>
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
+            <div class="grid card p-4">
                 <div class="flex">
                     <div class="mb-6 mr-auto flex items-center bg-gray-200 dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 h-10">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-gray-200 dark:bg-slate-700 dark:placeholder:text-slate-400 rounded-full"

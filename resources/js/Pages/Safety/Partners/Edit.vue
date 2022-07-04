@@ -18,8 +18,8 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
 
                             <div class="mb-2">
                                 <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }}:</label>
@@ -54,8 +54,6 @@
                             </div>
                         </div>
 
-
-                    </div>
 
                 </div>
                 </div>

@@ -3,8 +3,8 @@
 
 <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-8">
-            <Link :href="route('regions.show', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ form.region }}</Link>
-            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(region.updated_at).format('LLL') }}  |  <span class="cursor-pointer hover:text-slate-600" @click.prevent="open=true">История изменений</span> </div>
+            <Link :href="route('regions.show', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-slablu-500 hover:text-slablu-600 uppercase">{{ form.region }}</Link>
+            <div class="text-xs text-slate-400 dark:text-slate-500">Последние обновление {{ $moment(region.updated_at).format('LLL') }}  |  <span class="cursor-pointer hover:text-slablu-500" @click.prevent="open=true">История изменений</span> </div>
         </div>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
 
@@ -18,8 +18,8 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
 
                             <text-input v-model="form.region" :error="errors.region" label="Название ЦЗН района" />
                             <text-input v-model="form.leader" :error="errors.leader" label="Глава района" />
@@ -28,8 +28,6 @@
                             <text-input v-model="form.area"  @keyup="mask($event, 'area')" :error="errors.area" label="Площадь" />
 
                         </div>
-
-                    </div>
 
                 </div>
                 </div>
@@ -51,8 +49,8 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
 
                             <text-input v-model="form.school" :error="errors.school" label="Школы" type="number" placeholder="Оставьте пустым, если нет школ" min="1"/>
                             <text-input v-model="form.vvuz" :error="errors.vvuz" label="ВУЗы" type="number" placeholder="Оставьте пустым, если нет ВВУЗов" min="1"/>
@@ -61,7 +59,6 @@
 
                         </div>
 
-                    </div>
 
                 </div>
                 </div>
@@ -83,8 +80,8 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
 
                             <text-input v-model="form.amw" @keyup="mask($event, 'amw')"  :error="errors.amw" label="Средняя зарплата" />
                             <text-input v-model="form.commissions_c" @keyup="mask($event, 'commissions_c')" :error="errors.commissions_c" label="Контрольный показатель по снижению неформальной занятости" />
@@ -104,8 +101,6 @@
                                 <text-input v-model="form.cripple_worked" :error="errors.cripple_worked" label="из них заняты трудовой деятельностью" />
                             </div>
                         </div>
-
-                    </div>
 
                 </div>
                 </div>

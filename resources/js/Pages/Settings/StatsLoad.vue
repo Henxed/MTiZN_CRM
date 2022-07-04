@@ -1,7 +1,7 @@
 <template>
     <app-layout title="Загрузка статистики">
         <setting class="pr-9">
-        <div class="flex mb-3 rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card flex mb-3 p-4 w-full max-w-screen-2xl">
             <form @submit.prevent="setLvl">
                 <div class="px-3 mb-3 grid grid-cols-2 items-center">
                     <text-input v-model="lvl" @keyup="mask($event, 'lvl')" label="Уровень безработицы по области" />
@@ -12,7 +12,7 @@
 
             </form>
         </div>
-        <div class="flex rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card flex p-4 w-full max-w-screen-2xl">
             <form @submit.prevent="submit">
                 <div class="px-3 mb-3">
                     <div class="text-xl">Как сохранить в CSV?</div>

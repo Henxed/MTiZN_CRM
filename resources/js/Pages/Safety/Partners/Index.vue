@@ -7,7 +7,7 @@
                     <div class="text-3xl uppercase text-slate-600 dark:text-slate-400 p-5 pb-0 sm:p-0">Охрана труда и социальное партнерство</div>
                 </div>
             </div>
-            <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl mb-6">
+            <div class="bg-slate-600/10 dark:bg-slate-600/30 p-6 rounded-xl mb-6">
                             <div class="grid grid-cols-1 sm:flex gap-x-6 sm:gap-12 dark:text-slate-400 p-5 pt-0 sm:p-0">
                                 <div>
                                     <div class="text-2xl font-semibold">{{ safety_sum.ca || '-' }}</div>
@@ -23,7 +23,7 @@
                                 </div>
                             </div>
                         </div>
-            <div class="grid rounded-xl shadow bg-white text-slate-900 dark:bg-slate-800 p-4">
+            <div class="grid card p-4">
                 <div class="flex items-center mb-6">
                     <div class="flex items-center border border-slate-300 dark:border-slate-600  dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-md max-w-sm w-full pr-3 h-10" style="height: 42px;">
                         <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 dark:bg-slate-700 placeholder:text-slate-400 rounded-full"

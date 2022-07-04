@@ -2,7 +2,7 @@
     <app-layout :title="'Новое предприятие - ' + region.region">
 
  <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
-        <div class="py-4">
+        <div class="pb-4">
             <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Новое предприятие</div>
         </div>
         <breadcrumbs :data="bread" class="my-4"/>
@@ -18,8 +18,8 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
 
                             <div class="flex items-center">
                                 <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.ent.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
@@ -50,7 +50,6 @@
                             <div v-if="errors.status_id" class="form-error">{{ errors.status_id }}</div>
                         </div>
 
-                    </div>
 
                 </div>
                 </div>
@@ -72,19 +71,14 @@
                 </div>
                 <div class="mt-5 md:mt-0 md:col-span-2">
 
-                    <div class="shadow overflow-hidden sm:rounded-md">
-                        <div class="px-4 py-5 bg-white dark:bg-slate-800 sm:p-6">
+
+                        <div class="px-4 py-5 card sm:p-6">
                             <text-input v-model="form.amy" :error="errors.amy" :label="$t(`inputs.ent.amy`)" type='number'/>
                             <text-input v-model="form.total_jobs" :error="errors.total_jobs" :label="$t(`inputs.ent.total_jobs`)" type="number"/>
                             <text-input v-model="form.ane" :error="errors.ane" :label="$t(`inputs.ent.ane`)" type='number' />
                             <text-input v-model="form.nde" :error="errors.nde" :label="$t(`inputs.ent.nde`)" type='number' />
                             <text-input v-model="form.factors" :error="errors.factors" :label="$t(`inputs.ent.factors`)" type="number"/>
                             <text-input v-model="form.workplaces_respect" :error="errors.workplaces_respect" :label="$t(`inputs.ent.workplaces_respect`)" type="number"/>
-                            <text-input v-model="form.workplaces_three" :error="errors.workplaces_three" :label="$t(`inputs.ent.workplaces_three`)" type="number"/>
-                            <text-input v-model="form.workplaces_four" :error="errors.workplaces_four" :label="$t(`inputs.ent.workplaces_four`)" type="number"/>
-                            <text-input v-model="form.total_factors" :error="errors.total_factors" :label="$t(`inputs.ent.total_factors`)" type="number"/>
-                            <text-input v-model="form.start_year_factors" :error="errors.start_year_factors" :label="$t(`inputs.ent.start_year_factors`)" type="number"/>
-
                             <text-input v-model="form.sum_arrears" :error="errors.sum_arrears" :label="$t(`inputs.ent.sum_arrears`)" type='number'/>
                             <text-input v-model="form.employed_public" :error="errors.employed_public" :label="$t(`inputs.ent.employed_public`)" type='number'/>
                             <text-input v-model="form.employed_temporary" :error="errors.employed_temporary" :label="$t(`inputs.ent.employed_temporary`)" type='number'/>
@@ -94,8 +88,6 @@
                             <text-input v-model="form.dismissed" :error="errors.dismissed" :label="$t(`inputs.ent.dismissed`)" type='number'/>
                             <text-input v-model="form.remote" :error="errors.remote" :label="$t(`inputs.ent.remote`)" type='number'/>
                         </div>
-
-                    </div>
 
                 </div>
                 </div>
@@ -173,10 +165,6 @@ export default {
                 factors: '',
                 total_jobs: '',
                 workplaces_respect: '',
-                workplaces_three: '',
-                workplaces_four	: '',
-                total_factors: '',
-                start_year_factors: '',
                 address: '',
                 ogrn: '',
                 sum_arrears: '',

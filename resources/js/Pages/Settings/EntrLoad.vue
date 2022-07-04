@@ -1,7 +1,7 @@
 <template>
     <app-layout title="Загрузка статистики">
         <setting class="pr-9">
-        <div class="flex mb-4 rounded-xl bg-white text-slate-900 dark:text-slate-300 p-4 dark:bg-slate-800 w-full max-w-screen-2xl">
+        <div class="card flex mb-4 p-4 w-full max-w-screen-2xl">
             <form @submit.prevent="submit">
                 <div class="px-3 mb-3">
                     <div class="text-xl">Загрузка Отдела трудоустройства и специальных программ</div>

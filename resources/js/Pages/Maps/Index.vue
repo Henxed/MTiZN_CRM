@@ -4,13 +4,13 @@
         <div class="sidebar max-w-sm">
             <div class="lg:sticky lg:top-12 mr-6">
                 <div class="dark:text-slate-300 ">
-                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-gray-300 dark:bg-slate-600 dark:text-slate-300 text-13"
+                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-gray-300 dark:bg-slate-600/50 dark:text-slate-300 text-13"
                             :href="route('regions.index')">
                         Сводная информация
                     </Link>
                     <div class="mt-4 text-lg uppercase pl-3 border-b border-b-slate-300">Регионы</div>
                     <perfect-scrollbar class="h-screen-85 max-h-screen pr-3 mt-2">
-                    <Link class="block uppercase py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-400/20 text-13"
+                    <Link class="block uppercase py-1.5 px-3 mb-1 rounded-lg hover:bg-slate-600/20 dark:hover:bg-slate-600/40 text-13"
                             v-for="item in regions" :key="item.id" :ref="`region_${item.id}`"
                             :href="route('regions.show', item.id)">
                         {{ item.region }}
@@ -21,7 +21,7 @@
         </div>
         <div class="w-5/6 max-w-screen-xl">
         <div class="text-2xl font-bold dark:text-slate-300 mb-6">Сводная информация по Оренбургской области</div>
-        <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl">
+        <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl">
             <div class="text-xl font-bold dark:text-slate-300">Информация по районам</div>
             <div class="grid grid-cols-1 sm:flex gap-x-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                 <div>
@@ -45,7 +45,7 @@
             <div class="grid grid-cols-1 xl:grid-cols-2 gap-6 my-6">
                 <div class="grid gap-6">
                     <section>
-                        <div class="bg-slate-600/10 dark:bg-slate-400/10 p-6 rounded-xl mb-6">
+                        <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl mb-6">
                             <div class="text-xl font-bold dark:text-slate-300">Охрана труда и социальное партнерство</div>
                             <div class="grid grid-cols-1 sm:flex gap-x-6 sm:gap-12 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                                 <div>
@@ -65,11 +65,11 @@
                     </section>
                 </div>
 
-                <div class="grid bg-slate-600/10 dark:bg-slate-400/10 p-6
+                <div class="grid bg-slate-600/10 dark:bg-slate-600/20 p-6
                     mb-6 rounded-xl dark:text-slate-300 leading-tight" v-if="sum_people_dismissal">
                         <div class="text-xl font-bold dark:text-slate-300">Численность работников</div>
 
-                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-400/10 rounded-lg">
+                        <div class="flex items-center my-3 p-3 bg-slate-600/10 dark:bg-slate-600/30 rounded-lg">
                             <div class="w-4/6">Под риском увольнения</div>
                             <div class="w-2/6 text-center">
                                 <div class="text-2xl font-semibold">{{ sum_people_dismissal || '-' }}</div>

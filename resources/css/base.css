@@ -1,3 +1,17 @@
+.dark .page::before{
+    /* content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
+    background: radial-gradient(circle, rgb(39 54 86 / 78%) 0%, rgba(0,0,0,0) 70%) no-repeat;
+    background-position: -50rem -58rem; */
+   /* background: radial-gradient(circle, #2d374e 0%, rgba(25,35,58,0) 100%); */
+}
+
 .grid-main {
     grid-template-columns: 50px 1fr;
 }
@@ -217,7 +231,7 @@
 }
 
 .st1 {
-    @apply stroke-slate-600 fill-white dark:stroke-slate-700 dark:fill-slate-500;
+    @apply stroke-slate-600 fill-white dark:stroke-slate-800 dark:fill-slablu-580;
 
     &:hover {
         @apply fill-slate-400 !important;
@@ -276,4 +290,10 @@ input:checked + div svg {
 
 .text-0{
     text-indent: -9999px;
+}
+
+/* Блоки */
+
+.card {
+    @apply rounded-xl shadow bg-white text-slate-900 dark:text-slate-400 dark:bg-slate-700/50 dark:border dark:border-slate-600/30;
 }

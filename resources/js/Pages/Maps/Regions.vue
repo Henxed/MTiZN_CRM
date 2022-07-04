@@ -73,7 +73,7 @@
                 <div class="flex flex-col items-center justify-center mx-auto mt-5 ">
 
                     <div class="flex items-center bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 rounded-full max-w-sm w-full pr-3 shadow-md h-10">
-                        <input class="border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-700  rounded-full"
+                        <input class="placeholder:text-slate-400 border-none focus:outline-none focus:ring-0 flex-1 h-full w-full p-4 bg-white dark:bg-slate-700  rounded-full"
                         type="text"
                         placeholder="Поиск региона..."
                         v-model="keyword"
@@ -84,19 +84,19 @@
                 <div class="grid gap-4 grid-cols-1 sm:grid-cols-3 mt-6 select-none">
                     <div class="flex">
                         <input class="peer hidden" id="stats_u" type="radio" v-model="stats" value="lvl" />
-                        <label for="stats_u" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
+                        <label for="stats_u" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/20 hover:bg-slate-600/30 peer-checked:bg-slate-600/80 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('lvl')">
                             Уровень безработицы
                         </label>
                     </div>
                     <div class="flex">
                         <input class="peer hidden" id="stats_t" type="radio" v-model="stats" value="tension" />
-                        <label for="stats_t" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
+                        <label for="stats_t" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/20 hover:bg-slate-600/30 peer-checked:bg-slate-600/80 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('tension')">
                             Напряженность
                         </label>
                     </div>
                     <div class="flex">
                         <input class="peer hidden" id="stats_c" type="radio" v-model="stats" value="commissions" />
-                        <label for="stats_c" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/10 hover:bg-slate-600/20 peer-checked:bg-slate-600 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('commissions')">
+                        <label for="stats_c" class=" cursor-pointer text-slate-800 dark:text-slate-200 w-full max-w-xs bg-slate-600/20 hover:bg-slate-600/30 peer-checked:bg-slate-600/80 peer-checked:text-slate-200 p-4 rounded-xl" @click.prevent="uncheck('commissions')">
                             Процент исполнения контрольного показателя по снижению неформальной занятости
                         </label>
                     </div>
@@ -110,7 +110,7 @@
                 <div class="hidden sm:flex absolute right-12 top-1/4 w-1 h-40 rounded-xl flex-col justify-between" ref='linePct'></div>
             </div>
             <div class="sm:p-4 col-span-12 xl:col-span-4" v-if="reg">
-                <div class="w-full bg-slate-300/75 p-5 dark:bg-slate-800 dark:text-slate-400 rounded-lg">
+                <div class="card w-full p-5">
                     <div class="grid sm:gap-x-4 text-sm grid-cols-1 sm:grid-cols-5 mb-4">
                         <div class="text-base font-bold col-span-5">{{ reg.region }}</div>
                         <div class="text-sm text-slate-500 col-span-2">{{ reg.city }}</div>

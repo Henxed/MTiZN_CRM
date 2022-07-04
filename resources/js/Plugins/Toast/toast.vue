@@ -83,7 +83,7 @@ export default {
       return " animation-" + this.transition;
     },
     style() {
-      return "self-end bg-white dark:bg-slate-700 max-w-sm w-full shadow-lg rounded-lg pointer-events-auto relative mb-4 overflow-hidden";
+      return "self-end bg-white/70 dark:bg-slablu-800/70 max-w-sm w-full shadow-lg  backdrop-blur rounded-lg pointer-events-auto relative mb-4 overflow-hidden";
     },
   },
   beforeMount() {
