@@ -23,7 +23,7 @@
         <div class="w-5/6 max-w-screen-xl">
 
             <div class="font-bold p-5 pb-0 sm:p-0 sm:mb-6 xl:mb-9 sm:flex leading-none">
-                <span class="text-3xl text-slate-700 dark:text-slate-200 uppercase">{{ region.region }}</span>
+                <span class="text-2xl text-slate-700 dark:text-slate-200 uppercase">{{ region.region }}</span>
                 <Link :href="route('regions.edit', region.id)"  v-tippy="'Редактировать район'" class="text-2xl ml-4 mt-1 text-slate-700 dark:text-slate-400 hover:text-slablu-500 dark:hover:text-slablu-300" v-if="$page.props.access.can.includes('region.edit') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <i class="fi fi-rr-edit"></i>
                 </Link>
@@ -31,7 +31,7 @@
             <div class="bg-slate-600/10 dark:bg-slate-600/20 rounded-xl p-6 grid grid-cols-1 sm:grid-cols-6 gap-4">
 
                 <div class="flex sm:col-span-2 items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         <i class="fi fi-rr-user"></i>
                     </div>
                     <div class="ml-4 leading-snug">
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="flex sm:col-span-2  items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         <i class="fi fi-rr-school"></i>
                     </div>
                     <div class="ml-4 leading-snug">
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         <i class="fi fi-rr-marker"></i>
                     </div>
                     <div class="ml-4 leading-snug">
@@ -58,7 +58,7 @@
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         <i class="fi fi-rr-building pt-1"></i>
                     </div>
                     <div class="ml-4 leading-snug">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="flex sm:col-span-2 items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         ₽
                     </div>
                     <div class="ml-4 leading-snug">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
                 <div class="flex sm:col-span-3 items-center">
-                    <div class="rounded-lg text-slate-600 bg-slate-400/60 dark:text-slate-300 w-9 h-9 flex items-center justify-center text-lg leading-none">
+                    <div class="icon-list">
                         ₽
                     </div>
                     <div class="ml-4 leading-snug">

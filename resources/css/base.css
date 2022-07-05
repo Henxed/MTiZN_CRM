@@ -295,5 +295,9 @@ input:checked + div svg {
 /* Блоки */
 
 .card {
-    @apply rounded-xl shadow bg-white text-slate-900 dark:text-slate-400 dark:bg-slate-700/50 dark:border dark:border-slate-600/30;
+    @apply rounded-xl shadow bg-white text-slate-900 dark:text-slate-400 dark:bg-slate-700/50 border border-transparent dark:border-slate-600/30;
+}
+
+.icon-list {
+    @apply rounded-lg text-slate-600 bg-slate-600/20 dark:bg-slate-600/70 dark:text-slate-400 w-9 h-9 flex items-center justify-center text-lg leading-none;
 }

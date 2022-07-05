@@ -4,7 +4,7 @@
         <div class="w-full max-w-screen-2xl">
             <div class="grid sm:grid-cols-4 items-center">
                 <breadcrumbs :data="bread" class="my-4 sm:col-span-3"/>
-                <Link class="btn-blue ml-auto" :href="route('regions.enterprises.edit', [region.id, enterprise.id])"
+                <Link class="btn-secondary ml-auto" :href="route('regions.enterprises.edit', [region.id, enterprise.id])"
                 v-if="$page.props.access.can.includes('enterprise.create') || $page.props.access.role.includes('super-admin') || $page.props.access_region.includes(region.id)">
                     <span>Редактировать</span>
                     <span class="hidden md:inline"> предприятие</span>

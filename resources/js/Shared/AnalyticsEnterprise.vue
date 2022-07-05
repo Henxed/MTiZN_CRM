@@ -37,7 +37,9 @@
                                 <div class="mt-2">Обновилось предприятий за 30 дней - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ mounth }}</span></div>
                                 <div class="mt-2">Без ИНН предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ no_inn }}</span></div>
                             </div>
-                            <div class="mt-3 text-3xl text-center">≈ {{ (mounth / all * 100).toFixed(2) }}%</div>
+                            <div class="mt-3 ml-auto text-3xl">{{ (mounth / all * 100).toFixed(2) }}%
+                                <div class="text-base">заполняемость за 30 дней</div>
+                            </div>
                         </div>
                         <div class="mt-4" v-if="!id">
                             <div class="my-4 rounded-xl bg-slate-300/30 dark:bg-slate-600/30 py-2 px-4" v-for="item in list" :key="item">
