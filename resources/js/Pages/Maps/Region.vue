@@ -140,8 +140,8 @@
                     </div>
 
                 </div>
-                <div class="grid gap-6">
-                    <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl">
+                <div>
+                    <div class="bg-slate-600/10 dark:bg-slate-600/20 p-6 rounded-xl mb-6">
                         <div class="text-xl font-bold dark:text-slate-300">Регистрируемый рынок труда</div>
                         <div class="grid grid-cols-2 sm:flex sm:justify-between gap-4 mt-3 dark:text-slate-400 p-5 pt-0 sm:p-0">
                             <div>
@@ -161,7 +161,7 @@
                                 <div class="text-sm">{{ declOfNum(region.vacancy, ['Вакансия', 'Вакансии', 'Вакансий']) }}</div>
                             </div>
                         </div>
-                        <div class="flex items-center mt-5 p-3 bg-slate-600/10 dark:bg-slate-600/30 rounded-lg">
+                        <div class="flex items-center mt-5 p-3 bg-slate-600/10 dark:bg-slate-600/30 rounded-lg" v-if="region.cripple || region.cripple_worked">
 
                                     <div class="icon-list">
                                         <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" class="fill-current" viewBox="0 0 24 24" width="19" height="19"><path d="M23,21H21.721L20.4,17.051A3,3,0,0,0,17.559,15H14a2,2,0,0,1-2-2h6a1,1,0,0,0,0-2H12V8a1.026,1.026,0,0,0-.027-.134,4,4,0,1,0-1.946,0A1.026,1.026,0,0,0,10,8v5a4,4,0,0,0,3.911,3.991,6,6,0,1,1-6.769-6.929,1,1,0,0,0-.284-1.981A8,8,0,1,0,15.931,17h1.628a1,1,0,0,1,.949.684l1.544,4.632A1,1,0,0,0,21,23h2a1,1,0,0,0,0-2ZM9,4a2,2,0,1,1,2,2A2,2,0,0,1,9,4Z"></path></svg>
@@ -169,13 +169,13 @@
 
                                 <div class="ml-4 leading-snug">
                                     <div class="font-bold stroke-current dark:text-slate-400">Численность инвалидов</div>
-                                    <div class="text-slate-500">{{ region.cripple }} чел., трудоустроено — {{ region.cripple_worked }} чел.</div>
+                                    <div class="text-slate-500"><span v-if="region.cripple">{{ region.cripple }} чел.</span><span v-if="region.cripple && region.cripple_worked">,</span> <span v-if="region.cripple_worked">трудоустроено — {{ region.cripple_worked }} чел.</span></div>
                                 </div>
                             </div>
                     </div>
 
-                    <div class="block">
-                        <div class="grid bg-slate-600/10 dark:bg-slate-600/20 p-6
+
+                    <div class="grid bg-slate-600/10 dark:bg-slate-600/20 p-6
                         mb-6 rounded-xl dark:text-slate-300 leading-tight" v-if="sum_people_dismissal">
                             <div class="text-xl font-bold dark:text-slate-300">Численность работников</div>
 
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+
             </div>
 
 
