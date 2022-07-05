@@ -4,7 +4,7 @@
         <div class="sidebar max-w-sm">
             <div class="lg:sticky lg:top-6 mr-6">
                 <div class="dark:text-slate-300 ">
-                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-slate-600/10 hover:bg-slate-600/30 dark:hover:bg-slate-600/50 text-13"
+                    <Link class="block py-1.5 px-3 mr-3 uppercase mb-1 rounded-lg bg-slate-600/10 dark:bg-slate-600/30 hover:bg-slate-600/30 dark:hover:bg-slate-600/50 text-13"
                             :href="route('regions.index')">
                         Сводная информация
                     </Link>
