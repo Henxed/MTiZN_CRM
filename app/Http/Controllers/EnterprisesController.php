@@ -191,6 +191,8 @@ class EnterprisesController extends Controller
 
         Enterprises::create($request->all());
 
+        Areas::where('id', $request->area_id)->update(['subject' => Enterprises::where('area_id', $request->area_id)->count()]);
+
         return Redirect::route('regions.enterprises.index', Req::get('area_id'))->with('success', 'Предприятие добавлено!');
     }
 
@@ -225,6 +227,7 @@ class EnterprisesController extends Controller
         }
 
         $enterprise->update(Req::all());
+        Areas::where('id', $enterprise->area_id)->update(['subject' => Enterprises::where('area_id', $enterprise->area_id)->count()]);
 
         return Redirect::route('regions.enterprises.index', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');
     }

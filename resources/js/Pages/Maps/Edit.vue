@@ -84,12 +84,15 @@
                         <div class="px-4 py-5 card sm:p-6">
 
                             <text-input v-model="form.amw" @keyup="mask($event, 'amw')"  :error="errors.amw" label="Средняя зарплата" />
+<div class="hidden sm:block" aria-hidden="true"> <div class="py-5"> <div class="border-t border-gray-200 dark:border-slate-700" /></div> </div>
                             <text-input v-model="form.commissions_c" @keyup="mask($event, 'commissions_c')" :error="errors.commissions_c" label="Контрольный показатель по снижению неформальной занятости" />
                             <text-input v-model="form.commissions_t" @keyup="mask($event, 'commissions_t')" :error="errors.commissions_t" label="Заключено трудовых договоров в рамках работы по снижению неформальной занятости" />
                             <text-input v-model="commission" :error="errors.commissions" label="Процент исполнения контрольного показателя по снижению неформальной занятости"   disabled />
+<div class="hidden sm:block" aria-hidden="true"> <div class="py-5"> <div class="border-t border-gray-200 dark:border-slate-700" /></div> </div>
+                            <text-input v-model="form.subject" @keyup="mask($event, 'subject')" disabled :error="errors.subject" label="Число хозяйствующих субъектов" help="Предприятия обновляются автоматически" />
+                            <text-input v-model="form.contract" @keyup="mask($event, 'contract')" disabled :error="errors.contract" label="Заключенные коллективные договора"  help="Обновляются автоматически с отдела Охраны труда" />
+                            
                             <text-input v-model="form.in_employment" @keyup="mask($event, 'in_employment')" :error="errors.in_employment" label="Количество проведенных территориальных межведомственной комиссии" />
-                            <text-input v-model="form.subject" @keyup="mask($event, 'subject')" :error="errors.subject" label="Число хозяйствующих субъектов" />
-                            <text-input v-model="form.contract" @keyup="mask($event, 'contract')" :error="errors.contract" label="Заключенные коллективные договора"  />
                             <text-input v-model="form.lvl" @keyup="mask($event, 'lvl')" :error="errors.lvl" label="Уровень безработицы" />
                             <text-input v-model="form.unemployed" @keyup="mask($event, 'unemployed')" :error="errors.unemployed" label="Численность зарегистрированных безработных" />
                             <text-input v-model="form.vacancy" @keyup="mask($event, 'vacancy')" :error="errors.vacancy" label="Количество вакансий" />
@@ -108,8 +111,7 @@
 
             <div class="hidden sm:block" aria-hidden="true">
                 <div class="py-5">
-                <div class="border-t border-gray-200 dark:border-slate-700" />
-                </div>
+                <div class="border-t border-gray-200 dark:border-slate-700" /></div>
             </div>
 
             <div class="mt-6 flex items-center">
@@ -186,7 +188,7 @@ export default {
             var num = (this.form.commissions_t / this.form.commissions_c) * 100
             this.form.commissions = num.toFixed(2)
 
-            return num.toFixed(2);
+            return num != 'Infinity' ? num.toFixed(2) : 0;
         },
     },
     methods: {

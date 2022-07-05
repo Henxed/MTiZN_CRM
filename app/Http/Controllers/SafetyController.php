@@ -91,6 +91,11 @@ class SafetyController extends Controller
 
         Safety::create($request->all());
 
+        $s = Safety::select('area_id', DB::raw('count(safeties.id) as s_count'))->leftJoin('enterprises', function($join) {
+            $join->on('enterprises.id', 'enterprise_id');
+        })->where('area_id', DB::raw("(SELECT area_id FROM enterprises WHERE id = ". $request->enterprise_id .")"))->groupBy('area_id')->first();
+        Areas::where('id', $s->area_id)->update(['contract' => $s->s_count]);
+
         return Redirect::route('safety.partners.index')->with('success', 'Информация добавлена!');
     }
 
@@ -115,6 +120,11 @@ class SafetyController extends Controller
         ]);
 
         $partner->update(Req::all());
+
+        $s = Safety::select('area_id', DB::raw('count(safeties.id) as s_count'))->leftJoin('enterprises', function($join) {
+            $join->on('enterprises.id', 'enterprise_id');
+        })->where('area_id', DB::raw("(SELECT area_id FROM enterprises WHERE id = ". $partner->enterprise_id .")"))->groupBy('area_id')->first();
+        Areas::where('id', $s->area_id)->update(['contract' => $s->s_count]);
 
         return Redirect::route('safety.partners.index')->with('success', 'Информация обновлена!');
     }
