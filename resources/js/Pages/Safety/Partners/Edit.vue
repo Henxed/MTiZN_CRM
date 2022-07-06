@@ -30,21 +30,27 @@
                             <text-input v-model="form.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" />
                             <text-input v-model="form.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' />
 
-                            <div class="text-lg text-center mt-6">{{ $t(`inputs.safety.accidents`) }}</div>
-                            <div class="flex flex-wrap mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
-                                <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.group`) }}</div>
-                                <text-input v-model="form.accidents_group_at" :error="errors.accidents_group_at" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_group" />
-                                <text-input v-model="form.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" placeholder="Оставьте пустым, если нет данных"/>
+                            <div class="text-lg font-bold mt-6 text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.accidents`) }}</div>
+                            <div class="mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.group`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.accidents_group_at" :error="errors.accidents_group_at" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_group" />
+                                    <text-input v-model="form.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
                             </div>
-                            <div class="flex flex-wrap mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
-                                <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.heavy`) }}</div>
-                                <text-input v-model="form.accidents_heavy_at" :error="errors.accidents_heavy_at" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_heavy" />
-                                <text-input v-model="form.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_heavy_at" placeholder="Оставьте пустым, если нет данных"/>
+                            <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.heavy`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.accidents_heavy_at" :error="errors.accidents_heavy_at" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_heavy" />
+                                    <text-input v-model="form.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_heavy_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
                             </div>
-                            <div class="flex flex-wrap mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
-                                <div class="text-lg w-full font-bold text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.deadly`) }}</div>
-                                <text-input v-model="form.accidents_deadly_at" :error="errors.accidents_deadly_at" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_deadly" />
-                                <text-input v-model="form.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_deadly_at" placeholder="Оставьте пустым, если нет данных"/>
+                            <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400 rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.deadly`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.accidents_deadly_at" :error="errors.accidents_deadly_at" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_deadly" />
+                                    <text-input v-model="form.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_deadly_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
                             </div>
 
                             <div class="text-lg mt-6">{{ $t(`inputs.safety.learn_safety`) }}</div>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="links.length > 3">
-  <div class="flex items-center justify-center py-10 lg:px-0 sm:px-6 px-4">
-        <div class="w-full flex items-center justify-between border-t border-slate-200 dark:border-slate-500 leading-none">
+  <div class="flex items-center justify-center pb-10 lg:px-0 sm:px-6 px-4">
+        <div class="w-full flex items-center justify-between border-t border-slate-200 dark:border-slate-600/50 leading-none">
             <Link :href="links[0].url" preserve-scroll class="flex items-center pt-3 text-gray-600" :class="links[0].url === null ? 'text-0' : 'hover:text-indigo-700 dark:text-slate-300 dark:hover:text-slate-500 cursor-pointer'">
                 <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" :class="{'hidden' :links[0].url === null}">
                     <path d="M1.1665 4H12.8332" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/>

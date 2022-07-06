@@ -269,7 +269,7 @@ class EnterprisesController extends Controller
 
         $data = Enterprises::select(
                 'region',
-                DB::raw("count(enterprises.id) as e_all"),
+                DB::raw("count(enterprises.id) as e_all, COUNT( NULLIF( employed_public, '' )) null_ep, COUNT( NULLIF( employed_temporary, '' ) ) null_et"),
                 DB::raw("(SELECT COUNT(*) FROM `enterprises` e WHERE `updated_at` >= DATE_SUB(NOW(), INTERVAL 30 DAY) AND area_id = enterprises.area_id) as mounth"),
                 DB::raw("(SELECT COUNT(*) FROM `enterprises` e WHERE inn IS NULL AND area_id = enterprises.area_id) as no_inn")
             )->leftJoin('areas', function($join) {

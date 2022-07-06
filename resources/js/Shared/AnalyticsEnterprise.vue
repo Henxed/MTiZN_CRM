@@ -41,14 +41,24 @@
                                 <div class="text-base">заполняемость за 30 дней</div>
                             </div>
                         </div>
-                        <div class="mt-4" v-if="!id">
+                        <div v-if="id" class="grid grid-cols-5 text-slate-500 dark:text-slate-400 leading-none mt-6 pt-4 border-t border-gray-300 dark:border-slate-500">
+                            <div class="col-span-5 font-semibold mb-3">Трудоустроено в рамках субсидии. (незаполненные предприятия)</div>
+                            <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ list[0].null_ep }}</div> Общественные работы</div>
+                            <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ list[0].null_et }}</div> Временные работы</div>
+                        </div>
+                        <div class="mt-6" v-if="!id">
                             <div class="my-4 rounded-xl bg-slate-300/30 dark:bg-slate-600/30 py-2 px-4" v-for="item in list" :key="item">
                                 <div class="inline-block text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ item.region }}</div>
                                 <div class="grid grid-cols-5 text-slate-500 dark:text-slate-400 leading-none">
                                     <div class="mr-3"><div class="text-lg font-semibold">{{ item.e_all }}</div> всего в регионе</div>
                                     <div class="mr-3 col-span-2"><div class="text-lg font-semibold">{{ item.mounth }}</div> обновилось за 30 дней </div>
                                     <div class="text-xl font-bold">≈ {{ (item.mounth / item.e_all * 100).toFixed(2) }}%</div>
-                                    <div class="ml-3" v-if="item.no_inn"><span class="text-lg font-semibold">{{ item.no_inn }}</span> - без ИНН </div>
+                                    <div class="mr-3" v-if="item.no_inn"><span class="text-lg font-semibold">{{ item.no_inn }}</span> - без ИНН</div>
+                                </div>
+                                <div class="grid grid-cols-5 text-slate-500 dark:text-slate-400 leading-none mt-4 pt-4 border-t border-gray-300 dark:border-slate-500">
+                                    <div class="col-span-5 font-semibold mb-2">Трудоустроено в рамках субсидии. (незаполненные предприятия)</div>
+                                    <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ item.null_ep }}</div> Общественные работы</div>
+                                    <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ item.null_et }}</div> Временные работы</div>
                                 </div>
                             </div>
                         </div>
@@ -105,6 +115,8 @@ export default {
                     this.mounth = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.mounth, 0);
                     this.no_inn = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.no_inn, 0);
                 }).catch(e => {
+                    this.isLoad = !this.isLoad
+                    this.$toast.error('Не могу загрузить данные. Сообщите о проблеме администратору!')
                     console.log("Error... ")
                 });
         }
