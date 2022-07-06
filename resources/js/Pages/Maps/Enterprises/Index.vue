@@ -22,8 +22,8 @@
                     </Link>
                 </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 items-center">
-                <breadcrumbs :data="bread" class="my-4"/>
+            <div class="grid grid-cols-1 sm:grid-cols-3 items-center">
+                <breadcrumbs :data="bread" class="my-4 col-span-2"/>
                 <div class="flex items-center justify-self-end text-slate-600 dark:text-slate-400">
                         По району - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600/50 py-1 px-2 mr-2">{{ region_count }}</span>
                         По области - <span class="ml-2 rounded-xl bg-slate-300 dark:bg-slate-600/50 py-1 px-2">{{ enterprises_count }}</span>

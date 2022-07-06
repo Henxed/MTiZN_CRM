@@ -31,20 +31,19 @@
                         </svg>
                     </div>
                     <div class="" v-else>
-                        <div class="grid grid-cols-2 text-slate-600 dark:text-slate-400">
-                            <div>
+                        <div class="grid grid-cols-3 text-slate-600 dark:text-slate-400">
+                            <div class="col-span-2">
                                 <div class="">Всего предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ all }}</span></div>
                                 <div class="mt-2">Обновилось предприятий за 30 дней - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ mounth }}</span></div>
-                                <div class="mt-2">Без ИНН предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ no_inn }}</span></div>
                             </div>
-                            <div class="mt-3 ml-auto text-3xl">{{ (mounth / all * 100).toFixed(2) }}%
+                            <div class="ml-auto text-3xl">{{ (mounth / all * 100).toFixed(2) }}%
                                 <div class="text-base">заполняемость за 30 дней</div>
                             </div>
                         </div>
-                        <div v-if="id" class="grid grid-cols-5 text-slate-500 dark:text-slate-400 leading-none mt-6 pt-4 border-t border-gray-300 dark:border-slate-500">
-                            <div class="col-span-5 font-semibold mb-3">Трудоустроено в рамках субсидии. (незаполненные предприятия)</div>
-                            <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ list[0].null_ep }}</div> Общественные работы</div>
-                            <div class="col-span-2 mr-3"><div class="text-lg font-semibold">{{ list[0].null_et }}</div> Временные работы</div>
+                        <div class="text-slate-600 dark:text-slate-400 mt-2 pt-2 border-t border-gray-300 dark:border-slate-500">
+                            <div class="mt-2">Без ИНН предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ no_inn }}</span></div>
+                            <div class="mt-2" >Без "общественных работ в рамках субсидии" предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ null_ep }}</span></div>
+                            <div class="mt-2">Без "временных работ в рамках субсидии" предприятий - <span class="rounded-xl bg-slate-300 dark:bg-slate-600 py-1 px-2">{{ null_et }}</span></div>
                         </div>
                         <div class="mt-6" v-if="!id">
                             <div class="my-4 rounded-xl bg-slate-300/30 dark:bg-slate-600/30 py-2 px-4" v-for="item in list" :key="item">
@@ -93,6 +92,8 @@ export default {
             all: 0,
             mounth: 0,
             no_inn: 0,
+            null_ep: 0,
+            null_et: 0
         }
     },
     watch: {
@@ -114,6 +115,8 @@ export default {
                     this.all = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.e_all, 0);
                     this.mounth = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.mounth, 0);
                     this.no_inn = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.no_inn, 0);
+                    this.null_ep = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.null_ep, 0);
+                    this.null_et = this.list.reduce( (previousValue, currentValue) => previousValue + currentValue.null_et, 0);
                 }).catch(e => {
                     this.isLoad = !this.isLoad
                     this.$toast.error('Не могу загрузить данные. Сообщите о проблеме администратору!')

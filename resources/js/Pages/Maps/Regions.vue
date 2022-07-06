@@ -136,7 +136,7 @@
                         </div>
                     </div>
 
-                    <div class="flex mb-2">
+                    <Link :href="route('regions.enterprises.index', reg.id)" class="flex mb-2">
                         <div class="icon-list">
                             <i class="fi fi-rr-shop"></i>
                         </div>
@@ -144,7 +144,7 @@
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Число хозяйствующих субъектов</div>
                             <div class="text-slate-500">{{ reg.subject }} ед.</div>
                         </div>
-                    </div>
+                    </Link>
 
                     <div class="flex mb-2">
                         <div class="icon-list">

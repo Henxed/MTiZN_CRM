@@ -19,6 +19,8 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use App\Exports\EnterprisesExport;
+use App\Models\Safety;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 
 class EnterprisesController extends Controller
@@ -176,20 +178,32 @@ class EnterprisesController extends Controller
 
     public function store(Request $request)
     {
+
         Req::validate([
             'name' => 'required',
             'inn' => 'required|min:6',
             'okvd' => 'required',
             'okvd_name' => 'required',
             'status_id' => 'required',
-            'rns' => 'required',
         ]);
 
         if(Auth::user()->checkArea($request->area_id)){
             return abort(403);
         }
 
-        Enterprises::create($request->all());
+        $enterprise = Enterprises::updateOrCreate(['inn' => $request->inn, 'area_id' => $request->area_id], $request->all());
+
+        if($request->partner['collective_agreement']){
+            $validator = Validator::make($request->partner, [
+                'collective_agreement' => 'required',
+                'sum_contractual' => 'required',
+                'in_total' => 'required',
+                'start_year' => 'required',
+            ]);
+            $validator->validated();
+
+            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], Req::all()['partner']);
+        }
 
         Areas::where('id', $request->area_id)->update(['subject' => Enterprises::where('area_id', $request->area_id)->count()]);
 
@@ -206,6 +220,7 @@ class EnterprisesController extends Controller
         return Inertia::render('Maps/Enterprises/Edit', [
             'region' => Areas::select(['id', 'region'])->findOrfail($id),
             'enterprises' => $enterprise,
+            'partner' => Safety::where('enterprise_id', $enterprise->id)->first(),
             'statuses' => Status::where('model', 'enterprises')->where('active', true)->get(),
         ]);
     }
@@ -219,7 +234,6 @@ class EnterprisesController extends Controller
             'okvd' => 'required',
             'okvd_name' => 'required',
             'status_id' => 'required',
-            'rns' => 'required',
         ]);
 
         if(Auth::user()->checkArea(Req::get('area_id'))){
@@ -227,6 +241,19 @@ class EnterprisesController extends Controller
         }
 
         $enterprise->update(Req::all());
+
+        if(Req::get('partner')['collective_agreement']){
+            $validator = Validator::make(Req::get('partner'), [
+                'collective_agreement' => 'required',
+                'sum_contractual' => 'required',
+                'in_total' => 'required',
+                'start_year' => 'required',
+            ]);
+            $validator->validated();
+
+            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], Req::all()['partner']);
+        }
+
         Areas::where('id', $enterprise->area_id)->update(['subject' => Enterprises::where('area_id', $enterprise->area_id)->count()]);
 
         return Redirect::route('regions.enterprises.index', Req::get('area_id'))->with('success', 'Предприятие актулизированно!');

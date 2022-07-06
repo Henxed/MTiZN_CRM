@@ -33,8 +33,8 @@
                                     @click.prevent="nalog(form.inn)" :disabled="nalog_status">Получить данные с налоговой</button>
                                 </div>
                             </div>
-                            <ol class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600 rounded-lg" v-if="more_inn.length">
-                                <li class="text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-sm hover:bg-slate-300/80 p-2 dark:hover:bg-slate-700/80" v-for="item in more_inn" :key="item" @click="nalog_data(item)">
+                            <ol class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600/30 rounded-lg" v-if="more_inn.length">
+                                <li class="text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-lg hover:bg-slate-300/80 p-2 dark:hover:bg-slate-600/50" v-for="item in more_inn" :key="item" @click="nalog_data(item)">
                                     <div :class="{'line-through' : item.data.state.status !== 'ACTIVE'} ">{{ item.value }} - {{ item.data.inn }}</div>
                                     <div class="text-slate-500">{{ item.data.address.value }}</div>
                                 </li>
@@ -65,6 +65,63 @@
                                 <option v-for="item in statuses" :key="item" :value="item.code" :selected="item.code === form.status_id">{{ item.name }}</option>
                             </select>
                             <div v-if="errors.status_id" class="form-error">{{ errors.status_id }}</div>
+                        </div>
+
+
+                </div>
+                </div>
+            </div>
+
+            <div class="hidden sm:block" aria-hidden="true" v-if="$page.props.access.can.includes('safety.partners.edit') || $page.props.access.role.includes('super-admin')">
+                <div class="py-5">
+                <div class="border-t border-gray-200 dark:border-slate-700" />
+                </div>
+            </div>
+
+            <div class="mt-10 sm:mt-0" v-if="$page.props.access.can.includes('safety.partners.edit') || $page.props.access.role.includes('super-admin')">
+                <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0 sticky top-5">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900 dark:text-slate-200">Партнерская информация</h3>
+                        <p class="mt-1 text-sm text-gray-600 dark:text-slate-400">Дополнительная информация предприятия по договору.</p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+
+
+                        <div class="px-4 py-5 card sm:p-6">
+
+                            <text-input v-model="form.partner.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" />
+                            <text-input v-model="form.partner.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' />
+
+                            <div class="text-lg font-bold mt-6 text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.accidents`) }}</div>
+                            <div class="mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.group`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.partner.accidents_group_at" :error="errors.accidents_group_at" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.partner.accidents_group" />
+                                    <text-input v-model="form.partner.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
+                            </div>
+                            <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.heavy`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.partner.accidents_heavy_at" :error="errors.accidents_heavy_at" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.partner.accidents_heavy" />
+                                    <text-input v-model="form.partner.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.partner.accidents_heavy_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
+                            </div>
+                            <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
+                                <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400 rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.deadly`) }}</div>
+                                <div class="flex flex-wrap">
+                                    <text-input v-model="form.partner.accidents_deadly_at" :error="errors.accidents_deadly_at" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.partner.accidents_deadly" />
+                                    <text-input v-model="form.partner.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.partner.accidents_deadly_at" placeholder="Оставьте пустым, если нет данных"/>
+                                </div>
+                            </div>
+
+                            <div class="text-lg mt-6">{{ $t(`inputs.safety.learn_safety`) }}</div>
+                            <div class="flex flex-wrap ">
+                                <text-input v-model="form.partner.in_total" :error="errors.in_total" :label="$t(`inputs.safety.in_total`)" class="w-full lg:pr-2 lg:w-1/2" type='number' />
+                                <text-input v-model="form.partner.start_year" :error="errors.start_year" :label="$t(`inputs.safety.start_year`)" class="w-full lg:pl-2 lg:w-1/2" type='number' />
+                            </div>
                         </div>
 
 
@@ -147,6 +204,7 @@ export default {
     props: {
         region: Array,
         enterprises: Array,
+        partner: Array,
         statuses: Array,
         errors: Object,
     },
@@ -192,7 +250,19 @@ export default {
                 work_part: this.enterprises.work_part,
                 vacations: this.enterprises.vacations,
                 dismissed: this.enterprises.dismissed,
-                remote: this.enterprises.remote
+                remote: this.enterprises.remote,
+                partner: {
+                    sum_contractual: this.partner ? this.partner.sum_contractual : '',
+                    collective_agreement: this.partner ? this.partner.collective_agreement ? this.partner.collective_agreement.replace(/-/g, '-').substr(0, 10) : ''  : '',
+                    accidents_group_at: this.partner ? this.partner.accidents_group_at ? this.partner.accidents_group_at.replace(/-/g, '-').substr(0, 10) : '' : '',
+                    accidents_group: this.partner ? this.partner.accidents_group : '',
+                    accidents_heavy_at: this.partner ? this.partner.accidents_heavy_at ? this.partner.accidents_heavy_at.replace(/-/g, '-').substr(0, 10) : '' : '',
+                    accidents_heavy: this.partner ? this.partner.accidents_heavy : '',
+                    accidents_deadly_at: this.partner ? this.partner.accidents_deadly_at ? this.partner.accidents_deadly_at.replace(/-/g, '-').substr(0, 10) : '' : '',
+                    accidents_deadly: this.partner ? this.partner.accidents_deadly : '',
+                    in_total: this.partner ? this.partner.in_total : '',
+                    start_year: this.partner ? this.partner.start_year : ''
+                }
             }),
 
             nalog_status: false,
