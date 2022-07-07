@@ -193,7 +193,7 @@ class EnterprisesController extends Controller
 
         $enterprise = Enterprises::updateOrCreate(['inn' => $request->inn, 'area_id' => $request->area_id], $request->all());
 
-        if($request->partner['collective_agreement']){
+        if($request->partner['collective_agreement'] && Auth::user()->can('safety.partners.create')){
             $validator = Validator::make($request->partner, [
                 'collective_agreement' => 'required',
                 'sum_contractual' => 'required',
@@ -242,7 +242,7 @@ class EnterprisesController extends Controller
 
         $enterprise->update(Req::all());
 
-        if(Req::get('partner')['collective_agreement']){
+        if(Req::get('partner')['collective_agreement'] && Auth::user()->can('safety.partners.edit')){
             $validator = Validator::make(Req::get('partner'), [
                 'collective_agreement' => 'required',
                 'sum_contractual' => 'required',
