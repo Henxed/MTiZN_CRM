@@ -25,6 +25,7 @@
                                 <label class="form-label" for="enterprise_id" :class="{error : errors.enterprise_id}">{{ $t(`inputs.safety.enterprise_id`) }}:</label>
                                 <treeselect v-model="form.enterprise_id" :load-options="loadOptions" :defaultOptions="[enterprise]" :async="true" :class="{error : errors.enterprise_id}" placeholder="Найти другое предприятие..." id="enterprise_id" noResultsText="Нет результата" loadingText="Ищу предприятия..." searchPromptText="Начните вводить название или ИНН" />
                                 <div v-if="errors.enterprise_id" class="form-error">{{ errors.enterprise_id }}</div>
+                                <small v-if="form.enterprise_id && area_id">Редактировать предприятие в <a :href="route('regions.enterprises.edit', [area_id, form.enterprise_id])" target="_blank" class="underline">новой вкладке</a></small>
                             </div>
 
                             <text-input v-model="form.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" />
@@ -118,6 +119,8 @@ export default {
                     current: true,
                 },
             ],
+            list: [],
+            area_id: this.enterprise.area_id,
             form: this.$inertia.form({
                 enterprise_id: this.partner.enterprise_id,
                 sum_contractual: this.partner.sum_contractual,
@@ -133,14 +136,23 @@ export default {
             }),
         }
     },
+    watch: {
+        'form.enterprise_id': {
+            deep: true,
+            handler() {
+                let a = this.list.find((e) => e.id === this.form.enterprise_id)
+                this.area_id = a ? a.area_id : null
+            },
+        },
+    },
     methods: {
         submit() {
             this.form.put(route('safety.partners.update', this.partner.id))
         },
         async loadOptions({ action, searchQuery, callback }) {
-            console.log('Load!');
             if (action === ASYNC_SEARCH) {
                 await axios.post(route('enterpises.get.all') + '?filter[search]=' + searchQuery).then((res) => {
+                    this.list = res.data.data
                     callback(null, res.data.data)
                 })
             }

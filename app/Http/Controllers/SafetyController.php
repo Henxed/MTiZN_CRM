@@ -102,7 +102,7 @@ class SafetyController extends Controller
     public function edit(Safety $partner)
     {
         return Inertia::render('Safety/Partners/Edit', [
-            'enterprise' => Enterprises::select(['id', 'name as label'])->where('id', $partner->enterprise_id)->first(),
+            'enterprise' => Enterprises::select(['id', 'name as label', 'area_id'])->where('id', $partner->enterprise_id)->first(),
             'partner' => $partner,
         ]);
     }

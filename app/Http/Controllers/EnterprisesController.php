@@ -281,7 +281,7 @@ class EnterprisesController extends Controller
         });
 
         $data = QueryBuilder::for(Enterprises::class)
-            ->select('id', 'name as label')
+            ->select('id', 'name as label', 'area_id')
             ->defaultSort('name')
             ->allowedFilters($search)
             ->paginate(30)->withQueryString();
