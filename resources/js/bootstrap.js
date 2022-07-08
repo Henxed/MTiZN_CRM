@@ -23,12 +23,12 @@ window.Pusher = require('pusher-js');
 window.Echo = new Echo({
     broadcaster: 'pusher',
     key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: 'ws.henxed.ru',
+    wsHost: 'ws.henxed.ru', //window.location.hostname,
     cluster: process.env.PUSHER_APP_CLUSTER,
     wsPort: process.env.MIX_WEBSOCKET_PORT,
     wssPort: process.env.MIX_WEBSOCKET_PORT,
     forceTLS: false,
-    encrypted: false,
+    encrypted: true,
     disableStats: true,
     enabledTransports: ["ws", "wss"]
 });
