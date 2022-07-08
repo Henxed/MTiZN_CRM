@@ -24,7 +24,7 @@ class RegionController extends Controller
     {
         return Inertia::render('Maps/Index', [
             'lvl_all' => Setting::where('key', 'lvl_all')->first(),
-            'regions' => Areas::get(),
+            'regions' => Areas::orderBy('region')->get(),
             'regions_sum' => Areas::whereNull('areas_id')->count(),
             'regions_sum_b' => Areas::whereNull('areas_id')->sum('lvl'),
             'enterprises_count' => Enterprises::count(),
@@ -61,7 +61,7 @@ class RegionController extends Controller
     {
 
         return Inertia::render('Maps/Region', [
-            'regions' => Areas::get(),
+            'regions' => Areas::orderBy('region')->get(),
             'region' => Areas::with('extra', 'selsoviet', 'areas_children')->findOrFail($id),
             'access_region' => AreasUser::where('user_id', Auth::user()->id)->pluck('areas_id'),
             'entr_sum' => Enterprises::select(
