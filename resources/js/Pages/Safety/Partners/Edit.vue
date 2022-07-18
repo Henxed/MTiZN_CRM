@@ -147,7 +147,11 @@ export default {
     },
     methods: {
         submit() {
-            this.form.put(route('safety.partners.update', this.partner.id))
+            try{
+                this.form.put(route('safety.partners.update', this.partner.id))
+            }catch(e) {
+                this.$toast.error('Обновити страницу и попробуйте снова.', { title: 'Произошла ошибка' })
+            }
         },
         async loadOptions({ action, searchQuery, callback }) {
             if (action === ASYNC_SEARCH) {

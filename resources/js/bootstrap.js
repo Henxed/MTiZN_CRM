@@ -27,8 +27,8 @@ window.Echo = new Echo({
     cluster: process.env.PUSHER_APP_CLUSTER,
     wsPort: process.env.MIX_WEBSOCKET_PORT,
     wssPort: process.env.MIX_WEBSOCKET_PORT,
-    forceTLS: true,
-    encrypted: false,
+    forceTLS: false,
+    encrypted: true,
     disableStats: true,
     enabledTransports: ["ws", "wss"]
 });

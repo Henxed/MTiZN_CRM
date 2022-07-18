@@ -25,4 +25,9 @@ class Enterprises extends Model
     {
         return $this->hasOne(Areas::class, 'id', 'area_id');
     }
+    public function safety()
+    {
+        return $this->hasOne(Safety::class, 'enterprise_id', 'id');
+    }
+
 }

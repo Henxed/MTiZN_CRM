@@ -48,7 +48,7 @@
                 <div class="border-t border-gray-200 dark:border-slate-600">
                 <dl>
                     <template v-for="(item, index) in enterprise" :key="item">
-                        <div class="bg-white dark:bg-slate-700/50 odd:bg-gray-50 dark:odd:bg-slate-600/40 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" v-if="!except.includes(index)">
+                        <div class="bg-white dark:bg-slate-700/50 odd:bg-gray-50 dark:odd:bg-slate-600/40 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" v-if="!except.includes(index)" v-show="item">
                             <dt class="text-sm font-medium">{{ $t(`inputs.ent.${index}`) }}</dt>
                             <dd class="mt-1 text-sm text-gray-900 dark:text-slate-300 sm:mt-0 sm:col-span-2">{{ item || "-"  }}</dd>
                         </div>
@@ -56,6 +56,23 @@
 
                 </dl>
                 </div>
+
+                <template v-if="enterprise.safety">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900 dark:text-slate-300">Охрана труда и социальное партнерство</h3>
+                    </div>
+                    <div class="border-t border-gray-200 dark:border-slate-600">
+                    <dl>
+                        <template v-for="(item, index) in enterprise.safety" :key="item">
+                            <div class="bg-white dark:bg-slate-700/50 odd:bg-gray-50 dark:odd:bg-slate-600/40 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" v-if="!except.includes(index)" v-show="item">
+                                <dt class="text-sm font-medium">{{ $t(`inputs.safety.${index}`) }}</dt>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-slate-300 sm:mt-0 sm:col-span-2">{{ item || "-"  }}</dd>
+                            </div>
+                        </template>
+
+                    </dl>
+                    </div>
+                </template>
             </div>
             </div>
 
@@ -101,15 +118,8 @@
                         current: true,
                     },
                 ],
-                except: ['inn', 'created_at', 'updated_at', 'status_id', 'status', 'id', 'area_id', 'enterprises_id', 'address', 'name', 'ogrn', 'okvd', 'okvd_name', 'rns']
+                except: ['safety', 'inn', 'created_at', 'updated_at', 'status_id', 'status', 'id', 'enterprise_id','area_id', 'enterprises_id', 'address', 'name', 'ogrn', 'okvd', 'okvd_name', 'rns']
             }
-        },
-        mounted(){
-
-        },
-        methods: {
-
-        },
-
+        }
     })
 </script>

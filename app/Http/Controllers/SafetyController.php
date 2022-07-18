@@ -81,8 +81,8 @@ class SafetyController extends Controller
     {
         Req::validate([
             'enterprise_id' => ['required', Rule::unique('safeties')],
-            'collective_agreement' => 'required',
-            'sum_contractual' => 'required',
+            // 'collective_agreement' => 'required',
+            // 'sum_contractual' => 'required',
             'in_total' => 'required',
             'start_year' => 'required',
         ],[
@@ -111,8 +111,8 @@ class SafetyController extends Controller
     {
         Req::validate([
             'enterprise_id' => ['required', Rule::unique('safeties')->ignore($partner->id)],
-            'collective_agreement' => 'required',
-            'sum_contractual' => 'required',
+            // 'collective_agreement' => 'required',
+            // 'sum_contractual' => 'required',
             'in_total' => 'required',
             'start_year' => 'required',
         ],[

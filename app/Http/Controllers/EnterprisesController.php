@@ -28,7 +28,7 @@ class EnterprisesController extends Controller
 
     public function show($id, $enterprises)
     {
-        $data = Enterprises::with('status')->findOrfail($enterprises);
+        $data = Enterprises::with('status', 'safety')->findOrfail($enterprises);
 
         return Inertia::render('Maps/Enterprises/Show', [
             'region' => Areas::select(['id', 'region'])->findOrFail($data->area_id),
