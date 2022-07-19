@@ -102,7 +102,6 @@ export default {
         return {
             status_name: null,
             form: this.$inertia.form({
-                _method: 'put',
                 title: this.regist.title,
                 npa: this.regist.npa,
                 depart: this.regist.depart,
@@ -169,7 +168,7 @@ export default {
         },
         update() {
             this.$toast.show('Обновляю реестр... Ожидайте!')
-            this.form.post(route('registry.update', this.regist.id))
+            this.form.put(route('registry.update', this.regist.id))
         },
         deleteFile(file) {
             if (confirm('Вы действительно хотите удалить файл?')) {
