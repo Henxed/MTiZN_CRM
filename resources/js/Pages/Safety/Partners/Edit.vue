@@ -34,23 +34,64 @@
                             <div class="text-lg font-bold mt-6 text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.accidents`) }}</div>
                             <div class="mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.group`) }}</div>
-                                <div class="flex flex-wrap">
-                                    <text-input v-model="form.accidents_group_at" :error="errors.accidents_group_at" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_group" />
-                                    <text-input v-model="form.accidents_group" :error="errors.accidents_group" :label="$t(`inputs.safety.accidents_group`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_group_at" placeholder="Оставьте пустым, если нет данных"/>
+
+                                <div class="grid lg:grid-cols-7" v-for="(input, index) in form.accidents_group_list" :key="`groupInput-${index}`">
+                                    <text-input v-model="input.date" :label="$t(`inputs.safety.accidents_group_at`)" type="date" class="w-full lg:pr-2 lg:col-span-3" :required="!!input.count" />
+                                    <text-input v-model.number="input.count" :label="$t(`inputs.safety.accidents_group`)" type='number' class="w-full lg:pl-2 lg:col-span-3" :required="!!input.date" placeholder="Оставьте пустым, если нет данных"/>
+
+                                    <div class="w-24 flex items-end justify-center sm:justify-start m-2">
+                                        <div class="flex items-center justify-center leading-none mr-2 h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Удалить"' @click.prevent="removeField(index, form.accidents_group_list)" v-if="form.accidents_group_list.length > 1">
+                                            <i class="fi fi-rr-trash"></i>
+                                            <span class="ml-2 sm:hidden">Удалить</span>
+                                        </div>
+                                        <div class="flex items-center justify-center leading-none h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Добавить"' @click.prevent="addField(input, form.accidents_group_list)" v-if="index+1 === form.accidents_group_list.length">
+                                            <i class="fi fi-rr-layer-plus"></i>
+                                            <span class="ml-2 sm:hidden">Добавить</span>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400  rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.heavy`) }}</div>
-                                <div class="flex flex-wrap">
-                                    <text-input v-model="form.accidents_heavy_at" :error="errors.accidents_heavy_at" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_heavy" />
-                                    <text-input v-model="form.accidents_heavy" :error="errors.accidents_heavy" :label="$t(`inputs.safety.accidents_heavy`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_heavy_at" placeholder="Оставьте пустым, если нет данных"/>
+                                <div class="grid lg:grid-cols-7" v-for="(input, index) in form.accidents_heavy_list" :key="`groupInput-${index}`">
+                                    <text-input v-model="input.date" :label="$t(`inputs.safety.accidents_heavy_at`)" type="date" class="w-full lg:pr-2 lg:col-span-3" :required="!!input.count" />
+                                    <text-input v-model.number="input.count" :label="$t(`inputs.safety.accidents_heavy`)" type='number' class="w-full lg:pl-2 lg:col-span-3" :required="!!input.date" placeholder="Оставьте пустым, если нет данных"/>
+
+                                    <div class="w-24 flex items-end justify-center sm:justify-start m-2">
+                                        <div class="flex items-center justify-center leading-none mr-2 h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Удалить"' @click.prevent="removeField(index, form.accidents_heavy_list)" v-if="form.accidents_heavy_list.length > 1">
+                                            <i class="fi fi-rr-trash"></i>
+                                            <span class="ml-2 sm:hidden">Удалить</span>
+                                        </div>
+                                        <div class="flex items-center justify-center leading-none h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Добавить"' @click.prevent="addField(input, form.accidents_heavy_list)" v-if="index+1 === form.accidents_heavy_list.length">
+                                            <i class="fi fi-rr-layer-plus"></i>
+                                            <span class="ml-2 sm:hidden">Добавить</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="mt-4 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
                                 <div class="inline-block font-bold text-base mb-2 -ml-6 pl-6 pr-3 text-slate-500 dark:text-slate-400 rounded-lg bg-slate-300 dark:bg-slate-600">{{ $t(`inputs.safety.deadly`) }}</div>
-                                <div class="flex flex-wrap">
-                                    <text-input v-model="form.accidents_deadly_at" :error="errors.accidents_deadly_at" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:w-1/2" :required="!!form.accidents_deadly" />
-                                    <text-input v-model="form.accidents_deadly" :error="errors.accidents_deadly" :label="$t(`inputs.safety.accidents_deadly`)" class="w-full lg:pl-2 lg:w-1/2" type='number' :required="!!form.accidents_deadly_at" placeholder="Оставьте пустым, если нет данных"/>
+                                <div class="grid lg:grid-cols-7" v-for="(input, index) in form.accidents_deadly_list" :key="`groupInput-${index}`">
+                                    <text-input v-model="input.date" :label="$t(`inputs.safety.accidents_deadly_at`)" type="date" class="w-full lg:pr-2 lg:col-span-3" :required="!!input.count" />
+                                    <text-input v-model.number="input.count" :label="$t(`inputs.safety.accidents_deadly`)" type='number' class="w-full lg:pl-2 lg:col-span-3" :required="!!input.date" placeholder="Оставьте пустым, если нет данных"/>
+
+                                    <div class="w-24 flex items-end justify-center sm:justify-start m-2">
+                                        <div class="flex items-center justify-center leading-none mr-2 h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Удалить"' @click.prevent="removeField(index, form.accidents_deadly_list)" v-if="form.accidents_deadly_list.length > 1">
+                                            <i class="fi fi-rr-trash"></i>
+                                            <span class="ml-2 sm:hidden">Удалить</span>
+                                        </div>
+                                        <div class="flex items-center justify-center leading-none h-10 px-2 w-10 rounded-md bg-slate-400/20 text-slate-700 hover:bg-slate-300 dark:text-slate-300/80 dark:hover:bg-slate-500 cursor-pointer"
+                                        v-tippy='"Добавить"' @click.prevent="addField(input, form.accidents_deadly_list)" v-if="index+1 === form.accidents_deadly_list.length">
+                                            <i class="fi fi-rr-layer-plus"></i>
+                                            <span class="ml-2 sm:hidden">Добавить</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -124,13 +165,16 @@ export default {
             form: this.$inertia.form({
                 enterprise_id: this.partner.enterprise_id,
                 sum_contractual: this.partner.sum_contractual,
-                collective_agreement: this.partner.collective_agreement ? this.partner.collective_agreement.replace(/-/g, '-').substr(0, 10) : '',
-                accidents_group_at: this.partner.accidents_group_at ? this.partner.accidents_group_at.replace(/-/g, '-').substr(0, 10) : '',
+                collective_agreement: this.partner.collective_agreement,
+                accidents_group_at: this.partner.accidents_group_at,
                 accidents_group: this.partner.accidents_group,
-                accidents_heavy_at: this.partner.accidents_heavy_at ? this.partner.accidents_heavy_at.replace(/-/g, '-').substr(0, 10) : '',
+                accidents_group_list: this.partner.accidents_group_list ? JSON.parse(this.partner.accidents_group_list) : [{date: "", count: null}],
+                accidents_heavy_at: this.partner.accidents_heavy_at,
                 accidents_heavy: this.partner.accidents_heavy,
-                accidents_deadly_at: this.partner.accidents_deadly_at ? this.partner.accidents_deadly_at.replace(/-/g, '-').substr(0, 10) : '',
+                accidents_heavy_list: this.partner.accidents_heavy_list ? JSON.parse(this.partner.accidents_heavy_list) : [{date: "", count: null}],
+                accidents_deadly_at: this.partner.accidents_deadly_at,
                 accidents_deadly: this.partner.accidents_deadly,
+                accidents_deadly_list: this.partner.accidents_deadly_list ? JSON.parse(this.partner.accidents_deadly_list) : [{date: "", count: null}],
                 in_total: this.partner.in_total,
                 start_year: this.partner.start_year
             }),
@@ -167,6 +211,12 @@ export default {
                 this.$inertia.delete(route('safety.partners.destroy', this.partner.id))
             }
         },
+        addField(value, fieldType) {
+            fieldType.push({ date: "", count: null });
+        },
+        removeField(index, fieldType) {
+            fieldType.splice(index, 1);
+        }
     },
 }
 </script>

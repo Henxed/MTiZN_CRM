@@ -16,19 +16,22 @@ return new class extends Migration
         Schema::create('safeties', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('enterprise_id')->unsigned();
-            $table->timestamp('collective_agreement')->comment('Дата заключения коллективного договора');
+            $table->date('collective_agreement')->comment('Дата заключения коллективного договора');
             $table->integer('sum_contractual')->comment('Количество работников, охваченных коллективно-договорными отношениями, чел.');
 
             // Несчастные случаи на производстве
             // Групповые
-            $table->timestamp('accidents_group_at')->nullable()->comment('Дата');
+            $table->date('accidents_group_at')->nullable()->comment('Дата');
             $table->integer('accidents_group')->default(0)->nullable()->comment('Кол-во пострадавших, чел.');
+            $table->json('accidents_group_list')->nullable();
             // Тяжелые
-            $table->timestamp('accidents_heavy_at')->nullable()->comment('Дата');
+            $table->date('accidents_heavy_at')->nullable()->comment('Дата');
             $table->integer('accidents_heavy')->default(0)->nullable()->comment('Кол-во пострадавших, чел.');
+            $table->json('accidents_heavy_list')->nullable();
             // Смертельные
-            $table->timestamp('accidents_deadly_at')->nullable()->comment('Дата');
+            $table->date('accidents_deadly_at')->nullable()->comment('Дата');
             $table->integer('accidents_deadly')->default(0)->nullable()->comment('Кол-во пострадавших, чел.');
+            $table->json('accidents_deadly_list')->nullable();
 
             // Обучены по охране труда, чел.
             $table->integer('in_total')->default(0)->comment('всего');

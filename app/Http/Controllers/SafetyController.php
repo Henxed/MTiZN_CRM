@@ -89,7 +89,24 @@ class SafetyController extends Controller
             'enterprise_id.unique' => 'Данные с таким предприятием уже существуют, вы можете их отредактировать.'
         ]);
 
-        Safety::create($request->all());
+        $d = $request->all();
+
+        $group = Safety::dynFields($d['accidents_group_list']);
+        $d['accidents_group'] = $group['count'];
+        $d['accidents_group_at'] = $group['date'];
+        $d['accidents_group_list'] = $group['list'];
+
+        $heavy = Safety::dynFields($d['accidents_heavy_list']);
+        $d['accidents_heavy'] = $heavy['count'];
+        $d['accidents_heavy_at'] = $heavy['date'];
+        $d['accidents_heavy_list'] = $heavy['list'];
+
+        $deadly = Safety::dynFields($d['accidents_deadly_list']);
+        $d['accidents_deadly'] = $deadly['count'];
+        $d['accidents_deadly_at'] = $deadly['date'];
+        $d['accidents_deadly_list'] = $deadly['list'];
+
+        Safety::create($d);
 
         $s = Safety::select('area_id', DB::raw('count(safeties.id) as s_count'))->leftJoin('enterprises', function($join) {
             $join->on('enterprises.id', 'enterprise_id');
@@ -119,7 +136,24 @@ class SafetyController extends Controller
             'enterprise_id.unique' => 'Данные с таким предприятием уже существуют, вы можете их отредактировать.'
         ]);
 
-        $partner->update(Req::all());
+        $d = Req::all();
+
+        $group = Safety::dynFields($d['accidents_group_list']);
+        $d['accidents_group'] = $group['count'];
+        $d['accidents_group_at'] = $group['date'];
+        $d['accidents_group_list'] = $group['list'];
+
+        $heavy = Safety::dynFields($d['accidents_heavy_list']);
+        $d['accidents_heavy'] = $heavy['count'];
+        $d['accidents_heavy_at'] = $heavy['date'];
+        $d['accidents_heavy_list'] = $heavy['list'];
+
+        $deadly = Safety::dynFields($d['accidents_deadly_list']);
+        $d['accidents_deadly'] = $deadly['count'];
+        $d['accidents_deadly_at'] = $deadly['date'];
+        $d['accidents_deadly_list'] = $deadly['list'];
+
+        $partner->update($d);
 
         $s = Safety::select('area_id', DB::raw('count(safeties.id) as s_count'))->leftJoin('enterprises', function($join) {
             $join->on('enterprises.id', 'enterprise_id');

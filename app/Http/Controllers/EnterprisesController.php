@@ -191,18 +191,34 @@ class EnterprisesController extends Controller
             return abort(403);
         }
 
-        $enterprise = Enterprises::updateOrCreate(['inn' => $request->inn, 'area_id' => $request->area_id], $request->all());
+        $d = $request->all();
+        $enterprise = Enterprises::updateOrCreate(['inn' => $request->inn, 'area_id' => $request->area_id], $d);
 
-        if($request->partner['collective_agreement'] && Auth::user()->can('safety.partners.create')){
+        $group = Safety::dynFields($d['partner']['accidents_group_list']);
+        $d['partner']['accidents_group'] = $group['count'];
+        $d['partner']['accidents_group_at'] = $group['date'];
+        $d['partner']['accidents_group_list'] = $group['list'];
+
+        $heavy = Safety::dynFields($d['partner']['accidents_heavy_list']);
+        $d['partner']['accidents_heavy'] = $heavy['count'];
+        $d['partner']['accidents_heavy_at'] = $heavy['date'];
+        $d['partner']['accidents_heavy_list'] = $heavy['list'];
+
+        $deadly = Safety::dynFields($d['partner']['accidents_deadly_list']);
+        $d['partner']['accidents_deadly'] = $deadly['count'];
+        $d['partner']['accidents_deadly_at'] = $deadly['date'];
+        $d['partner']['accidents_deadly_list'] = $deadly['list'];
+
+        if($d['partner']['collective_agreement'] && Auth::user()->can('safety.partners.create')){
             $validator = Validator::make($request->partner, [
-                'collective_agreement' => 'required',
-                'sum_contractual' => 'required',
+                // 'collective_agreement' => 'required',
+                // 'sum_contractual' => 'required',
                 'in_total' => 'required',
                 'start_year' => 'required',
             ]);
             $validator->validated();
 
-            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], Req::all()['partner']);
+            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], $d['partner']);
         }
 
         Areas::where('id', $request->area_id)->update(['subject' => Enterprises::where('area_id', $request->area_id)->count()]);
@@ -240,18 +256,34 @@ class EnterprisesController extends Controller
             return abort(403);
         }
 
-        $enterprise->update(Req::all());
+        $d = Req::all();
+        $enterprise->update($d);
 
-        if(Req::get('partner')['collective_agreement'] && Auth::user()->can('safety.partners.edit')){
+        $group = Safety::dynFields($d['partner']['accidents_group_list']);
+        $d['partner']['accidents_group'] = $group['count'];
+        $d['partner']['accidents_group_at'] = $group['date'];
+        $d['partner']['accidents_group_list'] = $group['list'];
+
+        $heavy = Safety::dynFields($d['partner']['accidents_heavy_list']);
+        $d['partner']['accidents_heavy'] = $heavy['count'];
+        $d['partner']['accidents_heavy_at'] = $heavy['date'];
+        $d['partner']['accidents_heavy_list'] = $heavy['list'];
+
+        $deadly = Safety::dynFields($d['partner']['accidents_deadly_list']);
+        $d['partner']['accidents_deadly'] = $deadly['count'];
+        $d['partner']['accidents_deadly_at'] = $deadly['date'];
+        $d['partner']['accidents_deadly_list'] = $deadly['list'];
+
+        if($d['partner']['collective_agreement'] && Auth::user()->can('safety.partners.edit')){
             $validator = Validator::make(Req::get('partner'), [
-                'collective_agreement' => 'required',
-                'sum_contractual' => 'required',
+                // 'collective_agreement' => 'required',
+                // 'sum_contractual' => 'required',
                 'in_total' => 'required',
                 'start_year' => 'required',
             ]);
             $validator->validated();
 
-            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], Req::all()['partner']);
+            Safety::updateOrCreate(['enterprise_id' => $enterprise->id], $d['partner']);
         }
 
         Areas::where('id', $enterprise->area_id)->update(['subject' => Enterprises::where('area_id', $enterprise->area_id)->count()]);
