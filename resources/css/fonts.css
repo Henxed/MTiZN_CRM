@@ -9,7 +9,7 @@
         font-weight: normal;
         font-style: normal;
 }
-/*
+
 @font-face {
     font-family: 'Nunito';
     src: url('../webfonts/Nunito/Nunito-ExtraLight.eot');
@@ -56,7 +56,7 @@
         url('../webfonts/Nunito/Nunito-ExtraLightItalic.ttf') format('truetype');
     font-weight: 200;
     font-style: italic;
-} */
+}
 
 /* @font-face {
     font-family: 'Nunito';
