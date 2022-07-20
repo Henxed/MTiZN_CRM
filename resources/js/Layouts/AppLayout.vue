@@ -139,6 +139,14 @@
         },
         beforeMount() {
             this.$store.dispatch("initTheme");
+            const $this = this
+            window.addEventListener('offline', function(e) {
+                $this.$toast.warning('Нет доступа к интернету. Проверьте, пожалуйста, соединение к сети.', {title: 'Не в сети'})
+            });
+
+            window.addEventListener('online', function(e) {
+                $this.$toast.success('Интернет соединение восстановлено.', {title: 'В сети'})
+            });
         },
         data() {
             return {

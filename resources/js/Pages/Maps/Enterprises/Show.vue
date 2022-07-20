@@ -2,6 +2,9 @@
     <app-layout :title="`${region.region} - Предприятия`">
 
         <div class="w-full max-w-screen-2xl">
+            <div class="pb-4">
+                <Link :href="route('regions.enterprises.index', region.id)" class="text-3xl text-slate-700 dark:text-slate-200 hover:text-slablu-500 dark:hover:text-slablu-300 uppercase">{{ enterprise.name }}</Link>
+            </div>
             <div class="grid sm:grid-cols-4 items-center">
                 <breadcrumbs :data="bread" class="my-4 sm:col-span-3"/>
                 <Link class="btn-secondary ml-auto" :href="route('regions.enterprises.edit', [region.id, enterprise.id])"
@@ -12,10 +15,9 @@
             </div>
 
             <div class="card p-4">
-                <div class="p-4">
-                    <div class="text-3xl dark:text-slate-300">{{ enterprise.name }}</div>
-                    <h3 class="text-lg leading-6 font-medium text-slate-900 dark:text-slate-300">{{ enterprise.okvd_name || "ОКВЭД неизвестен" }}</h3>
-                    <p class="mt-1 max-w-2xl text-sm">{{ enterprise.status ? enterprise.status.name : "Статус неизвестен"}}</p>
+                <div class="p-4 pt-0">
+                    <h3 class="text-lg leading-6 font-medium text-slate-900 dark:text-slate-300 col-span-3">{{ enterprise.okvd_name || "ОКВЭД название неизвестно" }}</h3>
+                    <p class="mt-1 max-w-2xl text-md">{{ enterprise.status ? enterprise.status.name : "Статус неизвестен"}}</p>
                 </div>
                 <div class="border-t border-gray-200 dark:border-slate-600">
                 <dl>

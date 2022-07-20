@@ -2,7 +2,7 @@
     <app-layout :title="'Редактирование предприятие - ' + enterprises.name">
         <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="pb-4">
-            <Link :href="route('regions.enterprises.index', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 dark:hover:text-pink-600 hover:text-pink-500 uppercase">{{ enterprises.name }}</Link>
+            <Link :href="route('regions.enterprises.index', enterprises.area_id)" class="text-3xl text-slate-700 dark:text-slate-200 hover:text-slablu-500 dark:hover:text-slablu-300 uppercase">{{ enterprises.name }}</Link>
         </div>
         <div class="flex items-center">
                 <breadcrumbs :data="bread" class="my-4"/>
