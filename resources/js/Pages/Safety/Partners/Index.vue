@@ -61,8 +61,8 @@
                         <th colspan="2">{{ $t(`inputs.safety.group`) }}</th>
                         <th colspan="2">{{ $t(`inputs.safety.heavy`) }}</th>
                         <th colspan="2">{{ $t(`inputs.safety.deadly`) }}</th>
-                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('in_total')"><span v-html="getSortIcon('in_total')"></span> {{ $t(`inputs.safety.in_total`) }}</th>
-                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('start_year')"><span v-html="getSortIcon('start_year')"></span> {{ $t(`inputs.safety.start_year`) }}</th>
+                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer lowercase" @click.prevent="sortBy('in_total')"><span v-html="getSortIcon('in_total')"></span> {{ $t(`inputs.safety.in_total`) }}</th>
+                        <th rowspan="2" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer lowercase" @click.prevent="sortBy('start_year')"><span v-html="getSortIcon('start_year')"></span> {{ $t(`inputs.safety.start_year`) }}</th>
                     </tr>
                     <tr>
                         <th width="160" class="hover:bg-gray-300 hover:dark:bg-slate-700 hover:cursor-pointer" @click.prevent="sortBy('accidents_group_at')"><span v-html="getSortIcon('accidents_group_at')"></span> {{ $t(`inputs.safety.accidents_group_at`) }}</th>

@@ -29,6 +29,6 @@ class Safety extends Model
 
         $max = max(array_map('strtotime', $mostRecent));
 
-        return ['list' => $arr, 'date' => $max ? date('Y-m-d', $max) : null, 'count' => $count_num ? $count_num : null];
+        return ['list' => count($arr) ? $arr : null, 'date' => $max ? date('Y-m-d', $max) : null, 'count' => $count_num ? $count_num : null];
     }
 }

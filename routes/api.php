@@ -32,4 +32,5 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('enterprise/get/all', [EnterprisesController::class, 'apiAll'])->name('enterpises.get.all');
     Route::get('enterprise/analytics/{id?}', [EnterprisesController::class, 'analytics'])->name('enterpises.analytics');
+    Route::post('enterprise/dublicate/{inn}', [EnterprisesController::class, 'dublicate'])->name('enterpises.dublicate');
 });

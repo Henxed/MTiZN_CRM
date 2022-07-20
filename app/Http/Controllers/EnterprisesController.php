@@ -339,6 +339,12 @@ class EnterprisesController extends Controller
         return $data;
     }
 
+    public function dublicate($inn)
+    {
+        $data = Enterprises::select('id', 'area_id', 'name', 'inn')->with('areas')->where('inn', $inn)->get();
+        return $data;
+    }
+
     //выгрузка предприятий
     public function export()
     {

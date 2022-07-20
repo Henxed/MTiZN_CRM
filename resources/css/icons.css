@@ -7,6 +7,7 @@ font-family: "uicons-regular-rounded";
 
 .fi{
     @apply fill-current;
+    line-height: 0;
 }
 
     i[class^="fi-rr-"]:before, i[class*=" fi-rr-"]:before, span[class^="fi-rr-"]:before, span[class*="fi-rr-"]:before {

@@ -2,13 +2,13 @@
  * @license MIT */
 
 /*!
-  * vue-tippy v6.0.0-alpha.58
+  * vue-tippy v6.0.0-alpha.62
   * (c) 2022 
   * @license MIT
   */
 
 /*!
- * Pusher JavaScript Library v7.0.6
+ * Pusher JavaScript Library v7.2.0
  * https://pusher.com/
  *
  * Copyright 2020, Pusher

@@ -28,8 +28,8 @@
                                 <small v-if="form.enterprise_id && area_id">Редактировать предприятие в <a :href="route('regions.enterprises.edit', [area_id, form.enterprise_id])" target="_blank" class="underline">новой вкладке</a></small>
                             </div>
 
-                            <text-input v-model="form.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" />
-                            <text-input v-model="form.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' />
+                            <text-input v-model="form.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" :required="!!form.sum_contractual"/>
+                            <text-input v-model="form.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' :required="!!form.collective_agreement"/>
 
                             <div class="text-lg font-bold mt-6 text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.accidents`) }}</div>
                             <div class="mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">

@@ -26,19 +26,39 @@
                         <div class="px-4 py-5 card sm:p-6">
 
                             <div class="flex items-center">
-                                <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.ent.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2"/>
+                                <text-input v-model="form.inn" :error="errors.inn" :label="$t(`inputs.ent.inn`)" type="number" class="sm:pr-3 w-full lg:w-1/2" @blur="checkDubl"/>
                                 <div class="w-full lg:w-1/2 sm:mt-4">
                                     <button class="text-slate-700 dark:text-slate-500 hover:underline decoration-slate-500 decoration-dotted decoration-2 cursor-pointer
                                     disabled:hover:no-underline disabled:opacity-60 disabled:cursor-not-allowed"
-                                    @click.prevent="nalog(form.inn)" :disabled="nalog_status">Получить данные с налоговой</button>
+                                    @click.prevent="nalog(form.inn)" :disabled="nalog_status || inn.length">Получить данные с налоговой</button>
                                 </div>
                             </div>
-                            <ol class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600/30 rounded-lg" v-if="more_inn.length">
+                            <div class="text-emerald-500 flex items-center mb-2" v-if="inn_check && enterprises.inn !== form.inn">
+                                <i class="fi fi-rr-check mr-2"></i> Предприятие можно добавить в регион!
+                            </div>
+
+                            <div class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600/30 rounded-lg" v-if="inns.length && enterprises.inn !== form.inn">
+                                <div class="text-red-500 flex items-center" v-if="inn.length">
+                                    <i class="fi fi-rr-ban mr-2"></i> Предприятие уже есть в данном регионе!
+                                </div>
+                                <a :href="route('regions.enterprises.show', [item.area_id, item.id])" target="_blank" class="block text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-lg hover:bg-slate-300/80 p-2 dark:hover:bg-slate-600/50" v-for="item in inn" :key="item">
+                                    <div>{{ item.name }}</div>
+                                    <div class="text-xs text-slate-500">{{ item.areas.region }}</div>
+                                </a>
+                                <div v-if="inns.length ">В других регионах ({{ inns.length }}):</div>
+                                <a :href="route('regions.enterprises.show', [item.area_id, item.id])" target="_blank" class="block text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-lg hover:bg-slate-300/80 p-2 dark:hover:bg-slate-600/50" v-for="item in inns" :key="item">
+                                    <div>{{ item.name }}</div>
+                                    <div class="text-xs text-slate-500">{{ item.areas.region }}</div>
+                                </a>
+                            </div>
+
+                            <ul class="block mb-3 p-3 bg-slate-200 dark:bg-slate-600/30 rounded-lg" v-if="more_inn.length">
+                                Данные с налоговой ({{ more_inn.length }}):
                                 <li class="text-slate-800 dark:text-slate-300 leading-none cursor-pointer my-1 rounded-lg hover:bg-slate-300/80 p-2 dark:hover:bg-slate-600/50" v-for="item in more_inn" :key="item" @click="nalog_data(item)">
                                     <div :class="{'line-through' : item.data.state.status !== 'ACTIVE'} ">{{ item.value }} - {{ item.data.inn }}</div>
                                     <div class="text-slate-500">{{ item.data.address.value }}</div>
                                 </li>
-                            </ol>
+                            </ul>
 
                             <div class="relative">
                                 <text-input v-model="form.name" :error="errors.name" :label="$t(`inputs.ent.name`)" />
@@ -91,8 +111,8 @@
 
                         <div class="px-4 py-5 card sm:p-6">
 
-                            <text-input v-model="form.partner.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" />
-                            <text-input v-model="form.partner.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' />
+                            <text-input v-model="form.partner.collective_agreement" :error="errors.collective_agreement" :label="$t(`inputs.safety.collective_agreement`)" type="date" :required="!!form.partner.sum_contractual"/>
+                            <text-input v-model="form.partner.sum_contractual" :error="errors.sum_contractual" :label="$t(`inputs.safety.sum_contractual`)" type='number' :required="!!form.partner.collective_agreement"/>
 
                             <div class="text-lg font-bold mt-6 text-slate-500 dark:text-slate-400">{{ $t(`inputs.safety.accidents`) }}</div>
                             <div class="mt-2 bg-slate-200 dark:bg-slate-600/20 rounded-lg p-4">
@@ -157,7 +177,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div class="text-lg mt-6">{{ $t(`inputs.safety.learn_safety`) }}</div>
                             <div class="flex flex-wrap ">
                                 <text-input v-model="form.partner.in_total" :error="errors.in_total" :label="$t(`inputs.safety.in_total`)" class="w-full lg:pr-2 lg:w-1/2" type='number' />
@@ -214,7 +233,7 @@
             </div>
 
             <div class="mt-6 flex flex-col">
-                <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit">Обновить</loading-button>
+                <loading-button :loading="form.processing" class="btn-green mx-auto w-full max-w-xs" type="submit" :disabled="inn.length">Обновить</loading-button>
                 <small class="mx-auto">При нажатии, предприятие актулизируется.</small>
                 <button @click.prevent="destroy" class="text-red-600/90 dark:text-red-400 mt-4">Удалить предприятие</button>
             </div>
@@ -301,13 +320,13 @@ export default {
                     collective_agreement: this.partner ? this.partner.collective_agreement ? this.partner.collective_agreement : ''  : '',
                     accidents_group_at: this.partner ? this.partner.accidents_group_at ? this.partner.accidents_group_at : '' : '',
                     accidents_group: this.partner ? this.partner.accidents_group : '',
-                    accidents_group_list: this.partner ? this.partner.accidents_group_list ? JSON.parse(this.partner.accidents_group_list) : [{date: "", count: null}] : '',
+                    accidents_group_list: this.partner ? this.partner.accidents_group_list ? JSON.parse(this.partner.accidents_group_list) : [{date: "", count: null}] : [{date: "", count: null}],
                     accidents_heavy_at: this.partner ? this.partner.accidents_heavy_at ? this.partner.accidents_heavy_at : '' : '',
                     accidents_heavy: this.partner ? this.partner.accidents_heavy : '',
-                    accidents_heavy_list: this.partner ? this.partner.accidents_heavy_list ? JSON.parse(this.partner.accidents_heavy_list) : [{date: "", count: null}] : '',
+                    accidents_heavy_list: this.partner ?this.partner.accidents_heavy_list ? JSON.parse(this.partner.accidents_heavy_list) : [{date: "", count: null}] : [{date: "", count: null}],
                     accidents_deadly_at: this.partner ? this.partner.accidents_deadly_at ? this.partner.accidents_deadly_at : '' : '',
                     accidents_deadly: this.partner ? this.partner.accidents_deadly : '',
-                    accidents_deadly_list: this.partner ? this.partner.accidents_deadly_list? JSON.parse(this.partner.accidents_deadly_list) : [{date: "", count: null}] : '',
+                    accidents_deadly_list: this.partner ? this.partner.accidents_deadly_list? JSON.parse(this.partner.accidents_deadly_list) : [{date: "", count: null}] : [{date: "", count: null}],
                     in_total: this.partner ? this.partner.in_total : '',
                     start_year: this.partner ? this.partner.start_year : ''
                 }
@@ -316,18 +335,19 @@ export default {
             nalog_status: false,
             nalog_selected: false,
             token: "7d6bb02e2a8855750be56d3d50f7cc896aabc095",
-            more_inn: []
+            more_inn: [],
+            inns: [],
+            inn: [],
+            inn_check: false
         }
     },
     methods: {
 
         update() {
-            this.$toast.show('Обновляю предприятие... Ожидайте!')
             this.form.put(route('regions.enterprises.update', [this.enterprises.area_id, this.enterprises.id]))
         },
         destroy() {
             if (confirm('Вы уверены, что хотите удалить это предприятие?')) {
-                this.$toast.warning('Удаляю предприятие... Ожидайте!')
                 this.$inertia.delete(route('regions.enterprises.destroy', [this.enterprises.area_id, this.enterprises.id]))
             }
         },
@@ -417,6 +437,23 @@ export default {
         },
         removeField(index, fieldType) {
             fieldType.splice(index, 1);
+        },
+        checkDubl(e){
+            if(e.target.value && this.enterprises.inn !== e.target.value && !this.inn.filter((g) => g.inn === e.target.value).length ){
+                this.inn = [];
+                this.inns = [];
+                this.inn_check = false;
+                this.more_inn = [];
+
+                axios.post(route('enterpises.dublicate', e.target.value)).then((res) => {
+                    this.inn = res.data.filter((f) => f.area_id === this.form.area_id);
+                    this.inns = res.data.filter((f) => f.area_id !== this.form.area_id);
+
+                    if(!this.inn.length){
+                        this.inn_check = !this.inn_check
+                    }
+                })
+            }
         }
 
     },

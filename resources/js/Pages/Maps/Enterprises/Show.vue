@@ -66,7 +66,26 @@
                         <template v-for="(item, index) in enterprise.safety" :key="item">
                             <div class="bg-white dark:bg-slate-700/50 odd:bg-gray-50 dark:odd:bg-slate-600/40 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6" v-if="!except.includes(index)" v-show="item">
                                 <dt class="text-sm font-medium">{{ $t(`inputs.safety.${index}`) }}</dt>
-                                <dd class="mt-1 text-sm text-gray-900 dark:text-slate-300 sm:mt-0 sm:col-span-2">{{ item || "-"  }}</dd>
+                                <dd class="mt-1 text-sm text-gray-900 dark:text-slate-300 sm:mt-0 sm:col-span-2">
+
+                                    <template v-if="typeof isArray(item) === 'object'">
+                                        <div class="flex" v-for="r in isArray(item)" :key="r">
+                                            <div class="mr-4" v-for="(it, i) in r" :key="it">
+                                                {{ $t(`inputs.safety.${i}`) }}: {{ it }}
+                                            </div>
+                                        </div>
+                                        <div class="flex mt-3">
+                                            <div class="mr-4">
+                                                Последний случай: {{ enterprise.safety[index.replace('_list', '_at')] }}
+                                            </div>
+                                            Кол-во в сумме: {{ enterprise.safety[index.replace('_list', '')] }}
+                                        </div>
+                                    </template>
+                                    <template v-else>
+                                        {{ item || "-"  }}
+                                    </template>
+
+                                </dd>
                             </div>
                         </template>
 
@@ -118,7 +137,22 @@
                         current: true,
                     },
                 ],
-                except: ['safety', 'inn', 'created_at', 'updated_at', 'status_id', 'status', 'id', 'enterprise_id','area_id', 'enterprises_id', 'address', 'name', 'ogrn', 'okvd', 'okvd_name', 'rns']
+                except: ['safety', 'inn', 'created_at', 'updated_at', 'status_id', 'status', 'id', 'enterprise_id','area_id', 'enterprises_id', 'address', 'name', 'ogrn', 'okvd', 'okvd_name', 'rns', 'accidents_group_at', 'accidents_group', 'accidents_heavy_at', 'accidents_heavy', 'accidents_deadly_at', 'accidents_deadly']
+            }
+        },
+        methods:{
+            isArray(e){
+                if(e){
+                    try {
+                        let o = JSON.parse(e);
+                        if (o && typeof o === "object") {
+                            return o;
+                        }
+                    }
+                    catch (error) { }
+
+                    return e;
+                }
             }
         }
     })
