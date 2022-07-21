@@ -31,15 +31,6 @@
             <div class="bg-slate-600/10 dark:bg-slate-600/20 rounded-xl p-6">
 
                 <div class="grid grid-cols-1 sm:grid-cols-8 gap-4">
-                    <div class="flex sm:col-span-3 items-center">
-                        <div class="icon-list">
-                            <i class="fi fi-rr-user"></i>
-                        </div>
-                        <div class="ml-4 leading-snug">
-                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Глава</div>
-                            <div class="text-slate-500">{{ region.leader }}</div>
-                        </div>
-                    </div>
                     <div class="flex sm:col-span-2 items-center">
                         <div class="icon-list">
                             <i class="fi fi-rr-school"></i>
@@ -47,6 +38,15 @@
                         <div class="ml-4 leading-snug">
                             <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Районый центр</div>
                             <div class="text-slate-500">{{ region.city }}</div>
+                        </div>
+                    </div>
+                    <div class="flex sm:col-span-3 items-center">
+                        <div class="icon-list">
+                            <i class="fi fi-rr-user"></i>
+                        </div>
+                        <div class="ml-4 leading-snug">
+                            <div class="font-bold text-slate-600 dark:text-slate-400 stroke-current">Глава района</div>
+                            <div class="text-slate-500">{{ region.leader }}</div>
                         </div>
                     </div>
                     <div class="flex sm:col-span-3 items-center">

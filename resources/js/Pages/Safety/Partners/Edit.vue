@@ -1,9 +1,9 @@
 <template>
     <app-layout :title="'Новые данные по партнеру'">
 
- <div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
+<div class="text-slate-900 dark:text-slate-100 w-full max-w-screen-2xl">
         <div class="py-4">
-            <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Редактировать данные у "{{ enterprise.label }}"</div>
+            <div class="text-3xl text-slate-700 dark:text-slate-200 uppercase">Редактировать данные: {{ enterprise.label }}</div>
         </div>
         <breadcrumbs :data="bread" class="my-4"/>
         <form @submit.prevent="submit" class="border-t border-gray-200 dark:border-slate-700 py-6">
